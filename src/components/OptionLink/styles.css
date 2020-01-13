@@ -1,0 +1,13 @@
+.card-option {
+  cursor: pointer;
+  height: 130px;
+}
+.card-option:hover {
+  opacity: 0.8;
+}
+.card-option.bg {
+  width: 25%;
+}
+.card-option.bg:hover {
+  background-color: #a52a2acc;
+}

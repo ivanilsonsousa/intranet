@@ -1,0 +1,13 @@
+:root {
+  --color-default: #a52a2a;
+}
+.color-default {
+  background-color: var(--color-default);
+}
+.title-display {
+  font-size: 28px;
+}
+.slider {
+  max-height: 350px;
+  overflow: hidden;
+}

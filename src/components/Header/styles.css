@@ -1,0 +1,11 @@
+.sub-header {
+  height: 70px;
+}
+.sub-header h1 {
+  font-size: 35px;
+  font-weight: 400;
+  color: darkgray;
+}
+.meu-ip {
+  font-size: 18px;
+}
