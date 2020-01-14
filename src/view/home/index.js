@@ -5,12 +5,20 @@ import OptionLink from '../../components/OptionLink'
 import Callout from '../../components/Callout'
 
 import picture from '../../assets/picture.svg'
+import art from '../../assets/art.svg'
 import cinema from '../../assets/cinema.svg'
+import video from '../../assets/video-cameras.svg'
 import users from '../../assets/users.svg'
+import group from '../../assets/peoples.svg'
 import fones from '../../assets/call.svg'
+import fone from '../../assets/fones.svg'
 import file from '../../assets/file.svg'
 import folder from '../../assets/folder.svg'
 import computer from '../../assets/computer.svg'
+import mv from '../../assets/mv-indicadores.svg'
+import sigtap from '../../assets/sigtap.svg'
+import upToDate from '../../assets/upToDate.svg'
+import clock from '../../assets/clock.svg'
 
 import './style.css'
 
@@ -33,17 +41,17 @@ function Home() {
               <h1 className="display-4 title-display">Utilidades</h1>
               
               <div className="row mb-3">
-                <OptionLink className="bg" image={picture} legend="Galeria de Fotos"/>
-                <OptionLink className="bg" image={cinema} legend="Vídeos"/>
-                <OptionLink className="bg" image={users} legend="Pessoas"/>
-                <OptionLink className="bg" image={fones} legend="Lista de Ramais"/>
+                <OptionLink className="bg" image={art} legend="Galeria de Fotos"/>
+                <OptionLink className="bg" image={video} legend="Vídeos"/>
+                <OptionLink className="bg" image={group} legend="Pessoas"/>
+                <OptionLink className="bg" image={fone} legend="Lista de Ramais"/>
               </div>
 
               <div className="row">
-                <OptionLink className="bg" image={picture} legend="Titulo"/>
-                <OptionLink className="bg" image={picture} legend="Titulo"/>
-                <OptionLink className="bg" image={picture} legend="Titulo"/>
-                <OptionLink className="bg" image={picture} legend="Titulo"/>
+                <OptionLink className="bg" image={mv} legend="MV Indicadores"/>
+                <OptionLink className="bg" image={sigtap} legend="SigTap Web"/>
+                <OptionLink className="bg" image={upToDate} legend="UpToDate"/>
+                <OptionLink className="bg" image={clock} legend="Atividades"/>
               </div>
 
             </div>

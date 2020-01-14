@@ -1,13 +1,16 @@
 .card-option {
   cursor: pointer;
+  font-weight: 500;
   height: 130px;
 }
 .card-option:hover {
   opacity: 0.8;
+  text-decoration: underline;
+  color: white;
 }
 .card-option.bg {
   width: 25%;
 }
 .card-option.bg:hover {
-  background-color: #a52a2acc;
+  background-color: #db4040cc;
 }
