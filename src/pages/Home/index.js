@@ -1,4 +1,5 @@
 import React from 'react'
+
 import Header from '../../components/Header'
 import Carousel from '../../components/Carousel'
 import OptionLink from '../../components/OptionLink'
@@ -23,16 +24,13 @@ import clock from '../../assets/clock.svg'
 import './style.css'
 
 function Home() {
-  const decoration = {
-    color: 'whiteSmoke',
-    width:'33.333%'
-  }
+  const width = '33.33333'
 
   return (
     <>
       <Header/>
       <div className="container-lg content-body p-2 pt-4 m-0">
-        <div className="container">
+        <div className="container-md px-md-5 mx-md-5">
           <div className="row mb-4">
             <div className="col-sm-6">
               <Carousel/>
@@ -41,17 +39,17 @@ function Home() {
               <h1 className="display-4 title-display">Utilidades</h1>
               
               <div className="row mb-3">
-                <OptionLink className="bg" image={art} legend="Galeria de Fotos"/>
-                <OptionLink className="bg" image={video} legend="Vídeos"/>
-                <OptionLink className="bg" image={group} legend="Pessoas"/>
-                <OptionLink className="bg" image={fone} legend="Lista de Ramais"/>
+                <OptionLink image={art} legend="Galeria de Fotos" to="gallery" />
+                <OptionLink image={video} legend="Vídeos" to="videos" />
+                <OptionLink image={group} legend="Pessoas" to="persons" />
+                <OptionLink image={fone} legend="Lista de Ramais" to="fones"/>
               </div>
 
               <div className="row">
-                <OptionLink className="bg" image={mv} legend="MV Indicadores"/>
-                <OptionLink className="bg" image={sigtap} legend="SigTap Web"/>
-                <OptionLink className="bg" image={upToDate} legend="UpToDate"/>
-                <OptionLink className="bg" image={clock} legend="Atividades"/>
+                <OptionLink image={mv} legend="MV Indicadores" externalLink="http://10.10.10.211/Painel_PRD/" />
+                <OptionLink image={sigtap} legend="SigTap Web" externalLink="http://sigtap.datasus.gov.br/tabela-unificada/app/sec/inicio.jsp" />
+                <OptionLink image={upToDate} legend="UpToDate" externalLink="https://www.uptodate.com/contents/search" />
+                <OptionLink image={clock} legend="Atividades"to="activities" />
               </div>
 
             </div>
@@ -72,26 +70,36 @@ function Home() {
                 <OptionLink 
                   image={file} 
                   legend="POPs" 
-                  decorations={{ backgroundColor: "DarkSlateGray", ...decoration }}
+                  width={width}
+                  to="pops"
+                  backgroundColor="DarkSlateGray"
                 />
                 <OptionLink 
                   image={folder} 
                   legend="Documentos" 
-                  decorations={{ backgroundColor: "SteelBlue", ...decoration }}
+                  width={width}
+                  to="documents"
+                  backgroundColor="SteelBlue"
                 />
                 <OptionLink 
-                  image={computer} 
-                  legend="Sistemas" 
-                  decorations={{ backgroundColor: "DarkSlateBlue", ...decoration }}
+                  image={computer}
+                  legend="Sistemas"
+                  width={width}
+                  externalLink="http://10.10.10.4/wsp/"
+                  backgroundColor="DarkSlateBlue"
                 />
               </div>
               
-              <h1 className="display-4 title-display mb-4">Previsão do Tempo</h1>
+              <h1 className="display-4 title-display mb-4">Aniversariantes</h1>
               <div className="row">
-                hhfjdhd<br/>
-                hhfjdhd<br/>
-                hhfjdhd<br/>
-                hhfjdhd<br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
               </div>
                 
 

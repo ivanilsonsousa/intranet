@@ -8,9 +8,6 @@
   text-decoration: underline;
   color: white;
 }
-.card-option.bg {
-  width: 25%;
-}
-.card-option.bg:hover {
+.card-option:hover {
   background-color: #db4040cc;
 }
