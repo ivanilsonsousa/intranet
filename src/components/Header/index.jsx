@@ -1,44 +1,23 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import api from '../../services/api'
 import os from 'os'
-
 
 import logo from '../../assets/logo-intranet.svg'
 
 import './styles.css'
-
-const findLocalIp = require('../../scripts/index') 
 
 export default class Header extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
-            ip: '127.0.0.1'
+            ip: ''
         }
-    }
 
-    componentDidMount() {
-
-        var networkInterfaces = os.networkInterfaces( );
-
-        console.log( networkInterfaces );
-
-        
-
-
-        const getIp = new Promise( (resolve) => {
-            let ip = findLocalIp()
-            resolve(ip)
-        })
-
-        getIp.then( resultado => {
-          console.log(resultado); //Deu bom
-          this.setState({ ip: resultado })
-        }, erro => {
-            this.setState({ ip: 'ERRO!' })
-        });
-
+        api.get('/meu-ip')
+            .then(res => this.setState({ ip: res.data.ip }))
+            .catch(err => this.setState({ ip: 'Erro' }))
     }
 
     render() {
@@ -50,7 +29,7 @@ export default class Header extends Component {
                     </Link>
                     <div className="row d-flex justify-content-sm-between align-items-sm-center w-100 px-sm-5 justify-content-end pr-2 pr-sm-0">
                         <h1 className="display-4 m-0">Intranet</h1>
-                        <div className="meu-ip">{`Meu ip é ${this.state.ip}`}</div>
+                        <div className="meu-ip">{`Meu IP é ${this.state.ip}`}</div>
                     </div>
                 </div>
                 <nav className="navbar navbar-expand-lg navbar-dark color-default p-0">
