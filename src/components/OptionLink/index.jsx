@@ -7,7 +7,7 @@ function OptionLink(props) {
 
     let classes = 'card-option text-center d-flex flex-column p-2 align-items-center justify-content-sm-center m-0 ' + props.className
 
-    if(props.folder)
+    if (props.folder)
         return(
             <div 
             className={ classes }

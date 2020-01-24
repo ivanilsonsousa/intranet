@@ -1,9 +1,10 @@
-import React from 'react'
-
+import React, { useState, useEffect } from 'react'
 import Header from '../../components/Header'
 import Carousel from '../../components/Carousel'
 import OptionLink from '../../components/OptionLink'
 import Callout from '../../components/Callout'
+
+import { ClipLoader as Spinner } from 'react-spinners'
 
 import picture from '../../assets/picture.svg'
 import art from '../../assets/art.svg'
@@ -21,10 +22,49 @@ import sigtap from '../../assets/sigtap.svg'
 import upToDate from '../../assets/upToDate.svg'
 import clock from '../../assets/clock.svg'
 
+import api from '../../services/api'
+
 import './style.css'
+
+function getDate(date) {
+  let data = new Date(date)
+  let dia  = data.getDate()
+  if (dia < 10)
+      dia  = "0" + dia
+
+  let mes  = data.getMonth() + 1
+  if (mes < 10) 
+      mes  = "0" + mes
+
+  let ano  = data.getFullYear()
+  return ( dia + "/" + mes + "/" + ano)
+}
+
 
 function Home() {
   const width = '33.33333'
+  const [posts, setPosts] = useState([])
+  const [photoPosts, setPhotoPosts] = useState([])
+
+  useEffect(() => {
+    async function loadPosts() {
+      const response =  await api.get('/posts')
+
+      setPosts(response.data)
+    }
+    
+    loadPosts()
+  }, [])
+  
+  useEffect(() => {
+    async function loadPhotoPosts() {
+      const response =  await api.get('/posts-caroussel')
+
+      setPhotoPosts(response.data)
+    }
+
+    loadPhotoPosts()
+  }, [])
 
   return (
     <>
@@ -33,23 +73,30 @@ function Home() {
         <div className="container-md px-md-5 mx-md-5">
           <div className="row mb-4">
             <div className="col-sm-6">
-              <Carousel/>
+
+              { photoPosts.length ?
+                <Carousel photos={photoPosts}/>
+              : <div className="container d-flex h-100 align-items-center justify-content-center">
+                  <Spinner sizeUnit="px" size={35} color="#4d6d6d" /> 
+                </div>
+              }
+    
             </div>
             <div className="col-sm-6">
               <h1 className="display-4 title-display">Utilidades</h1>
               
               <div className="row mb-3">
-                <OptionLink image={art} legend="Galeria de Fotos" to="gallery" />
-                <OptionLink image={video} legend="Vídeos" to="videos" />
-                <OptionLink image={group} legend="Pessoas" to="persons" />
-                <OptionLink image={fone} legend="Lista de Ramais" to="fones"/>
+                <OptionLink image={art} legend="Galeria de Fotos" to="/gallery" />
+                <OptionLink image={video} legend="Vídeos" to="/videos" />
+                <OptionLink image={group} legend="Pessoas" to="/persons" />
+                <OptionLink image={fone} legend="Lista de Ramais" to="/fones"/>
               </div>
 
               <div className="row">
                 <OptionLink image={mv} legend="MV Indicadores" externalLink="http://10.10.10.211/Painel_PRD/" />
                 <OptionLink image={sigtap} legend="SigTap Web" externalLink="http://sigtap.datasus.gov.br/tabela-unificada/app/sec/inicio.jsp" />
                 <OptionLink image={upToDate} legend="UpToDate" externalLink="https://www.uptodate.com/contents/search" />
-                <OptionLink image={clock} legend="Atividades"to="activities" />
+                <OptionLink image={clock} legend="Atividades"to="/activities" />
               </div>
 
             </div>
@@ -58,9 +105,9 @@ function Home() {
           <div className="row">
             <div className="col-sm-6 ">
               <h1 className="display-4 title-display">Comunicados</h1>
-              <Callout className="callout-primary" title="Semana Pró-Sangue" description="Acompanhe o cronograma de doação." date="11/01/2020" />
-              <Callout className="callout-secundary" title="Campanha de Vacinação" description="Se cuide, e cuide do outro." date="08/01/2020" />
-              <Callout className="callout-info" title="Cursos de extensão" description="Se prepare, vamos todos juntos nessa." date="05/01/2020" />
+              {posts.map(post => (
+                <Callout key={post._id} className={`callout-${post.type}`} title={post.title} description={post.description} date={getDate(post.createAt)} />
+              ))}
             </div>
 
             <div className="col-sm-6">

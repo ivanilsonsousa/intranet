@@ -2,20 +2,19 @@ import React from 'react';
 import Carousel from 'nuka-carousel';
 import './styles.css'
 
-import foto from '../../assets/foto.png'
-
 export default class CardOption extends React.Component {
+    constructor(props) {
+      super(props);
+
+      this.state = {
+        photos: this.props.photos,
+      }
+    }
 
     render() {
         return (
-            <Carousel autoplay wrapAround renderCenterLeftControls renderCenterRightControls > 
-                <img src={foto} />
-                <img src="http://placehold.it/500x300/ffffff/c0392b/&text=slide1" />
-                <img src="http://placehold.it/500x300/ffffff/c0392b/&text=slide2" />
-                <img src="http://placehold.it/500x300/ffffff/c0392b/&text=slide3" />
-                <img src="http://placehold.it/500x300/ffffff/c0392b/&text=slide4" />
-                <img src="http://placehold.it/500x300/ffffff/c0392b/&text=slide5" />
-                <img src="http://placehold.it/500x300/ffffff/c0392b/&text=slide6" />
+            <Carousel autoplay wrapAround renderCenterLeftControls={() => <></>} renderCenterRightControls={() => <></>} > 
+              { this.state.photos.map( photo => <img key={photo._id} src={photo.file_url} alt="s"/> ) }
             </Carousel>
         );
     }
