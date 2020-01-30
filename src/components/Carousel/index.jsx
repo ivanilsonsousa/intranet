@@ -14,7 +14,7 @@ export default class CardOption extends React.Component {
     render() {
         return (
             <Carousel autoplay wrapAround renderCenterLeftControls={() => <></>} renderCenterRightControls={() => <></>} > 
-              { this.state.photos.map( photo => <img key={photo._id} src={photo.file_url} alt="s"/> ) }
+              { this.state.photos.map( photo => <img key={photo._id} src={photo.file_url} alt="Imagem do Carrousel"/> ) }
             </Carousel>
         );
     }

@@ -11,7 +11,7 @@ function OptionLink(props) {
         return(
             <div 
             className={ classes }
-            onClick={ () => props.func(props.parent) }
+            onDoubleClick={ () => props.func(props.parent) }
             style={{ backgroundColor: props.backgroundColor, width: props.width ? `${props.width}%` : "25%", color: props.backgroundColor ? "white" : "black" }} >
 
                 <img src={props.image} style={{ height: "55px"}}/>

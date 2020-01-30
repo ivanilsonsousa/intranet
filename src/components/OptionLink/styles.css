@@ -2,6 +2,13 @@
   cursor: pointer;
   font-weight: 500;
   height: 130px;
+
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 .card-option:hover {
   opacity: 0.8;

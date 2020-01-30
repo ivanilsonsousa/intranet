@@ -1,0 +1,26 @@
+.callout {
+  padding: 20px;
+  margin: 20px 0;
+  border: 1px solid white;
+  background-color: white;
+  border-left-width: 5px;
+  border-radius: 3px;
+
+  -webkit-box-shadow: -1px 0px 18px -1px rgba(166,163,166,1);
+  -moz-box-shadow: -1px 0px 18px -1px rgba(166,163,166,1);
+  box-shadow: -1px 0px 18px -1px rgba(166,163,166,1);
+}
+.callout h4 {
+  margin-top: 0;
+  margin-bottom: 5px;
+  font-size: medium;
+} 
+.callout-primary {
+  border-left-color: #a52a2a;
+}
+.callout-secundary {
+  border-left-color: #d9534f;
+}
+.callout-info {
+  border-left-color: #5bc0de;
+}

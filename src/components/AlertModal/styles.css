@@ -1,0 +1,12 @@
+.btn-confirme {
+  background-color: firebrick;
+  color: white;
+}
+.btn-cancel {
+  background-color: rgb(105, 102, 96);
+  color: white;
+}
+.btn-confirme:hover, 
+.btn-cancel:hover {
+  opacity: 0.9;
+}

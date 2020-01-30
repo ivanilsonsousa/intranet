@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import api from '../../services/api'
-import os from 'os'
 
 import logo from '../../assets/logo-intranet.svg'
 
