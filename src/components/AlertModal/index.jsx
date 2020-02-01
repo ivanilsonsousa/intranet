@@ -12,7 +12,7 @@ function AlertModal(props) {
   return (
     <Modal size="md" show onHide={() => onClose()} animation >
       <Modal.Header closeButton>
-      <Modal.Title><i className={ props.message ? "fas fa-exclamation-circle mr-2" : "far fa-question-circle mr-2" }></i>{ props.title }</Modal.Title>
+      <Modal.Title>{ props.noIcon ? '' : <i className={ props.message ? "fas fa-exclamation-circle mr-2" : "far fa-question-circle mr-2" }></i> }{ props.title }</Modal.Title>
       </Modal.Header>
       { props.children  ?
         <Modal.Body>

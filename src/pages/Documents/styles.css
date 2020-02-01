@@ -6,3 +6,21 @@
 .breadcrumb a {
   color: black;
 }
+.label-upload {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  padding: 15px;
+  border: 1px dashed grey;
+  width: 100%;
+}
+.label-upload:hover {
+  opacity: 0.6;
+}
+.label-upload input[type="file"] {
+  width: 0px;
+  height: 0px;
+}
