@@ -19,6 +19,9 @@ import power_point from '../../assets/power-point.svg'
 function Documents() {
   const [parent, setParent] = useState('root')
   const [folder, setFolder] = useState('')
+  const [file, setFile] = useState(null)
+  const [titleFile, setTitleFile] = useState('')
+  const [dirUpdate, setDirUpdate] = useState('')
   const [dir, setDir] = useState([])
   const [load, setLoad] = useState(true)
   const [modalNewFolder, setModalNewFolder] = useState(false)
@@ -28,15 +31,34 @@ function Documents() {
     setParent(parent)
   }
 
-  function teste(texto) {
-    alert(texto)
+  function closeModal() {
+    setFolder('')
+    setFile('')
+    setModalNewFolder(false)
   }
   
+  function uploadFile() {
+    console.log(file)
+
+    const data = new FormData()
+
+    data.append('title', titleFile)
+    data.append('parent', parent)
+    data.append('file', file)
+
+    api.post('/documents', data)
+    .then(response => {
+      setDirUpdate(response.data._id)
+      closeModal()
+    })
+    .catch((err) => { alert(err) })
+  }
+
   function makeFolder() {
     api.post('/folders', { folder, parent, title: folder })
-    .then((data) => {
-      alert("Pasta criada")
-      console.log(data)
+    .then(response => {
+      setDirUpdate(response.data._id)
+      closeModal()
     })
     .catch(() => {
       alert("Deu erro ao criar a Pasta")
@@ -49,11 +71,11 @@ function Documents() {
               setDir(res.data) 
               setLoad(false) 
             })
-            .catch(err => { 
-              setLoad(false) 
+            .catch(err => {
+              setLoad(false)
               setDir([])
             })
-  }, [parent]);
+  }, [parent, dirUpdate]);
 
   return(
     <>
@@ -69,7 +91,8 @@ function Documents() {
         <div className="container-fluid d-flex align-items-baseline w-100">
           <div className="d-flex align-items-end pl-2 pt-5"> <img src={folder_icon} style={{ width: "45px" }}/> 
           <h3 className="mt-4 ml-3 mb-0 display-3 title align-text-bottom">Documentos</h3></div>
-          <button type="button" className="btn btn-secondary align-self-end ml-auto" onClick={() => setModalNewFolder(true)} >Nova Pasta <i className="fas fa-folder-plus"></i></button>
+          <button type="button" className="btn btn-secondary align-self-end ml-auto mr-2" onClick={() => setModalNewFolder(true)} ><i class="fas fa-undo"></i></button>
+          <button type="button" className="btn btn-secondary align-self-end" onClick={() => setModalNewFolder(true)} >Nova Pasta <i className="fas fa-folder-plus"></i></button>
           <button type="button" className="btn btn-success align-self-end ml-2" onClick={() => setModalNewFile(true)} >Novo Arquivo <i className="fas fa-cloud-upload-alt"></i></button>
         </div>
         <hr className="my"></hr>
@@ -88,7 +111,7 @@ function Documents() {
       {
         modalNewFolder ?
         <AlertModal title={"Nova Pasta"} noIcon show={modalNewFolder} func={() => makeFolder()} onDisable={ setModalNewFolder } >
-          <div class="form-group">
+          <div className="form-group">
             <input type="text" className="form-control" id="exampleInputPassword1" placeholder="Nova Pasta" onChange={(e) => setFolder(e.target.value)} />
           </div>
         </AlertModal> 
@@ -98,12 +121,12 @@ function Documents() {
       
       {
         modalNewFile ?
-        <AlertModal title={"Novo Arquivo"} noIcon show={modalNewFile} func={() => teste("Nome do Arquivo")} onDisable={ setModalNewFile } >
-          <div class="form-group">
-            <input type="text" className="form-control" placeholder="Descrição do arquivo" />
+        <AlertModal title={"Novo Arquivo"} noIcon show={modalNewFile} func={() => uploadFile()} onDisable={ setModalNewFile } >
+          <div className="form-group">
+            <input type="text" className="form-control" placeholder="Descrição do arquivo" onChange={(e) => setTitleFile(e.target.value)} />
             <label htmlFor="upload" className="label-upload" title="Fazer upload de arquivo">
-              <input type="file" name="Document" id="upload"/>
-              <img src={upload} style={{ width: "45px" }}/> 
+              <input type="file" name="Document" id="upload" onChange={e => setFile(e.target.files[0])}/>
+              <img src={upload} style={{ width: "45px" }} />
               <span className="mt-2">Clique aqui para adiconar um arquivo</span>
             </label>
           </div>

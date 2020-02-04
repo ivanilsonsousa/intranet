@@ -7,7 +7,7 @@ function OptionLink(props) {
 
     let classes = 'card-option text-center d-flex flex-column p-2 align-items-center justify-content-sm-center m-0 ' + props.className
 
-    if (props.folder)
+    if (props.folder) {
         return(
             <div 
             className={ classes }
@@ -18,7 +18,7 @@ function OptionLink(props) {
                 <span className="mt-2">{props.legend}</span>
             </div>
         )
-
+    }
 
     return props.externalLink ?
     
@@ -29,7 +29,7 @@ function OptionLink(props) {
       style={{ backgroundColor: props.backgroundColor, width: props.width ? `${props.width}%` : "25%", color: props.backgroundColor ? "white" : "black" }} >
 
         <img src={props.image} style={{ height: "55px"}}/>
-        <span className="mt-2">{props.legend}</span>
+        <span className="mt-2" title={props.title ? props.title : ''} >{props.legend}</span>
     </a>
 
     : 
