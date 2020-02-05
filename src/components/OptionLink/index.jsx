@@ -9,9 +9,9 @@ function OptionLink(props) {
 
     if (props.folder) {
         return(
-            <div 
+            <div
             className={ classes }
-            onDoubleClick={ () => props.func(props.parent) }
+            onClick={ () => props.func({ parent: props.parent, legend: props.legend}) }
             style={{ backgroundColor: props.backgroundColor, width: props.width ? `${props.width}%` : "25%", color: props.backgroundColor ? "white" : "black" }} >
 
                 <img src={props.image} style={{ height: "55px"}}/>

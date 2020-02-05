@@ -10,9 +10,7 @@ import iconEXCEL from '../../assets/excel_new.svg'
 import iconSLIDE from '../../assets/powerpoint.svg'
 import iconDefault from '../../assets/file.svg'
 
-
 import empty from '../../assets/empty.svg'
-
 
 function chooseIcon(format = '') {
   let icon = iconDefault
@@ -33,7 +31,6 @@ function chooseIcon(format = '') {
 }
 
 function cutLegend(legend) {
-  console.log(legend.length)
   if(legend.length < 25)
     return legend
 

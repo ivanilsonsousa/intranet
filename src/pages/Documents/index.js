@@ -15,10 +15,12 @@ import pdf from '../../assets/pdf.svg'
 import word from '../../assets/word.svg'
 import excel from '../../assets/excel.svg'
 import power_point from '../../assets/power-point.svg'
+import BreadCrumb from '../../components/BreadCrumb'
 
 function Documents() {
   const [parent, setParent] = useState('root')
   const [folder, setFolder] = useState('')
+  const [stackParent, setStackParent] = useState([{parent: 'root', legend: 'Documentos'}])
   const [file, setFile] = useState(null)
   const [titleFile, setTitleFile] = useState('')
   const [dirUpdate, setDirUpdate] = useState('')
@@ -27,7 +29,20 @@ function Documents() {
   const [modalNewFolder, setModalNewFolder] = useState(false)
   const [modalNewFile, setModalNewFile] = useState(false)
 
-  function doubleClick(parent) {
+  function comeBack() {
+    const stack = stackParent
+    stack.pop()
+    const size = Object.keys(stack).length
+    const { parent } = stack[size-1]
+    setParent(parent)
+    setStackParent(stack)
+  }
+
+  function doubleClick(data) {
+    const { parent } = data
+    setStackParent([...stackParent, data])
+    // localStorage.setItem('stackParent', stackParent)
+    // console.log(JSON.parse(parent))
     setParent(parent)
   }
 
@@ -38,8 +53,6 @@ function Documents() {
   }
   
   function uploadFile() {
-    console.log(file)
-
     const data = new FormData()
 
     data.append('title', titleFile)
@@ -56,42 +69,37 @@ function Documents() {
 
   function makeFolder() {
     api.post('/folders', { folder, parent, title: folder })
-    .then(response => {
-      setDirUpdate(response.data._id)
-      closeModal()
-    })
-    .catch(() => {
-      alert("Deu erro ao criar a Pasta")
-    })
+      .then(response => {
+        setDirUpdate(response.data._id)
+        closeModal()
+      })
+      .catch(() => {
+        alert("Deu erro ao criar a Pasta")
+      })
   }
 
   useEffect(() => {
+    // console.log(parent)
     api.get(`/documents/${parent}`)
-            .then(res =>  {
-              setDir(res.data) 
-              setLoad(false) 
-            })
-            .catch(err => {
-              setLoad(false)
-              setDir([])
-            })
+      .then(res =>  {
+        setDir(res.data) 
+        setLoad(false) 
+      })
+      .catch(err => {
+        setLoad(false)
+        setDir([])
+      })
   }, [parent, dirUpdate]);
 
   return(
     <>
       <Header/>
-      <nav aria-label="breadcrumb">
-        <ol className="breadcrumb">
-          <li className="breadcrumb-item"><a href="#">Home</a></li>
-          <li className="breadcrumb-item"><a href="#">Library</a></li>
-          <li className="breadcrumb-item active" aria-current="page">Data</li>
-        </ol>
-      </nav>
+      {stackParent && <BreadCrumb data={stackParent} setStackParent={setStackParent} setParent={setParent}/>}
       <div className="container">
         <div className="container-fluid d-flex align-items-baseline w-100">
           <div className="d-flex align-items-end pl-2 pt-5"> <img src={folder_icon} style={{ width: "45px" }}/> 
           <h3 className="mt-4 ml-3 mb-0 display-3 title align-text-bottom">Documentos</h3></div>
-          <button type="button" className="btn btn-secondary align-self-end ml-auto mr-2" onClick={() => setModalNewFolder(true)} ><i class="fas fa-undo"></i></button>
+          {parent && <button type="button" className="btn btn-secondary align-self-end ml-auto mr-2" disabled={ Object.keys(stackParent).length - 1 ? false : true } onClick={() => comeBack()} ><i className="fas fa-chevron-left"></i></button>}
           <button type="button" className="btn btn-secondary align-self-end" onClick={() => setModalNewFolder(true)} >Nova Pasta <i className="fas fa-folder-plus"></i></button>
           <button type="button" className="btn btn-success align-self-end ml-2" onClick={() => setModalNewFile(true)} >Novo Arquivo <i className="fas fa-cloud-upload-alt"></i></button>
         </div>
@@ -107,20 +115,14 @@ function Documents() {
             <Directory data={dir} func={doubleClick} />
           }
       </div>
-      {/* <AlertModal title={"Você tem certeza?"} show message func={() => teste("Meu deus")} /> */}
-      {
-        modalNewFolder ?
+      {modalNewFolder &&
         <AlertModal title={"Nova Pasta"} noIcon show={modalNewFolder} func={() => makeFolder()} onDisable={ setModalNewFolder } >
           <div className="form-group">
             <input type="text" className="form-control" id="exampleInputPassword1" placeholder="Nova Pasta" onChange={(e) => setFolder(e.target.value)} />
           </div>
-        </AlertModal> 
-        :
-        <></>
-      }
+        </AlertModal>}
       
-      {
-        modalNewFile ?
+      {modalNewFile &&
         <AlertModal title={"Novo Arquivo"} noIcon show={modalNewFile} func={() => uploadFile()} onDisable={ setModalNewFile } >
           <div className="form-group">
             <input type="text" className="form-control" placeholder="Descrição do arquivo" onChange={(e) => setTitleFile(e.target.value)} />
@@ -130,10 +132,7 @@ function Documents() {
               <span className="mt-2">Clique aqui para adiconar um arquivo</span>
             </label>
           </div>
-        </AlertModal> 
-        :
-        <></>
-      }
+        </AlertModal>}
       
     </>
   )
