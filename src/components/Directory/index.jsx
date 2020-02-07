@@ -8,6 +8,7 @@ import iconJPG from '../../assets/jpg.svg'
 import iconWORD from '../../assets/word.svg'
 import iconEXCEL from '../../assets/excel_new.svg'
 import iconSLIDE from '../../assets/powerpoint.svg'
+import iconVIDEO from '../../assets//video.svg'
 import iconDefault from '../../assets/file.svg'
 
 import empty from '../../assets/empty.svg'
@@ -15,12 +16,13 @@ import empty from '../../assets/empty.svg'
 function chooseIcon(format = '') {
   let icon = iconDefault
   const valuesPDF = [ iconPDF, '.pdf']
+  const valuesVIDEO = [ iconVIDEO, '.mp4']
   const valuesJPG = [iconJPG, '.jpeg', '.jpg', '.jij', '.png']
   const valuesWORD = [iconWORD, '.doc', '.docx']
   const valuesEXCEL = [iconEXCEL, '.xls', '.xlsx']
   const valuesSLIDE = [iconSLIDE, '.ppt']
 
-  const formats = [valuesPDF, valuesWORD, valuesSLIDE, valuesJPG, valuesEXCEL]
+  const formats = [valuesPDF, valuesWORD, valuesSLIDE, valuesJPG, valuesEXCEL, valuesVIDEO]
 
   formats.forEach((element) => {
     if(element.includes(format)) 

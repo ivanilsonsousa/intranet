@@ -10,11 +10,6 @@ import './styles.css'
 
 import folder_icon from '../../assets/folder-black.svg'
 import upload from '../../assets/upload.svg'
-import folder_open from '../../assets/folder-open.svg'
-import pdf from '../../assets/pdf.svg'
-import word from '../../assets/word.svg'
-import excel from '../../assets/excel.svg'
-import power_point from '../../assets/power-point.svg'
 import BreadCrumb from '../../components/BreadCrumb'
 
 function Documents() {
@@ -28,6 +23,20 @@ function Documents() {
   const [load, setLoad] = useState(true)
   const [modalNewFolder, setModalNewFolder] = useState(false)
   const [modalNewFile, setModalNewFile] = useState(false)
+  const [nameFileChoose, setNameFileChoose] = useState('')
+
+  function cutLegend(legend) {
+    if(legend.length < 35)
+      return legend
+  
+    const ext = legend.split('.').pop()
+    return `${legend.substr(0, 30)}...${ext}`
+  }
+
+  function setFileUpdate(file) {
+    setFile(file)
+    setNameFileChoose(cutLegend(file.name))
+  }
 
   function comeBack() {
     const stack = stackParent
@@ -50,6 +59,7 @@ function Documents() {
     setFolder('')
     setFile('')
     setModalNewFolder(false)
+    setModalNewFile(false)
   }
   
   function uploadFile() {
@@ -62,9 +72,13 @@ function Documents() {
     api.post('/documents', data)
     .then(response => {
       setDirUpdate(response.data._id)
+      setFile(null)
       closeModal()
     })
-    .catch((err) => { alert(err) })
+    .catch((err) => { 
+      alert(err) 
+      setFile(null) 
+    })
   }
 
   function makeFolder() {
@@ -79,7 +93,6 @@ function Documents() {
   }
 
   useEffect(() => {
-    // console.log(parent)
     api.get(`/documents/${parent}`)
       .then(res =>  {
         setDir(res.data) 
@@ -111,29 +124,29 @@ function Documents() {
             <div className="container d-flex flex-column h-100 align-items-center justify-content-center pt-5">
               <Spinner sizeUnit="px" size={35} color="#4d6d6d" />
             </div>
-            : 
+            :
             <Directory data={dir} func={doubleClick} />
           }
       </div>
-      {modalNewFolder &&
-        <AlertModal title={"Nova Pasta"} noIcon show={modalNewFolder} func={() => makeFolder()} onDisable={ setModalNewFolder } >
-          <div className="form-group">
-            <input type="text" className="form-control" id="exampleInputPassword1" placeholder="Nova Pasta" onChange={(e) => setFolder(e.target.value)} />
-          </div>
-        </AlertModal>}
+      <AlertModal title={"Nova Pasta"} noIcon show={modalNewFolder} func={() => makeFolder()} onDisable={ setModalNewFolder } >
+        <div className="form-group">
+          <input type="text" className="form-control" id="exampleInputPassword1" placeholder="Nova Pasta" onChange={(e) => setFolder(e.target.value)} />
+        </div>
+      </AlertModal>
       
-      {modalNewFile &&
-        <AlertModal title={"Novo Arquivo"} noIcon show={modalNewFile} func={() => uploadFile()} onDisable={ setModalNewFile } >
-          <div className="form-group">
-            <input type="text" className="form-control" placeholder="Descrição do arquivo" onChange={(e) => setTitleFile(e.target.value)} />
-            <label htmlFor="upload" className="label-upload" title="Fazer upload de arquivo">
-              <input type="file" name="Document" id="upload" onChange={e => setFile(e.target.files[0])}/>
-              <img src={upload} style={{ width: "45px" }} />
-              <span className="mt-2">Clique aqui para adiconar um arquivo</span>
-            </label>
-          </div>
-        </AlertModal>}
-      
+      <AlertModal title={"Novo Arquivo"} noIcon show={modalNewFile} func={() => uploadFile()} onDisable={ setModalNewFile } >
+        <div className="form-group">
+          <input type="text" className="form-control" placeholder="Descrição do arquivo" onChange={(e) => setTitleFile(e.target.value)} />
+          <label htmlFor="upload" className="label-upload" title="Fazer upload de arquivo">
+            <input type="file" name="Document" id="upload" onChange={e => setFileUpdate(e.target.files[0])}/>
+            <img src={upload} style={{ width: "45px" }} />
+            {nameFileChoose ?
+              <span className="text-success font-weight-bold">{ nameFileChoose }</span> 
+              :
+              <span className="mt-2">Clique aqui para adiconar um arquivo</span>}
+          </label>
+        </div>
+      </AlertModal>
     </>
   )
 
