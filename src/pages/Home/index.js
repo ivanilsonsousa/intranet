@@ -6,13 +6,9 @@ import Callout from '../../components/Callout'
 
 import { ClipLoader as Spinner } from 'react-spinners'
 
-import picture from '../../assets/picture.svg'
 import art from '../../assets/art.svg'
-import cinema from '../../assets/cinema.svg'
 import video from '../../assets/video-cameras.svg'
-import users from '../../assets/users.svg'
 import group from '../../assets/peoples.svg'
-import fones from '../../assets/call.svg'
 import fone from '../../assets/fones.svg'
 import file from '../../assets/file.svg'
 import folder from '../../assets/folder.svg'
@@ -39,7 +35,6 @@ function getDate(date) {
   let ano  = data.getFullYear()
   return ( dia + "/" + mes + "/" + ano)
 }
-
 
 function Home() {
   const width = '33.33333'
@@ -132,7 +127,7 @@ function Home() {
                   image={computer}
                   legend="Sistemas"
                   width={width}
-                  externalLink="http://10.10.10.4/wsp/"
+                  externalLink="http://10.10.10.5/wsp/"
                   backgroundColor="DarkSlateBlue"
                 />
               </div>

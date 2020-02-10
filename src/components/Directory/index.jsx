@@ -25,8 +25,10 @@ function chooseIcon(format = '') {
   const formats = [valuesPDF, valuesWORD, valuesSLIDE, valuesJPG, valuesEXCEL, valuesVIDEO]
 
   formats.forEach((element) => {
-    if(element.includes(format)) 
-      return icon = element[0]
+    if(element.includes(format)) {
+      icon = element[0]
+      return icon
+    }
   })
 
   return icon
@@ -46,7 +48,7 @@ function Directory(props) {
   return data.length ? 
         <div className="row mb-3">
           {data.map((dir,index) => {
-            return dir.type == 'file' ?
+            return dir.type === 'file' ?
               <OptionLink key={index} image={ chooseIcon(dir.format) } legend={cutLegend(dir.file)} title={dir.file} externalLink={dir.file_url} /> 
               :
               <OptionLink key={index} image={folder_open} legend={dir.title} folder parent={dir._id} func={props.func} />

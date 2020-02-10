@@ -38,6 +38,15 @@ function Documents() {
     setNameFileChoose(cutLegend(file.name))
   }
 
+  function updateStackParent(stackParent, data) {
+    stackParent.forEach(e => {
+      if (e.parent === data.parent)
+        return
+    })
+
+    setStackParent([...stackParent, data])
+  }
+
   function comeBack() {
     const stack = stackParent
     stack.pop()
@@ -49,7 +58,8 @@ function Documents() {
 
   function doubleClick(data) {
     const { parent } = data
-    setStackParent([...stackParent, data])
+    updateStackParent(stackParent, data)
+
     // localStorage.setItem('stackParent', stackParent)
     // console.log(JSON.parse(parent))
     setParent(parent)
@@ -110,11 +120,11 @@ function Documents() {
       {stackParent && <BreadCrumb data={stackParent} setStackParent={setStackParent} setParent={setParent}/>}
       <div className="container">
         <div className="container-fluid d-flex align-items-baseline w-100">
-          <div className="d-flex align-items-end pl-2 pt-5"> <img src={folder_icon} style={{ width: "45px" }}/> 
+          <div className="d-flex align-items-end pl-2 pt-5"> <img src={folder_icon} style={{ width: "45px" }} alt="Icone de Pasta" /> 
           <h3 className="mt-4 ml-3 mb-0 display-3 title align-text-bottom">Documentos</h3></div>
-          {parent && <button type="button" className="btn btn-secondary align-self-end ml-auto mr-2" disabled={ Object.keys(stackParent).length - 1 ? false : true } onClick={() => comeBack()} ><i className="fas fa-chevron-left"></i></button>}
+          {parent && <button type="button" className="btn btn-secondary align-self-end ml-auto mr-2" disabled={ parent === 'root' ? true : false } onClick={() => comeBack()} ><i className="fas fa-chevron-left"></i></button>}
           <button type="button" className="btn btn-secondary align-self-end" onClick={() => setModalNewFolder(true)} >Nova Pasta <i className="fas fa-folder-plus"></i></button>
-          <button type="button" className="btn btn-success align-self-end ml-2" onClick={() => setModalNewFile(true)} >Novo Arquivo <i className="fas fa-cloud-upload-alt"></i></button>
+          <button type="button" className="btn btn-success align-self-end ml-2" disabled={ parent === 'root' ? true : false } onClick={() => setModalNewFile(true)} >Novo Arquivo <i className="fas fa-cloud-upload-alt"></i></button>
         </div>
         <hr className="my"></hr>
       </div>
@@ -139,7 +149,7 @@ function Documents() {
           <input type="text" className="form-control" placeholder="Descrição do arquivo" onChange={(e) => setTitleFile(e.target.value)} />
           <label htmlFor="upload" className="label-upload" title="Fazer upload de arquivo">
             <input type="file" name="Document" id="upload" onChange={e => setFileUpdate(e.target.files[0])}/>
-            <img src={upload} style={{ width: "45px" }} />
+            <img src={upload} style={{ width: "45px" }} alt="Icone de Upload" />
             {nameFileChoose ?
               <span className="text-success font-weight-bold">{ nameFileChoose }</span> 
               :

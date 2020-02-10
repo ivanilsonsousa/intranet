@@ -24,7 +24,7 @@ export default class Header extends Component {
             <>  
                 <div className="sub-header d-flex bg-light px-3 align-items-center">
                     <Link to="/">
-                        <img src={logo} style={{ height: "60px" }} />                
+                        <img src={logo} style={{ height: "60px" }} alt="logo" />                
                     </Link>
                     <div className="row d-flex justify-content-sm-between align-items-sm-center w-100 px-sm-5 justify-content-end pr-2 pr-sm-0">
                         <h1 className="display-4 m-0">Intranet</h1>

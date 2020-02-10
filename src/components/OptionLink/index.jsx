@@ -14,7 +14,7 @@ function OptionLink(props) {
             onClick={ () => props.func({ parent: props.parent, legend: props.legend}) }
             style={{ backgroundColor: props.backgroundColor, width: props.width ? `${props.width}%` : "25%", color: props.backgroundColor ? "white" : "black" }} >
 
-                <img src={props.image} style={{ height: "55px"}}/>
+                <img src={props.image} alt="icone" style={{ height: "55px"}}/>
                 <span className="mt-2">{props.legend}</span>
             </div>
         )
@@ -26,9 +26,10 @@ function OptionLink(props) {
       className={ classes }
       href={props.externalLink} 
       target="_blank" 
+      rel="noopener noreferrer"
       style={{ backgroundColor: props.backgroundColor, width: props.width ? `${props.width}%` : "25%", color: props.backgroundColor ? "white" : "black" }} >
 
-        <img src={props.image} style={{ height: "55px"}}/>
+        <img src={props.image} style={{ height: "55px"}} alt="logo" />
         <span className="mt-2" title={props.title ? props.title : ''} >{props.legend}</span>
     </a>
 
@@ -39,7 +40,7 @@ function OptionLink(props) {
             className={classes}
             style={{ backgroundColor: props.backgroundColor, color: props.backgroundColor ? "white" : "black" }}
         >
-            <img src={props.image} style={{ height: "55px"}}/>
+            <img src={props.image} style={{ height: "55px"}} alt="logo" />
             <span className="mt-2">{props.legend}</span>
         </div>
     </Link>
