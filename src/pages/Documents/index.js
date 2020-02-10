@@ -23,6 +23,7 @@ function Documents() {
   const [load, setLoad] = useState(true)
   const [modalNewFolder, setModalNewFolder] = useState(false)
   const [modalNewFile, setModalNewFile] = useState(false)
+  const [modalMessage, setModalMessage] = useState(false)
   const [nameFileChoose, setNameFileChoose] = useState('')
 
   function cutLegend(legend) {
@@ -73,6 +74,11 @@ function Documents() {
   }
   
   function uploadFile() {
+    if (!file || !titleFile) {
+      setModalMessage(true)
+      return
+    }
+
     const data = new FormData()
 
     data.append('title', titleFile)
@@ -92,6 +98,11 @@ function Documents() {
   }
 
   function makeFolder() {
+    if (!folder) {
+      setModalMessage(true)
+      return
+    }
+
     api.post('/folders', { folder, parent, title: folder })
       .then(response => {
         setDirUpdate(response.data._id)
@@ -157,6 +168,8 @@ function Documents() {
           </label>
         </div>
       </AlertModal>
+
+      <AlertModal title={"Preencha todos os campos"} message show={modalMessage} onDisable={ setModalMessage } />
     </>
   )
 

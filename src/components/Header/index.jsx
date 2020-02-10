@@ -37,7 +37,7 @@ export default class Header extends Component {
                     </button>
 
                     <div className="collapse navbar-collapse pl-2" id="navbarSupportedContent">
-                        <ul className="navbar-nav mr-auto">
+                      <ul className="navbar-nav mr-auto">
                         <li className="nav-item active">
                             <Link className="nav-link" to="/">Home <span className="sr-only">(current)</span></Link>
                         </li>
@@ -62,7 +62,7 @@ export default class Header extends Component {
                         <li className="nav-item">
                             <Link className="nav-link" to="/documents"> Documentos</Link>
                         </li>
-                        </ul>
+                      </ul>
                     </div>
                 </nav>
             </>
