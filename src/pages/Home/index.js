@@ -127,7 +127,7 @@ function Home() {
                   image={computer}
                   legend="Sistemas"
                   width={width}
-                  externalLink={process.env.URL_WSP}
+                  externalLink='http://10.10.10.5/wsp/'
                   backgroundColor="DarkSlateBlue"
                 />
               </div>
