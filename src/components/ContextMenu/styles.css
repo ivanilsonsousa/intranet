@@ -1,0 +1,37 @@
+@keyframes pade {
+  0% {
+    opacity: 0;
+    transform: scale3d(.3,.3,.3);
+  }
+  50% {
+    opacity: 1;
+  }
+}
+.context-menu {
+  background-color: white;
+  border: 1px solid whitesmoke;
+  padding: 3px 0;
+  color: #666;
+  box-shadow: 0 10px 20px rgba(0,0,0,.3), 0 0 0 1px #eee;
+
+  transform-origin: top left;
+  /* animation: pade .4s; */
+}
+.menu-item {
+  display: flex;
+  align-items: center;
+
+  padding: 6px 12px;
+  height: 45px;
+  cursor: pointer;
+}
+.menu-item:hover {
+  background-color: lightblue;
+  color: #666;
+}
+.divider{
+  background-color: whitesmoke;
+  height: 2px;
+  width: 100%;
+}
+

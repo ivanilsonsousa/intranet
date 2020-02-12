@@ -1,4 +1,6 @@
 import React from 'react'
+import ContextMenu from '../ContextMenu'
+// import { MenuProvider } from 'react-contexify';
 import OptionLink from '../OptionLink'
 import './styles.css'
 
@@ -47,11 +49,15 @@ function Directory(props) {
 
   return data.length ? 
         <div className="row mb-3">
-          {data.map((dir,index) => {
+          {data.map((dir, index) => {
             return dir.type === 'file' ?
-              <OptionLink key={index} image={ chooseIcon(dir.format) } legend={cutLegend(dir.file)} title={dir.file} externalLink={dir.file_url} /> 
+              <ContextMenu id={dir._id} filename={dir.file} width="25" key={dir._id} >
+                <OptionLink image={ chooseIcon(dir.format) } legend={cutLegend(dir.file)} width="100" title={dir.file} externalLink={dir.file_url} />
+              </ContextMenu>
               :
-              <OptionLink key={index} image={folder_open} legend={dir.title} folder parent={dir._id} func={props.func} />
+              <ContextMenu id={dir._id} width="25" key={dir._id} >
+                <OptionLink image={folder_open} legend={dir.title} width="100" folder parent={dir._id} func={props.func} />
+              </ContextMenu>
           })}
         </div>
         :

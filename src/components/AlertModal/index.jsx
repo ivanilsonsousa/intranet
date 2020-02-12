@@ -12,9 +12,9 @@ function AlertModal(props) {
       <Modal.Title>{ props.noIcon || <i className={ props.message ? "fas fa-exclamation-circle mr-2" : "far fa-question-circle mr-2" }></i> }{ props.title }</Modal.Title>
       </Modal.Header>
       { props.children  &&
-        <Modal.Body>
-          { props.children }
-        </Modal.Body> }
+      <Modal.Body>
+        { props.children }
+      </Modal.Body> }
       <Modal.Footer>
         <button className="btn btn-modal btn-cancel" onClick={() => props.onDisable(false)}>
           { props.message ? 'Fechar' : 'Não' }
