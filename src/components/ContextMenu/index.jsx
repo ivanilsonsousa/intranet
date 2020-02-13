@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
 import AlertModal from '../AlertModal'
-import 'react-contexify/dist/ReactContexify.min.css';
 
 import './styles.css'
 

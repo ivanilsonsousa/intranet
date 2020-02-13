@@ -5,7 +5,7 @@ import './styles.css'
 
 function OptionLink(props) {
 
-    let classes = 'card-option text-center d-flex flex-column p-2 align-items-center justify-content-sm-center m-0 ' + props.className
+    let classes = 'card-option text-center d-flex flex-column p-2 align-items-center justify-content-baseline justify-content-md-center m-0 ' + props.className
 
     if (props.folder) {
         return(

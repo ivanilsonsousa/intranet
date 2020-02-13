@@ -16,7 +16,7 @@ import computer from '../../assets/computer.svg'
 import mv from '../../assets/mv-indicadores.svg'
 import sigtap from '../../assets/sigtap.svg'
 import upToDate from '../../assets/upToDate.svg'
-import clock from '../../assets/clock.svg'
+import gmail from '../../assets/gmail.svg'
 
 import api from '../../services/api'
 
@@ -64,8 +64,8 @@ function Home() {
   return (
     <>
       <Header/>
-      <div className="container-lg content-body p-2 pt-4 m-0">
-        <div className="container-md px-md-5 mx-md-5">
+      <div className="container-lg content-body p-2 pt-4">
+        <div className="container-md px-lg-5 mx-xl-5">
           <div className="row mb-4">
             <div className="col-sm-6">
 
@@ -88,10 +88,10 @@ function Home() {
               </div>
 
               <div className="row">
-                <OptionLink image={mv} legend="MV Indicadores" externalLink="http://10.10.10.211/Painel_PRD/" />
-                <OptionLink image={sigtap} legend="SigTap Web" externalLink="http://sigtap.datasus.gov.br/tabela-unificada/app/sec/inicio.jsp" />
-                <OptionLink image={upToDate} legend="UpToDate" externalLink="https://www.uptodate.com/contents/search" />
-                <OptionLink image={clock} legend="Atividades"to="/activities" />
+                <OptionLink image={mv} legend="MV Indicadores" externalLink={process.env.REACT_APP_URL_MV_PAINEL} />
+                <OptionLink image={sigtap} legend="SigTap Web" externalLink={process.env.REACT_APP_URL_SIGTAP} />
+                <OptionLink image={upToDate} legend="UpToDate" externalLink={process.env.REACT_APP_URL_UPTODATE} />
+                <OptionLink image={gmail} legend="Email" externalLink={process.env.REACT_APP_URL_EMAIL} />
               </div>
 
             </div>
@@ -113,6 +113,7 @@ function Home() {
                   image={file} 
                   legend="POPs" 
                   width={width}
+                  className="justify-content-center"
                   to="pops"
                   backgroundColor="DarkSlateGray"
                 />
@@ -120,6 +121,7 @@ function Home() {
                   image={folder} 
                   legend="Documentos" 
                   width={width}
+                  className="justify-content-center"
                   to="documents"
                   backgroundColor="SteelBlue"
                 />
@@ -127,7 +129,8 @@ function Home() {
                   image={computer}
                   legend="Sistemas"
                   width={width}
-                  externalLink='http://10.10.10.5/wsp/'
+                  className="justify-content-center"
+                  externalLink={process.env.REACT_APP_URL_WSP}
                   backgroundColor="DarkSlateBlue"
                 />
               </div>
