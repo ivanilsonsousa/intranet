@@ -9,6 +9,7 @@ import Fones from './pages/Fones'
 import Activities from './pages/Activities'
 import Pops from './pages/Pops'
 import Documents from './pages/Documents'
+import Login from './pages/Login'
 
 export default function Routes() {
     return (
@@ -22,6 +23,7 @@ export default function Routes() {
                 <Route path="/activities" component={Activities}/>
                 <Route path="/pops" component={Pops}/>
                 <Route path="/documents" component={Documents}/>
+                <Route path="/login" component={Login}/>
             </Switch>
         </BrowserRouter>
     )
