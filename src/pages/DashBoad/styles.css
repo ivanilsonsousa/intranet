@@ -1,0 +1,12 @@
+.content-dashboard {
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 80px 80px;
+  background-size: cover;
+  background-position: bottom right;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  height: 600px;
+  width: 100%;
+}

@@ -10,6 +10,7 @@ import Activities from './pages/Activities'
 import Pops from './pages/Pops'
 import Documents from './pages/Documents'
 import Login from './pages/Login'
+import DashBoad from './pages/DashBoad'
 
 export default function Routes() {
     return (
@@ -24,6 +25,7 @@ export default function Routes() {
                 <Route path="/pops" component={Pops}/>
                 <Route path="/documents" component={Documents}/>
                 <Route path="/login" component={Login}/>
+                <Route path="/dashboard" component={DashBoad}/>
             </Switch>
         </BrowserRouter>
     )

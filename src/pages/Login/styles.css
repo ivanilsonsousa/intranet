@@ -7,10 +7,8 @@
 .box-login {
   height: 350px;
   width: 500px;
+  margin-top: 5%;
   -webkit-tap-highlight-color: transparent;
-
-  position: relative;
-  top: -100px;
 
   line-height: 1.42857143;
   color: #333;
@@ -22,7 +20,7 @@
   border: 1px solid transparent;
   box-shadow: 0 1px 1px rgba(0,0,0,.05);
   border-color: #ddd;
-  border-radius: 10px;
+  /* border-radius: 10px; */
 }
 .form-login {
   height: 40px;
@@ -34,36 +32,38 @@
   width: 100%;
   margin-left: 15px;
   border: transparent;
+  background-color: transparent;
   border-bottom: 1px solid steelblue;
   outline: none;
 }
 .box-login button {
-  -webkit-tap-highlight-color: transparent;
   box-sizing: border-box;
-  font: inherit;
-  margin: 0;
-  overflow: visible;
-  text-transform: none;
-  -webkit-appearance: button;
-  font-family: inherit;
-  margin-bottom: 0;
   font-weight: 400;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: middle;
-  touch-action: manipulation;
   cursor: pointer;
-  background-image: none;
   border: 1px solid transparent;
   padding: 6px 12px;
   font-size: 14px;
-  line-height: 1.42857143;
-  border-radius: 4px;
-  user-select: none;
+  /* border-radius: 4px; */
   color: #fff;
-  display: block;
   width: 100%;
   background-color: var(--color-default);
   border-color: var(--color-default);
 }
-
+.box-login button:hover {
+  opacity: 0.9;
+}
+.content-pass {
+  position: relative;
+}
+.span-show {
+  text-align: right;
+  font-size: 14px;
+  cursor: pointer;
+  width: 70px;
+  position: absolute;
+  margin-left: 80%;
+  float: left;
+  top: 15px;
+  left: 15px;
+  background-color: transparent;
+}

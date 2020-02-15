@@ -1,0 +1,9 @@
+.option-dashboard {
+  padding: 10px;
+  color: black;
+  font-weight: bolder;
+}
+.option-dashboard:hover {
+  text-decoration: underline;
+  opacity: 0.9;
+}
