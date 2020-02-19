@@ -8,7 +8,6 @@ function Persons() {
     <>
       <Header/>
       <div>Teste Persons</div>
-      <a href=""></a>
     </>
   )
 

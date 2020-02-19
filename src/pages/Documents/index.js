@@ -146,16 +146,16 @@ function Documents() {
               <Spinner sizeUnit="px" size={35} color="#4d6d6d" />
             </div>
             :
-            <Directory data={dir} func={doubleClick} />
+            <Directory data={dir} func={doubleClick} setDirUpdate={setDirUpdate} />
           }
       </div>
-      <AlertModal title={"Nova Pasta"} noIcon show={modalNewFolder} func={() => makeFolder()} onDisable={ setModalNewFolder } >
+      <AlertModal title={"Nova Pasta"} noIcon show={modalNewFolder} func={() => makeFolder()} onDisable={setModalNewFolder} >
         <div className="form-group">
           <input type="text" className="form-control" id="exampleInputPassword1" placeholder="Nova Pasta" onChange={(e) => setFolder(e.target.value)} />
         </div>
       </AlertModal>
       
-      <AlertModal title={"Novo Arquivo"} noIcon show={modalNewFile} func={() => uploadFile()} onDisable={ setModalNewFile } >
+      <AlertModal title={"Novo Arquivo"} noIcon show={modalNewFile} func={() => uploadFile()} onDisable={setModalNewFile} >
         <div className="form-group">
           <input type="text" className="form-control" placeholder="Descrição do arquivo" onChange={(e) => setTitleFile(e.target.value)} />
           <label htmlFor="upload" className="label-upload" title="Fazer upload de arquivo">

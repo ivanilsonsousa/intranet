@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
 import AlertModal from '../AlertModal'
 
+import api from '../../services/api'
+
 import './styles.css'
 
 function MenuContext(props) {
@@ -9,13 +11,15 @@ function MenuContext(props) {
   const [modalDelete, setModalDelete] = useState(false)
   const [fileName, setFileName] = useState(props.filename)
 
-
-  function deleteFile() {
-    alert("Apagar File"+fileName)
-  }
-
   function deleteFolder() {
-    alert("Apagar")
+    api.delete(`/documents/${props.id}`)
+      .then(res =>  {
+        setModalDelete(false)
+        props.setDirUpdate(res)
+      })
+      .catch(err => {
+        console.log(err.data)        
+      })
   }
 
   function handleFileName() {
@@ -28,7 +32,7 @@ function MenuContext(props) {
 
   return(
     <div style={{ width: `${props.width}%`}} >
-        <ContextMenuTrigger id={props.id}>
+        <ContextMenuTrigger id={props.id} >
           { props.children }
         </ContextMenuTrigger>
 
@@ -41,7 +45,7 @@ function MenuContext(props) {
           </MenuItem>
         </ContextMenu>
 
-        <AlertModal title="Deseja realmente apagar esse ficheiro?" show={modalDelete} onDisable={setModalDelete } func={() => deleteFile()} />
+        <AlertModal title="Deseja realmente apagar esse ficheiro?" show={modalDelete} onDisable={setModalDelete } func={() => deleteFolder()} />
         
         <AlertModal title={"Renomear Ficheiro"} noIcon show={modalRename} func={() => alert(fileName)} onDisable={ setModalRename } >
           <div className="form-group">

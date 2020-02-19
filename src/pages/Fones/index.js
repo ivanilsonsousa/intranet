@@ -8,7 +8,6 @@ function Fones() {
     <>
       <Header/>
       <div>Teste Fones</div>
-      <a href=""></a>
     </>
   )
 

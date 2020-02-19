@@ -8,7 +8,6 @@ function Activities() {
     <>
       <Header/>
       <div>Teste Activities</div>
-      <a href=""></a>
     </>
   )
 

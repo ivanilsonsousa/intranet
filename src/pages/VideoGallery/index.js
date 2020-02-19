@@ -8,7 +8,6 @@ function VideoGallery() {
     <>
       <Header/>
       <div>Teste Videos</div>
-      <a href=""></a>
     </>
   )
 

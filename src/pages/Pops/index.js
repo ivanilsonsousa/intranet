@@ -8,7 +8,6 @@ function Pops() {
     <>
       <Header/>
       <div>Teste Pops</div>
-      <a href=""></a>
     </>
   )
 

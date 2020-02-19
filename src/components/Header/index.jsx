@@ -49,44 +49,37 @@ function Header() {
               </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">
-                {" "}
+              <Link className="nav-link" to="/documents">
                 Empresa
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">
-                {" "}
+              <Link className="nav-link" to="/documents">
                 Departamentos
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">
-                {" "}
+              <Link className="nav-link" to="/documents">
                 Gestão de Pessoas
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
               <Link className="nav-link" to="/login">
-                {" "}
                 TI
               </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">
-                {" "}
+              <Link className="nav-link" to="/documents">
                 Marketing
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">
-                {" "}
-                Projetos DEPE
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
               <Link className="nav-link" to="/documents">
-                {" "}
+                Projetos DEPE
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/documents">
                 Documentos
               </Link>
             </li>

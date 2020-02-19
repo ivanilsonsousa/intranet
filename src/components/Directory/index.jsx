@@ -26,7 +26,7 @@ function chooseIcon(format = '') {
 
   const formats = [valuesPDF, valuesWORD, valuesSLIDE, valuesJPG, valuesEXCEL, valuesVIDEO]
 
-  formats.forEach((element) => {
+  formats.forEach(element => {
     if(element.includes(format)) {
       icon = element[0]
       return icon
@@ -51,11 +51,11 @@ function Directory(props) {
         <div className="row mb-3">
           {data.map((dir, index) => {
             return dir.type === 'file' ?
-              <ContextMenu id={dir._id} filename={dir.file} width="25" key={dir._id} >
+              <ContextMenu id={dir._id} filename={dir.file} width="25" key={dir._id} setDirUpdate={props.setDirUpdate} >
                 <OptionLink image={ chooseIcon(dir.format) } legend={cutLegend(dir.file)} width="100" title={dir.file} externalLink={dir.file_url} />
               </ContextMenu>
               :
-              <ContextMenu id={dir._id} width="25" key={dir._id} >
+              <ContextMenu id={dir._id} width="25" key={dir._id} setDirUpdate={props.setDirUpdate} >
                 <OptionLink image={folder_open} legend={dir.title} width="100" folder parent={dir._id} func={props.func} />
               </ContextMenu>
           })}
