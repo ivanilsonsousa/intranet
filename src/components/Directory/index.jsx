@@ -1,6 +1,5 @@
 import React from 'react'
 import ContextMenu from '../ContextMenu'
-// import { MenuProvider } from 'react-contexify';
 import OptionLink from '../OptionLink'
 import './styles.css'
 

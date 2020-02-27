@@ -108,8 +108,13 @@ function Documents() {
         setDirUpdate(response.data._id)
         closeModal()
       })
-      .catch(() => {
-        alert("Deu erro ao criar a Pasta")
+      .catch((err) => {
+        try {
+          const message = err.response.status === 409 ? "Essa pasta já existe" : "Erro ao criar a pasta"
+          alert(message)
+        } catch (err) {
+          alert("Sem resposta do servidor...")
+        }
       })
   }
 
