@@ -11,6 +11,8 @@ import Pops from './pages/Pops'
 import Documents from './pages/Documents'
 import Login from './pages/Login'
 import DashBoad from './pages/DashBoad'
+import Photos from './pages/Adm/Photos'
+import Posts from './pages/Adm/Posts'
 
 export default function Routes() {
     return (
@@ -25,7 +27,9 @@ export default function Routes() {
                 <Route path="/pops" component={Pops}/>
                 <Route path="/documents" component={Documents}/>
                 <Route path="/login" component={Login}/>
-                <Route path="/dashboard" component={DashBoad}/>
+                <Route path="/dashboard" exact component={DashBoad}/>
+                <Route path="/dashboard/photos" component={Photos}/>
+                <Route path="/dashboard/posts" component={Posts}/>
             </Switch>
         </BrowserRouter>
     )

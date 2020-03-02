@@ -20,7 +20,7 @@ function chooseIcon(format = '') {
   const valuesVIDEO = [ iconVIDEO, '.mp4']
   const valuesJPG = [iconJPG, '.jpeg', '.jpg', '.jij', '.png']
   const valuesWORD = [iconWORD, '.doc', '.docx']
-  const valuesEXCEL = [iconEXCEL, '.xls', '.xlsx']
+  const valuesEXCEL = [iconEXCEL, '.xls', '.xlsx', '.slk']
   const valuesSLIDE = [iconSLIDE, '.ppt', '.pptx']
 
   const formats = [valuesPDF, valuesWORD, valuesSLIDE, valuesJPG, valuesEXCEL, valuesVIDEO]

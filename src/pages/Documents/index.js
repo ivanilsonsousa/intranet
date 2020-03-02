@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { ClipLoader as Spinner } from 'react-spinners'
 
 import Header from '../../components/Header'
+import BreadCrumb from '../../components/BreadCrumb'
 import AlertModal from '../../components/AlertModal'
 import Directory from '../../components/Directory'
 import api from '../../services/api'
@@ -10,7 +11,6 @@ import './styles.css'
 
 import folder_icon from '../../assets/folder-black.svg'
 import upload from '../../assets/upload.svg'
-import BreadCrumb from '../../components/BreadCrumb'
 
 function Documents() {
   const [parent, setParent] = useState('root')
