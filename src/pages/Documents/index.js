@@ -103,7 +103,7 @@ function Documents() {
       return
     }
 
-    api.post('/folders', { folder, parent, title: folder })
+    api.post('/folders', { parent, title: folder })
       .then(response => {
         setDirUpdate(response.data._id)
         closeModal()

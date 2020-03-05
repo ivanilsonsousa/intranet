@@ -49,9 +49,10 @@ function Directory(props) {
   return data.length ? 
         <div className="row mb-3">
           {data.map((dir, index) => {
+            console.log(dir)
             return dir.type === 'file' ?
               <ContextMenu id={dir._id} filename={dir.file} width="25" key={dir._id} setDirUpdate={props.setDirUpdate} >
-                <OptionLink image={ chooseIcon(dir.format) } legend={cutLegend(dir.file)} width="100" title={dir.file} externalLink={dir.file_url} />
+                <OptionLink image={chooseIcon(dir.format)} legend={cutLegend(dir.file)} width="100" title={dir.file} externalLink={dir.url} />
               </ContextMenu>
               :
               <ContextMenu id={dir._id} width="25" key={dir._id} setDirUpdate={props.setDirUpdate} >
