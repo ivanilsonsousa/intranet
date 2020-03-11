@@ -109,6 +109,7 @@ function Documents() {
         closeModal()
       })
       .catch((err) => {
+        // console.log(err.response)
         try {
           const message = err.response.status === 409 ? "Essa pasta já existe" : "Erro ao criar a pasta"
           alert(message)
