@@ -9,8 +9,7 @@ import "./styles.css";
 function Header() {
   const [ip, setIp] = useState("");
 
-  api
-    .get("/meu-ip")
+  api.get("/meu-ip")
     .then(res => setIp(res.data.ip))
     .catch(err => setIp("Sem conexão"));
 

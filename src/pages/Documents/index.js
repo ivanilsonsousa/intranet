@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { ClipLoader as Spinner } from 'react-spinners'
 
 import Header from '../../components/Header'
+import Footer from '../../components/Footer'
 import BreadCrumb from '../../components/BreadCrumb'
 import AlertModal from '../../components/AlertModal'
 import Directory from '../../components/Directory'
@@ -39,13 +40,18 @@ function Documents() {
     setNameFileChoose(cutLegend(file.name))
   }
 
-  function updateStackParent(stackParent, data) {
+  function updateStackParent(data) {
+    let repeated = false
+
     stackParent.forEach(e => {
-      if (e.parent === data.parent)
+      if (e.parent === data.parent) {
+        repeated = true
         return
+      }
     })
 
-    setStackParent([...stackParent, data])
+    if(!repeated)
+      setStackParent([...stackParent, data])
   }
 
   function comeBack() {
@@ -59,7 +65,7 @@ function Documents() {
 
   function doubleClick(data) {
     const { parent } = data
-    updateStackParent(stackParent, data)
+    updateStackParent(data)
 
     // localStorage.setItem('stackParent', stackParent)
     // console.log(JSON.parse(parent))
@@ -155,9 +161,11 @@ function Documents() {
             <Directory data={dir} func={doubleClick} setDirUpdate={setDirUpdate} />
           }
       </div>
+      <Footer />
+
       <AlertModal title={"Nova Pasta"} noIcon show={modalNewFolder} func={() => makeFolder()} onDisable={setModalNewFolder} >
         <div className="form-group">
-          <input type="text" className="form-control" id="exampleInputPassword1" placeholder="Nova Pasta" onChange={(e) => setFolder(e.target.value)} />
+          <input type="text" className="form-control" placeholder="Nova Pasta" onChange={(e) => setFolder(e.target.value)} />
         </div>
       </AlertModal>
       
@@ -168,14 +176,14 @@ function Documents() {
             <input type="file" name="Document" id="upload" onChange={e => setFileUpdate(e.target.files[0])}/>
             <img src={upload} style={{ width: "45px" }} alt="Icone de Upload" />
             {nameFileChoose ?
-              <span className="text-success font-weight-bold">{ nameFileChoose }</span> 
+              <span className="text-success font-weight-bold">{nameFileChoose}</span> 
               :
               <span className="mt-2">Clique aqui para adiconar um arquivo</span>}
           </label>
         </div>
       </AlertModal>
 
-      <AlertModal title={"Preencha todos os campos"} message show={modalMessage} onDisable={ setModalMessage } />
+      <AlertModal title={"Preencha todos os campos"} message show={modalMessage} onDisable={setModalMessage} />
     </>
   )
 

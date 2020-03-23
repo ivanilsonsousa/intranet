@@ -26,7 +26,6 @@ function chooseIcon(format = '') {
   const formats = [valuesPDF, valuesWORD, valuesSLIDE, valuesJPG, valuesEXCEL, valuesVIDEO]
 
   formats.forEach(element => {
-    // console.log("teste")
     if(element.includes(format)) {
       icon = element[0]
       return icon
@@ -47,9 +46,8 @@ function Directory(props) {
   const { data } = props
 
   return data.length ? 
-        <div className="row mb-3">
+        <div className="row mb-3 directory">
           {data.map((dir, index) => {
-            // console.log(dir)
             return dir.type === 'file' ?
               <ContextMenu id={dir._id} filename={dir.title} width="25" key={dir._id} setDirUpdate={props.setDirUpdate} >
                 <OptionLink image={chooseIcon(dir.format)} legend={cutLegend(dir.title)} width="100" title={dir.title} externalLink={dir.url} />
@@ -61,7 +59,7 @@ function Directory(props) {
           })}
         </div>
         :
-        <div className="container d-flex flex-column h-100 align-items-center justify-content-center pt-5 no-touch">
+        <div className="container d-flex flex-column align-items-center pt-5 no-touch directory">
           <img src={empty} alt="Pasta Vazia" style={{ height: "55px"}}/>
           <span className="mt-3">Essa pasta está vazia.</span>
         </div> 

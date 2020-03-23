@@ -30,7 +30,8 @@ function MenuContext(props) {
         props.setDirUpdate(res)
       })
       .catch(err => {
-        console.log(err.data)        
+        console.log(err.data)      
+        alert(err.data)  
       })
   }
 

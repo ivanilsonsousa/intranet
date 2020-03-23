@@ -12,4 +12,4 @@ function getDate(date) {
   return ( dia + "/" + mes + "/" + ano)
 }
 
-export default getDate
+module.exports = { getDate }

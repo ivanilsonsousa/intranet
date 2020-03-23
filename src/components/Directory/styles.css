@@ -24,3 +24,6 @@
 .callout-info {
   border-left-color: #5bc0de;
 }
+.directory {
+  min-height: 60vh;
+}

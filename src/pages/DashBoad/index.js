@@ -23,8 +23,8 @@ export default function DashBoad() {
         <hr className="my"></hr>
         <div className="container content-dashboard" style={{ backgroundImage: `url(${logo})` }}>
           <Option image={post_icon} legend="Posts" width="50" to="/dashboard/posts" backgroundColor="#ff8556" />
-          <Option image={airplane_icon} legend="Comunicados" to="/communicated" backgroundColor="#fec05c" />
-          <Option image={phone_icon} legend="Lista de ramais" to="fones" backgroundColor="#0063b4" />
+          <Option image={airplane_icon} legend="Comunicados" to="dashboard/notices" backgroundColor="#fec05c" />
+          <Option image={phone_icon} legend="Lista de ramais" to="dashboard/fones" backgroundColor="#0063b4" />
           <Option image={photo_icon} legend="Fotos" to="/dashboard/photos" backgroundColor="#A3D98C" />
         </div>
       </div>

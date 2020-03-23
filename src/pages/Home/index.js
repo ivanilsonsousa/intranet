@@ -3,12 +3,13 @@ import Header from '../../components/Header'
 import Carousel from '../../components/Carousel'
 import OptionLink from '../../components/OptionLink'
 import Callout from '../../components/Callout'
+import Footer from '../../components/Footer'
 
 import { ClipLoader as Spinner } from 'react-spinners'
 
 import art from '../../assets/art.svg'
 import video from '../../assets/video-cameras.svg'
-import group from '../../assets/peoples.svg'
+import soulmv from '../../assets/soulmv.svg'
 import fone from '../../assets/fones.svg'
 import file from '../../assets/file.svg'
 import folder from '../../assets/folder.svg'
@@ -18,23 +19,10 @@ import sigtap from '../../assets/sigtap.svg'
 import upToDate from '../../assets/upToDate.svg'
 import gmail from '../../assets/gmail.svg'
 
+import { getDate } from '../../scripts/utils'
 import api from '../../services/api'
 
 import './style.css'
-
-function getDate(date) {
-  let data = new Date(date)
-  let dia  = data.getDate()
-  if (dia < 10)
-      dia  = "0" + dia
-
-  let mes  = data.getMonth() + 1
-  if (mes < 10) 
-      mes  = "0" + mes
-
-  let ano  = data.getFullYear()
-  return ( dia + "/" + mes + "/" + ano)
-}
 
 function Home() {
   const width = '33.33333'
@@ -43,7 +31,7 @@ function Home() {
 
   useEffect(() => {
     async function loadPosts() {
-      const response =  await api.get('/posts')
+      const response =  await api.get('/posts/20')
 
       setPosts(response.data)
     }
@@ -53,7 +41,7 @@ function Home() {
   
   useEffect(() => {
     async function loadPhotoPosts() {
-      const response =  await api.get('/posts-caroussel')
+      const response =  await api.get('/posts-caroussel-list')
 
       setPhotoPosts(response.data)
     }
@@ -83,7 +71,7 @@ function Home() {
               <div className="row mb-3">
                 <OptionLink image={art} legend="Galeria de Fotos" to="/gallery" />
                 <OptionLink image={video} legend="Vídeos" to="/videos" />
-                <OptionLink image={group} legend="Pessoas" to="/persons" />
+                <OptionLink image={soulmv} legend="Soul MV" externalLink={process.env.REACT_APP_URL_SOULMV} />
                 <OptionLink image={fone} legend="Lista de Ramais" to="/fones"/>
               </div>
 
@@ -152,6 +140,7 @@ function Home() {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   )
 }

@@ -13,6 +13,8 @@ import Login from './pages/Login'
 import DashBoad from './pages/DashBoad'
 import Photos from './pages/Adm/Photos'
 import Posts from './pages/Adm/Posts'
+import Notices from './pages/Adm/Notices'
+import Phones from './pages/Adm/Fones'
 
 export default function Routes() {
     return (
@@ -30,6 +32,8 @@ export default function Routes() {
                 <Route path="/dashboard" exact component={DashBoad}/>
                 <Route path="/dashboard/photos" component={Photos}/>
                 <Route path="/dashboard/posts" component={Posts}/>
+                <Route path="/dashboard/notices" component={Notices}/>
+                <Route path="/dashboard/fones" component={Phones}/>
             </Switch>
         </BrowserRouter>
     )
