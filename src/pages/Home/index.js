@@ -22,8 +22,6 @@ import gmail from '../../assets/gmail.svg'
 import { getDate } from '../../scripts/utils'
 import api from '../../services/api'
 
-import './style.css'
-
 function Home() {
   const width = '33.33333'
   const [posts, setPosts] = useState([])

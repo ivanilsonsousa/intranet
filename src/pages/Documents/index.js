@@ -4,7 +4,7 @@ import { ClipLoader as Spinner } from 'react-spinners'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import BreadCrumb from '../../components/BreadCrumb'
-import AlertModal from '../../components/AlertModal'
+import AlertModal from '../../components/Modal'
 import Directory from '../../components/Directory'
 import api from '../../services/api'
 

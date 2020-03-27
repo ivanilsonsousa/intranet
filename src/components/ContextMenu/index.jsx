@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
-import AlertModal from '../AlertModal'
+import AlertModal from '../Modal'
 
 import api from '../../services/api'
 

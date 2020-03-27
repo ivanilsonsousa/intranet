@@ -1,10 +1,10 @@
-.post {
+/* .post {
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
   background-color: whitesmoke;
-  padding: 0px;
+  padding: 10px;
   margin-bottom: 10px;
   border-radius: 5px;
   border-left: 5px solid;
@@ -12,6 +12,15 @@
   -webkit-box-shadow: -1px 0px 18px -1px rgba(166,163,166,1);
   -moz-box-shadow: -1px 0px 18px -1px rgba(166,163,166,1);
   box-shadow: -1px 0px 18px -1px rgba(166,163,166,1);
+}
+.primary {
+  border-left-color: #a52a2a;
+}
+.secundary {
+  border-left-color: #d9534f;
+}
+.info {
+  border-left-color: #5bc0de;
 }
 .form-search {
   position: relative;
@@ -40,7 +49,7 @@
   border-radius: 20px;
   padding: 0 20px;
 }
-.fa-search{
+.fa-search {
   box-sizing: border-box;
   padding: 10px;
   width: 42.5px;
@@ -55,7 +64,7 @@
   transition: all 1s;
 }
 .form-search:hover{
-  width: 200px;
+  width: 500px;
   cursor: pointer;
 }
 .form-search:hover input{
@@ -68,33 +77,9 @@
 .btn-item:hover {
   opacity: 0.8;
 }
-.img-post {
-  height: 55px;
-  width: 100px;
-  margin-right: 20px;
+.title-phone {
+  color: #555;
 }
-.img-post img {
-  height: 100%;
-  width: 100%;
-}
-label#thumbnail {
-  margin-bottom: 20px;
-  border: 1px dashed #888;
-  background-size: cover;
-  
-  display: flex;
-  cursor: pointer;
-  height: 300px;
-  justify-content: center;
-  align-items: center;
-  margin-top: 20px;
-}
-label#thumbnail input {
-  display: none;
-}
-label#thumbnail.has-thumbnail {
-  border: 0;   
-}
-label#thumbnail.has-thumbnail img{
-  display: none;   
-}
+.description-phone {
+  font-size: 20px;
+} */

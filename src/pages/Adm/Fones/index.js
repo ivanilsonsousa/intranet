@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Header from '../../../components/Header'
-import AlertModal from '../../../components/AlertModal'
+import AlertModal from '../../../components/Modal'
 import Switch from '../../../components/Switch'
 
 import trash from '../../../assets/bin.svg'
@@ -10,26 +10,23 @@ import api from '../../../services/api'
 
 import './style.css'
 
-import { getDate } from '../../../scripts/utils'
-
-function Notices() {
-  const [ posts, setPosts ] = useState([])
+function Phones() {
+  const [ phones, setPhones ] = useState([])
   const [ query, setQuery ] = useState('')
-  const [ postId, setPostId ] = useState(null)
-  const [ postEdit, setPostEdit ] = useState({ })
+  const [ phoneId, setPhoneId ] = useState(null)
+  const [ foneEdit, setFoneEdit ] = useState({})
   const [ modalPost, setModalPost ] = useState(false)
   const [ modalMessage, setModalMessage ] = useState(false)
   const [ modalEdit, setModalEdit ] = useState(false)
   const [ update, setUpdate ] = useState([])
   const [ title, setTitle ] = useState('')
   const [ description, setDescription ] = useState('')
-  const [ type, setType ] = useState('primary')
   const [ modalDelete, setModalDelete ] = useState(false)
 
   useEffect(() => {
-    api.get(`/posts?query=${query}`)
+    api.get(`/phones?query=${query}`)
       .then(res =>  {
-        setPosts(res.data)
+        setPhones(res.data)
       })
       .catch(err => {
         console.log(err)
@@ -37,26 +34,25 @@ function Notices() {
   }, [update, query])
 
   function setDeletePost(id) {
-    setPostId(id)
+    setPhoneId(id)
     setModalDelete(true)
   }
 
-  function setEditPost(post) {
-    setPostEdit(post)
+  function setEditPost(phone) {
+    setFoneEdit(phone)
     setModalEdit(true)
   }
 
   function handleSubmit() {
-    if (!title || !type || !description) {
+    if (!title || !description) {
       setModalMessage(true)
       return
     }
 
-    api.post(`/posts`, { title, description, type })
+    api.post(`/phones`, { title, description })
       .then(res =>  {
         setUpdate(res.data)
         setModalPost(false)
-        setType('primary')
         setTitle('')
         setDescription('')
       })
@@ -66,18 +62,17 @@ function Notices() {
   }
 
   function handleSubmitEdit() {
-    const { _id, title, description, type } = postEdit
+    const { _id, title, description } = foneEdit
 
-    if (!_id || !type || !description || !title) {
+    if (!_id || !description || !title) {
       setModalMessage(true)
       return
     }
 
-    api.put(`/posts/${_id}`, { title, description, type })
+    api.put(`/phones/${_id}`, { title, description })
       .then(res =>  {
         setUpdate(res.data)
         setModalEdit(false)
-        setType('primary')
         setTitle('')
         setDescription('')
       })
@@ -87,7 +82,7 @@ function Notices() {
   }
 
   function handleDeletePost() {
-    api.delete(`posts/${postId}`).then(res => {
+    api.delete(`phones/${phoneId}`).then(res => {
       setModalDelete(false)
       setUpdate(res.data)
     }).catch(res => {
@@ -96,7 +91,7 @@ function Notices() {
   }
 
   async function handleCheck(id, value) {
-    return await api.put(`/posts/${id}`, { active: value })
+    return await api.put(`/phones/${id}`, { active: value })
   }
 
   return(
@@ -114,21 +109,18 @@ function Notices() {
         </div>
         <hr className="my"></hr>
         <div className="container pt-5" >
-        {posts.map(post => {
+        {phones.map(phone => {
           return (
-            <div className={`post secundary`} key={post._id} >
+            <div className={`post secundary`} key={phone._id} >
               <div className="d-flex space-between w-100" >
                 <div className="w-100" >
-                  <h5>{post.title}</h5>
-                  <span>{post.description}</span>
-                </div>
-                <div className="pr-5 d-flex align-items-center">
-                  {getDate(post.createAt)}
+                  <h5 className="title-phone"><i className="fas fa-phone-alt mr-2"/><i>{phone.title}</i></h5>
+                  <span className="description-phone ml-4"><strong> {phone.description}</strong></span>
                 </div>
               </div>
-              <img src={edit} alt="icone" style={{ height: "25px", cursor: "pointer", marginRight: "10px" }} onClick={() => setEditPost(post) }/>
-              <img src={trash} alt="icone" style={{ height: "25px", cursor: "pointer", marginRight: "10px" }} onClick={() => setDeletePost(post._id)}/>
-              <Switch checked={post.active} id={post._id} onChange={handleCheck} />
+              <img src={edit} alt="icone" style={{ height: "25px", cursor: "pointer", marginRight: "10px" }} onClick={() => setEditPost(phone) }/>
+              <img src={trash} alt="icone" style={{ height: "25px", cursor: "pointer", marginRight: "10px" }} onClick={() => setDeletePost(phone._id)}/>
+              <Switch checked={phone.active} id={phone._id} onChange={handleCheck} />
             </div>
           )
         })}
@@ -146,14 +138,14 @@ function Notices() {
         </div>
       </AlertModal>
       
-      <AlertModal title={"Editar Comunicado"} noIcon show={modalEdit} func={handleSubmitEdit} onDisable={setModalEdit} >
+      <AlertModal title={"Editar Ramal"} noIcon show={modalEdit} func={handleSubmitEdit} onDisable={setModalEdit} >
         <div className="form-group">
           <label htmlFor="exampleFormControlSelect1">Descrição</label>
-          <input type="text" className="form-control" defaultValue={postEdit.title} onChange={e => setPostEdit({ ...postEdit, title: e.target.value }) } />
+          <input type="text" className="form-control" defaultValue={foneEdit.title} onChange={e => setFoneEdit({ ...foneEdit, title: e.target.value }) } />
         </div>
         <div className="form-group">
           <label htmlFor="exampleFormControlSelect1">Lista de numeros (Separe por vírgulas)</label>
-          <input type="text" className="form-control" defaultValue={postEdit.description} onChange={e => setPostEdit({ ...postEdit, description: e.target.value }) } />
+          <input type="text" className="form-control" defaultValue={foneEdit.description} onChange={e => setFoneEdit({ ...foneEdit, description: e.target.value }) } />
         </div>
       </AlertModal>
 
@@ -165,4 +157,4 @@ function Notices() {
 
 }
 
-export default Notices;
+export default Phones;

@@ -77,3 +77,9 @@
 .btn-item:hover {
   opacity: 0.8;
 }
+.title-phone {
+  color: #555;
+}
+.description-phone {
+  font-size: 20px;
+}

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Header from '../../../components/Header'
-import AlertModal from '../../../components/AlertModal'
+import AlertModal from '../../../components/Modal'
 import Switch from '../../../components/Switch'
 
 import trash from '../../../assets/bin.svg'

@@ -1,6 +1,12 @@
 :root {
   --color-default: #a52a2a;
 }
+.content-body {
+  min-height: 100vh;
+}
+.bg-gray {
+  background-color: whitesmoke;
+}
 .color-default {
   background-color: var(--color-default);
 }
