@@ -25,3 +25,31 @@
   -ms-user-select: none;
   user-select: none;
 }
+.btn-disabled {
+  cursor: no-drop !important;
+  background-color: yellowgreen;
+}
+.fadeIn {
+  animation-delay: 0s;
+  -webkit-animation: fadeIn 3s ease-in-out;
+  -moz-animation: fadeIn 3s ease-in-out;
+  -o-animation: fadeIn 3s ease-in-out;
+  animation: fadeIn 3s ease-in-out;
+  animation-fill-mode: forwards;
+}
+@-webkit-keyframes fadeIn {
+  100% { opacity: 0; }
+  0% { opacity: 1; } 
+}
+@-moz-keyframes fadeIn {
+  100% { opacity: 0; }
+  0% { opacity: 1; }
+}
+@-o-keyframes fadeIn {
+  100% { opacity: 0; }
+  0% { opacity: 1; } 
+}
+@keyframes fadeIn {
+  100% { opacity: 0; }
+  0% { opacity: 1; } 
+}

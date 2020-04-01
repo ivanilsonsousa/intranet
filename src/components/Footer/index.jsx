@@ -12,7 +12,7 @@ function Footer() {
             <h6>Rua Antonio Crisóstomo de Melo 919, Centro</h6>
             <p>Sobral - Ceará, CEP: 62010-550</p>
             <span>Telefone: (88) 3112-0400</span> 
-        <span>&copy; { `Desenvolvido pela equipe de tecnolgia da informação 2020 - ${new Date().getFullYear()} `}</span>
+        <span>&copy; { `Desenvolvido pela equipe de tecnologia da informação 2020 - ${new Date().getFullYear()} `}</span>
         </div>
   )
 

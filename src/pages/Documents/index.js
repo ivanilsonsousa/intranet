@@ -4,7 +4,7 @@ import { ClipLoader as Spinner } from 'react-spinners'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import BreadCrumb from '../../components/BreadCrumb'
-import AlertModal from '../../components/Modal'
+import Modal from '../../components/Modal'
 import Directory from '../../components/Directory'
 import api from '../../services/api'
 
@@ -52,6 +52,12 @@ function Documents() {
 
     if(!repeated)
       setStackParent([...stackParent, data])
+  }
+
+  function setBeforeModalNewFile() {
+    setModalNewFile(true)
+    setNameFileChoose('')
+    setFile(null)
   }
 
   function comeBack() {
@@ -115,7 +121,6 @@ function Documents() {
         closeModal()
       })
       .catch((err) => {
-        // console.log(err.response)
         try {
           const message = err.response.status === 409 ? "Essa pasta já existe" : "Erro ao criar a pasta"
           alert(message)
@@ -147,7 +152,7 @@ function Documents() {
           <h3 className="mt-4 ml-3 mb-0 display-3 title align-text-bottom">Documentos</h3></div>
           {parent && <button type="button" className="btn btn-secondary align-self-end ml-auto mr-2" disabled={ parent === 'root' ? true : false } onClick={() => comeBack()} ><i className="fas fa-chevron-left"></i></button>}
           <button type="button" className="btn btn-secondary align-self-end" onClick={() => setModalNewFolder(true)} >Nova Pasta <i className="fas fa-folder-plus"></i></button>
-          <button type="button" className="btn btn-success align-self-end ml-2" disabled={ parent === 'root' ? true : false } onClick={() => setModalNewFile(true)} >Novo Arquivo <i className="fas fa-cloud-upload-alt"></i></button>
+          <button type="button" className="btn btn-success align-self-end ml-2" disabled={ parent === 'root' ? true : false } onClick={() => setBeforeModalNewFile()} >Novo Arquivo <i className="fas fa-cloud-upload-alt"></i></button>
         </div>
         <hr className="my"></hr>
       </div>
@@ -163,13 +168,13 @@ function Documents() {
       </div>
       <Footer />
 
-      <AlertModal title={"Nova Pasta"} noIcon show={modalNewFolder} func={() => makeFolder()} onDisable={setModalNewFolder} >
+      <Modal title={"Nova Pasta"} noIcon show={modalNewFolder} func={() => makeFolder()} onDisable={setModalNewFolder} >
         <div className="form-group">
           <input type="text" className="form-control" placeholder="Nova Pasta" onChange={(e) => setFolder(e.target.value)} />
         </div>
-      </AlertModal>
+      </Modal>
       
-      <AlertModal title={"Novo Arquivo"} noIcon show={modalNewFile} func={() => uploadFile()} onDisable={setModalNewFile} >
+      <Modal title={"Novo Arquivo"} noIcon show={modalNewFile} func={() => uploadFile()} onDisable={setModalNewFile} >
         <div className="form-group">
           <input type="text" className="form-control" placeholder="Descrição do arquivo" onChange={(e) => setTitleFile(e.target.value)} />
           <label htmlFor="upload" className="label-upload" title="Fazer upload de arquivo">
@@ -181,9 +186,9 @@ function Documents() {
               <span className="mt-2">Clique aqui para adiconar um arquivo</span>}
           </label>
         </div>
-      </AlertModal>
+      </Modal>
 
-      <AlertModal title={"Preencha todos os campos"} message show={modalMessage} onDisable={setModalMessage} />
+      <Modal title={"Preencha todos os campos"} message show={modalMessage} onDisable={setModalMessage} />
     </>
   )
 

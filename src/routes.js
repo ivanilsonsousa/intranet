@@ -15,6 +15,7 @@ import Photos from './pages/Adm/Photos'
 import Posts from './pages/Adm/Posts'
 import Notices from './pages/Adm/Notices'
 import Phones from './pages/Adm/Fones'
+import Users from './pages/Adm/Users'
 
 export default function Routes() {
     return (
@@ -34,6 +35,7 @@ export default function Routes() {
                 <Route path="/dashboard/posts" component={Posts}/>
                 <Route path="/dashboard/notices" component={Notices}/>
                 <Route path="/dashboard/fones" component={Phones}/>
+                <Route path="/dashboard/users" component={Users}/>
             </Switch>
         </BrowserRouter>
     )

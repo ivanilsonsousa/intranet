@@ -113,7 +113,7 @@ function Home() {
                 />
                 <OptionLink 
                   image={computer}
-                  legend="Sistemas"
+                  legend="WebSys"
                   width={width}
                   className="justify-content-center"
                   externalLink={process.env.REACT_APP_URL_WSP}
