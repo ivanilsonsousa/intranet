@@ -48,7 +48,7 @@ function Header() {
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/documents">
+              <Link className="nav-link" to="/company">
                 Empresa
               </Link>
             </li>

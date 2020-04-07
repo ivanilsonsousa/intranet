@@ -1,0 +1,7 @@
+.content-like i {
+  cursor: pointer;
+}
+.content-like i:hover,
+.content-like i:hover + b {
+  color: var(--color-default);
+}

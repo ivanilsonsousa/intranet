@@ -16,6 +16,7 @@ import Posts from './pages/Adm/Posts'
 import Notices from './pages/Adm/Notices'
 import Phones from './pages/Adm/Fones'
 import Users from './pages/Adm/Users'
+import Company from './pages/Company'
 
 export default function Routes() {
     return (
@@ -30,6 +31,7 @@ export default function Routes() {
                 <Route path="/pops" component={Pops}/>
                 <Route path="/documents" component={Documents}/>
                 <Route path="/login" component={Login}/>
+                <Route path="/company" component={Company}/>
                 <Route path="/dashboard" exact component={DashBoad}/>
                 <Route path="/dashboard/photos" component={Photos}/>
                 <Route path="/dashboard/posts" component={Posts}/>

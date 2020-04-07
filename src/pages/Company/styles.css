@@ -1,0 +1,15 @@
+.company {
+  padding: 20px 200px;
+}
+.company hr {
+  background-color: lightslategray;
+  height: 1px;
+  width: 100%;
+}
+.company h1 {
+
+  font-size: 30px;
+}
+.content-logo-white {
+  background-color: var(--color-default);
+}

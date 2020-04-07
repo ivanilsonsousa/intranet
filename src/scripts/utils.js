@@ -12,4 +12,6 @@ function getDate(date) {
   return ( dia + "/" + mes + "/" + ano)
 }
 
-module.exports = { getDate }
+function verifyCapsLock(event) { return event.getModifierState("CapsLock") ? true : false }
+
+module.exports = { getDate, verifyCapsLock }

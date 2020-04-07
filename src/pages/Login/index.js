@@ -5,6 +5,7 @@ import Header from '../../components/Header'
 import stacasa from '../../assets/stacasa.svg'
 import './styles.css'
 
+import { verifyCapsLock } from '../../scripts/utils'
 import api from '../../services/api'
 
 function Login() {
@@ -12,6 +13,7 @@ function Login() {
   const [password, setPassword] = useState('')
   const [message, setMessage] = useState('')
   const [showMessage, setShowMessage] = useState(false)
+  const [caps, setCaps] = useState(false)
   const [showPass, setShowPass] = useState(true)
   const history = useHistory()
   
@@ -19,7 +21,7 @@ function Login() {
     const session = localStorage.getItem('_id')
 
     console.log(history)
-
+    
     if(session && history.action === 'PUSH')
       history.push('/dashboard')
     else if (history.action === 'POP') {
@@ -33,14 +35,13 @@ function Login() {
     api.post('/login', { user, password })
     .then(response => {
       const { _id, message } = response.data 
-      console.log(message)
+
       if(_id) {
         localStorage.setItem('_id', _id)
         history.push('/dashboard')
       } else {
         setMessage(message)
         setTimeout(() => {
-          console.log("mano do ceu")
           setShowMessage(false)
         }, 3000)
         setShowMessage(true)
@@ -64,12 +65,13 @@ function Login() {
             <i className="fas fa-user mb-2" />
             <input type="text" name="user" placeholder="Digite seu usuário" onChange={e => setUser(e.target.value)} />
           </div>
-          <div className="form-login mb-4 content-pass">
+          <div className="form-login content-pass">
             <i className="fas fa-key mb-2" />
-            <input type={showPass ? 'password' : 'text'} name="key" placeholder="Digite sua senha" onChange={e => setPassword(e.target.value)} />
+            <input type={showPass ? 'password' : 'text'} name="key" placeholder="Digite sua senha" onKeyUp={e => setCaps(verifyCapsLock(e))} onChange={e => setPassword(e.target.value)} />
             <span className="span-show no-touch" onClick={() => setShowPass(!showPass)} >{showPass ? 'MOSTRAR' : 'OCULTAR'}</span>
           </div>
-          <button type="submit" className={`mb-2 ${ user && password ? '' : 'btn-disabled'}`} disabled={ user && password ? false : true } >Entrar</button>
+          <p hidden={caps ? false : true} className="font-italic m-0 text-danger" >Caps lock está ativado</p>
+          <button type="submit" className={`mt-3 ${ user && password ? '' : 'btn-disabled'}`} disabled={ user && password ? false : true } >Entrar</button>
           {showMessage && <span className={`login-error ${showMessage ? 'fadeIn':''}`} ><strong>{message}</strong></span>}
         </div>
       </div>
