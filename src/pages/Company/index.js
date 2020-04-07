@@ -10,7 +10,7 @@ function Company() {
   return(
     <>
       <Header/>
-      <div className="container-fluid content-body d-flex company">
+      <div className="container-fluid content-body d-flex company pt-5">
         <div className="col d-flex align-items-center justify-content-center content-logo-white">
           <img src={logo} style={{ height: "180px" }} alt="logo" />
         </div>

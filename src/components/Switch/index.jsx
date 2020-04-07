@@ -14,11 +14,10 @@ function Switcher(props) {
 
   useEffect(() => {
     setCheck(props.checked)
-  }, [])
+  }, [props.checked])
 
   return(
         <Switch
-            onChange={() => {}}
             onHandleColor='#3C52B4'
             offHandleColor='#999'
             onColor='#284A77'

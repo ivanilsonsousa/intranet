@@ -1,4 +1,4 @@
-import React, { useState , memo } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import api from "../../services/api";
 
@@ -9,9 +9,11 @@ import "./styles.css";
 function Header() {
   const [ip, setIp] = useState("");
 
-  api.get("/meu-ip")
+  useEffect(() => {
+    api.get("/meu-ip")
     .then(res => setIp(res.data.ip))
     .catch(err => setIp("Sem conexão"));
+  }, [])
 
   return (
     <>
@@ -89,4 +91,4 @@ function Header() {
   );
 }
 
-export default memo(Header);
+export default Header;

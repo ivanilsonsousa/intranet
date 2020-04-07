@@ -27,7 +27,7 @@ function Login() {
     else if (history.action === 'POP') {
       history.push('/')
     }
-  }, [])
+  }, [history])
 
   function handleSubmitLogin(e) {
     e.preventDefault()
@@ -55,7 +55,7 @@ function Login() {
 
   return(
     <>
-      <Header/>
+      <Header />
       <form onSubmit={(e) => handleSubmitLogin(e)} >
       <div className="container-fluid content-login d-flex justify-content-center">
         <div className="box-login bg-light">
@@ -63,7 +63,7 @@ function Login() {
           <span>Use sua conta para acessar o <b>Painel de configurações</b></span>
           <div className="form-login mt-3">
             <i className="fas fa-user mb-2" />
-            <input type="text" name="user" placeholder="Digite seu usuário" onChange={e => setUser(e.target.value)} />
+            <input type="text" name="user" className="text-lowercase" placeholder="Digite seu usuário" onChange={e => setUser(e.target.value)} />
           </div>
           <div className="form-login content-pass">
             <i className="fas fa-key mb-2" />

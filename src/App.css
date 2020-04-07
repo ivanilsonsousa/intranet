@@ -37,6 +37,21 @@
   animation: fadeIn 3s ease-in-out;
   animation-fill-mode: forwards;
 }
+.paragraph {
+  word-wrap: break-word;
+}
+::-webkit-input-placeholder { /* Chrome, Safari */
+  text-transform: initial;
+}
+:-moz-placeholder { /* Firefox 18- */
+   text-transform: initial; 
+}
+::-moz-placeholder {  /* Firefox 19+ */
+   text-transform: initial;
+}
+:-ms-input-placeholder {  /* IE */
+   text-transform: initial; 
+}
 @-webkit-keyframes fadeIn {
   100% { opacity: 0; }
   0% { opacity: 1; } 

@@ -7,9 +7,9 @@
   width: 100%;
 }
 .company h1 {
-
   font-size: 30px;
 }
 .content-logo-white {
   background-color: var(--color-default);
+  max-height: 610px;
 }

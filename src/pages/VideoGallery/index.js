@@ -11,7 +11,7 @@ import './styles.css'
 
 function VideoGallery() {
   const [ query, setQuery ] = useState('')
-  const [ video, setVideo ] = useState('')
+  const [ videoPlay, setVideoPlay ] = useState({})
   const [ videos, setVideos ] = useState([])
 
   useEffect(() => {
@@ -36,21 +36,23 @@ function VideoGallery() {
         <div className="container pb-5 mx-sm-auto" >
           <div className="row">
             <div className="col col-12 col-md-7 mb-4">
-              <ReactPlayer url={video} controls width="100%" onStart={() => console.log("iniciou...")} />
-              <h5 className="mt-2">Ed Sheeran - 'Photograph' (Capital Live Session)</h5>
+              <ReactPlayer url={videoPlay.file_url} controls width="100%" onStart={() => console.log("iniciou...")} playing />
+              <h5 className="mt-2">{videoPlay.title}</h5>
               <div className="d-flex align-items-center justify-content-between">
-                <span className="mr-100">19.864.253 visualizações</span>
+                <span className="mr-100">{videoPlay.views} visualizações</span>
                 <div className="content-like">
-                  <i className="far fa-thumbs-up fa-2x" /><b> 32</b>
-                  <i className="ml-2 far fa-thumbs-down fa-2x" /><b> 14</b>
+                  <i className="far fa-thumbs-up fa-2x" /><b> {videoPlay.likes}</b>
+                  <i className="ml-2 far fa-thumbs-down fa-2x" /><b> {videoPlay.unlikes}</b>
                 </div>
               </div>
               <hr/>
               <h4>Descrição</h4>
-              <h6>Ed Sheeran came by the Capital FM live studio to sing us a few of his new tracks. This is a stripped-back, acoustic version of his new track 'Photograph'.</h6>
+              <p className="paragraph">
+                {videoPlay.description}
+              </p>
             </div>
             <div className="col col-md-5 mb-4">
-              <VideoList data={videos} setVideo={setVideo} />
+              <VideoList data={videos} setVideoPlay={setVideoPlay} setQuery={setQuery} />
             </div>
           </div>
         </div>
