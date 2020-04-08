@@ -16,7 +16,7 @@ function VideoItem(props) {
   useEffect(() => {
     if(selectedVideo !== video._id)
       setPlaying(false)
-  }, [selectedVideo])
+  }, [selectedVideo, video._id])
 
   return (
     <div onClick={() => handleClick()} className={`video-item ${playing ? 'playing' : ''}`}>
@@ -35,6 +35,7 @@ function VideoItem(props) {
 function VideoList(props) {
   const [query, setQuery] = useState('')
   const [selectedVideo, setVideo] = useState('#')
+  const { setVideoPlay } = props
   const videos = props.data
 
   function handleSearch(e) {
@@ -44,8 +45,8 @@ function VideoList(props) {
 
   useEffect(() => {
     if(videos[0])
-      props.setVideoPlay(videos[0])
-  }, [videos])
+      setVideoPlay(videos[0])
+  }, [videos, setVideoPlay])
 
   return(
     <div className="content-list">
