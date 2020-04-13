@@ -55,7 +55,7 @@ function Login() {
 
   return(
     <>
-      <Header />
+      <Header flag="TI" />
       <form onSubmit={(e) => handleSubmitLogin(e)} >
       <div className="container-fluid content-login d-flex justify-content-center">
         <div className="box-login bg-light">

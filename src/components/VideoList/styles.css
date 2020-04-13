@@ -35,6 +35,7 @@
 .video-thumbnail {
   width: 100px;
   height: 100%;
+  opacity: 0.9;
 }
 .video-thumbnail img {
   width: 100%;

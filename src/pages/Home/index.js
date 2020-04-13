@@ -49,7 +49,7 @@ function Home() {
 
   return (
     <>
-      <Header/>
+      <Header flag="Home" />
       <div className="container-lg content-body p-2 pt-4">
         <div className="container-md px-lg-5 mx-xl-5">
           <div className="row mb-4">

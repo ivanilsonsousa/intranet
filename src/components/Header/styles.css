@@ -8,4 +8,5 @@
 }
 .meu-ip {
   font-size: 18px;
+  height: min-content;
 }

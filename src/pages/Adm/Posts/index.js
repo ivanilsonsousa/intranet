@@ -2,6 +2,8 @@ import React, { useState, useEffect, useMemo } from 'react'
 import Header from '../../../components/Header'
 import AlertModal from '../../../components/Modal'
 import Switch from '../../../components/Switch'
+import NotFound from '../../../components/NotFound'
+import Search from '../../../components/Search'
 
 import trash from '../../../assets/bin.svg'
 import notice_icon from '../../../assets/post.svg'
@@ -85,22 +87,20 @@ function Posts() {
 
   return(
     <>
-      <Header/>
+      <Header flag="TI" />
       <div className="container">
         <div className="container-fluid d-flex align-items-baseline w-100">
           <div className="d-flex align-items-end pl-2 pt-5"> <img src={notice_icon} style={{ width: "50px" }} alt="Posts" /> 
           <h3 className="mt-4 ml-3 mb-0 display-3 title align-text-bottom">Posts</h3></div>
-        <form className="ml-auto form-search">
-          <input type="search" className="search" onChange={e => setQuery(e.target.value)} />
-          <i className="fa fa-search"></i>
-        </form>
+          <Search className="ml-auto mr-2" onChange={setQuery} />
         <button type="button" className="btn btn-info align-self-end mb-1" onClick={() => setInsertPost()} >Adicionar <i className="fas fa-plus"></i></button>
 
         </div>
         <hr className="my"></hr>
         <div className="container pt-5" >
-
-        {photoPosts.map(photoPost => {
+        {
+         photoPosts.length ?
+         photoPosts.map(photoPost => {
           return (
             <div className="post info" key={photoPost._id} >
               <div className="d-flex space-around align-items-center w-100" >
@@ -116,7 +116,10 @@ function Posts() {
               <Switch checked={photoPost.active} id={photoPost._id} onChange={handleCheck} />
             </div>
           )
-        })}
+        })
+        :
+         <NotFound />
+        }
         </div>
       </div>
       

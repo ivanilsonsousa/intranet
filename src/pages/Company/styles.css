@@ -1,15 +1,17 @@
 .company {
-  padding: 20px 200px;
+  padding: 200px;
 }
 .company hr {
-  background-color: lightslategray;
   height: 1px;
   width: 100%;
+  background-color: var(--color-default);
 }
 .company h1 {
-  font-size: 30px;
+  font-size: 35px;
+  text-transform: uppercase;
+  margin-bottom: 0;
+  color: var(--color-default);
 }
 .content-logo-white {
   background-color: var(--color-default);
-  max-height: 610px;
 }

@@ -3,7 +3,7 @@ import search_icon from '../../assets/search.svg'
 import './styles.css'
 
 function VideoItem(props) {
-  const [ playing, setPlaying ] = useState(false)
+  const [ playing, setPlaying ] = useState(props.playing)
   const { selectedVideo, setVideo } = props.func
   const { video, thumbnail } = props
 
@@ -14,9 +14,16 @@ function VideoItem(props) {
   }
 
   useEffect(() => {
-    if(selectedVideo !== video._id)
+
+    if (props.playing && selectedVideo === '#')
+      return
+
+    if (selectedVideo !== video._id)
       setPlaying(false)
-  }, [selectedVideo])
+      else {
+        setPlaying(true)
+    }
+  }, [selectedVideo, video._id, props.playing])
 
   return (
     <div onClick={() => handleClick()} className={`video-item ${playing ? 'playing' : ''}`}>
@@ -35,6 +42,7 @@ function VideoItem(props) {
 function VideoList(props) {
   const [query, setQuery] = useState('')
   const [selectedVideo, setVideo] = useState('#')
+  const { setVideoPlay } = props
   const videos = props.data
 
   function handleSearch(e) {
@@ -43,9 +51,11 @@ function VideoList(props) {
   }
 
   useEffect(() => {
-    if(videos[0])
-      props.setVideoPlay(videos[0])
-  }, [videos])
+
+    if(!props.videoPlay._id && videos[0])
+      setVideoPlay(videos[0])
+      
+  }, [videos, setVideoPlay, props.videoPlay._id])
 
   return(
     <div className="content-list">
@@ -66,7 +76,7 @@ function VideoList(props) {
         </div>
       </div>
       <div className="video-list">
-        {videos.map(video => <VideoItem key={video._id} video={video} func={{ selectedVideo, setVideo }} thumbnail="http://10.1.3.119:3333/files/imagens%20teste/rocketseat-1586264879288.jpg" setVideoPlay={props.setVideoPlay} />)}
+        {videos.map((video, index) => <VideoItem key={video._id} playing={index === 0 ? true : false} video={video} func={{ selectedVideo, setVideo }} thumbnail="http://10.1.3.119:3333/files/imagens%20teste/thumb-1586793013151.jpg" setVideoPlay={props.setVideoPlay} />)}
       </div>
     </div>     
   )

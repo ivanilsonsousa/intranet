@@ -26,7 +26,7 @@ export default function DashBoad() {
 
   return (
     <>
-      <Header/>
+      <Header flag="TI" />
       <div className="container">
         <div className="container-fluid d-flex align-items-baseline w-100">
           <div className="d-flex align-items-end pl-2 pt-5"> <img src={dashboard_icon} style={{ width: "45px" }} alt="DashBoard" /> 

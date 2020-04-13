@@ -1,3 +1,6 @@
+.content-like {
+  display: flex;
+}
 .content-like i {
   cursor: pointer;
 }

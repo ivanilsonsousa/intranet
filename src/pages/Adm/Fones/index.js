@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import Header from '../../../components/Header'
 import AlertModal from '../../../components/Modal'
 import Switch from '../../../components/Switch'
+import NotFound from '../../../components/NotFound'
+import Search from '../../../components/Search'
 
 import trash from '../../../assets/bin.svg'
 import edit from '../../../assets/edit.svg'
@@ -96,20 +98,19 @@ function Phones() {
 
   return(
     <>
-      <Header/>
+      <Header flag="TI" />
       <div className="container">
         <div className="container-fluid d-flex align-items-baseline w-100">
           <div className="d-flex align-items-end pl-2 pt-5"> <img src={fone} style={{ width: "50px" }} alt="Posts" /> 
           <h3 className="mt-4 ml-3 mb-0 display-3 title align-text-bottom">Lista de Ramais</h3></div>
-        <form className="ml-auto form-search">
-          <input type="search" className="search" onChange={e => setQuery(e.target.value)} />
-          <i className="fa fa-search"></i>
-        </form>
+          <Search className="ml-auto mr-2" onChange={setQuery} />
         <button type="button" className="btn btn-info align-self-end mb-1" onClick={() => setModalPost(true)} >Adicionar <i className="fas fa-plus"></i></button>
         </div>
         <hr className="my"></hr>
         <div className="container pt-5" >
-        {phones.map(phone => {
+        {
+          phones.length ?
+          phones.map(phone => {
           return (
             <div className={`post secundary`} key={phone._id} >
               <div className="d-flex space-between w-100" >
@@ -123,7 +124,10 @@ function Phones() {
               <Switch checked={phone.active} id={phone._id} onChange={handleCheck} />
             </div>
           )
-        })}
+        })
+        :
+        <NotFound />
+        }
         </div>
       </div>
 
