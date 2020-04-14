@@ -22,6 +22,7 @@ function VideoGallery() {
 
   let seconds = 0 
   let paused = false
+  // let viewVideo = false
   let videoPlayingCount 
 
   useEffect(() => {
@@ -34,6 +35,18 @@ function VideoGallery() {
       })
   }, [query])
 
+  function addView(id) {
+    api.put(`/videos-add-view/${id}`)
+    .then(response => {
+      const { status } = response.data 
+
+      console.log(status)
+    })
+    .catch((err) => { 
+      console.log(err)
+    })
+  }
+
   function pause() { 
     paused = true
   }
@@ -45,8 +58,13 @@ function VideoGallery() {
   function countView(idVideo) {
     if (idVideo === videoPlayingCount) {
       paused = false  
+      console.log("entrou aqui")
       return
-    }
+    } 
+    // else if (viewVideo) {
+    //   viewVideo = false
+    //   return
+    // }
 
     videoPlayingCount = videoPlay._id
 
@@ -65,12 +83,15 @@ function VideoGallery() {
       
       if (!paused) {
         seconds++
-        // console.log("seconds: ", seconds)
       }
       
       if (seconds === 5) {
         seconds = 0
         console.log("+1 view ", videoPlay._id)
+        addView(videoPlay._id)
+        clearInterval(inter)
+        // viewVideo = true
+        sessionStorage.setItem("lastname", "Smith");
       }
       
     }, 1000);
