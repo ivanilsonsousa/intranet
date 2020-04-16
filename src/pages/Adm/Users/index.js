@@ -25,11 +25,12 @@ function Users() {
 
   const [ users, setUsers ] = useState([])
   const [ query, setQuery ] = useState('')
-  const [ phoneId, setPhoneId ] = useState(null)
+  const [ userId, setUserId ] = useState(null)
   const [ modalPost, setModalPost ] = useState(false)
   const [ modalMessage, setModalMessage ] = useState(false)
   const [ modalEdit, setModalEdit ] = useState(false)
   const [ modalDelete, setModalDelete ] = useState(false)
+  const [ modalResetPass, setModalResetPass ] = useState(false)
 
   useEffect(() => {
     api.get(`/users?query=${query}`)
@@ -42,7 +43,7 @@ function Users() {
   }, [update, query])
 
   function setDeletePost(user) {
-    setPhoneId(user._id)
+    setUserId(user._id)
     setEditUser(user)
     setModalDelete(true)
   }
@@ -50,6 +51,11 @@ function Users() {
   function setBeforeEditUser(user) {
     setEditUser(user)
     setModalEdit(true)
+  }
+
+  function setBeforeResetPassUser(user) {
+    setEditUser(user)
+    setModalResetPass(true)
   }
 
   function handleSubmit() {
@@ -92,11 +98,26 @@ function Users() {
       })
   }
 
+  function handleResetPass() {
+    if ((!password || !passwordRepeat) || (password !== passwordRepeat)) {
+      setModalMessage(true)
+      return
+    }
+
+    console.log(userEdit._id)
+
+    api.put(`users-reset-pass/${userEdit._id}`, { password, passwordRepeat }).then(res => {
+      setModalResetPass(false)
+    }).catch(res => {
+      console.log(res)
+    })
+  }
+
   function handleDeletePost() {
     if(veryfyDelete != userEdit.username)
       return alert("çjiefgbpwrep")
 
-    api.delete(`users/${phoneId}`).then(res => {
+    api.delete(`users/${userId}`).then(res => {
       setModalDelete(false)
       setUpdate(res.data)
     }).catch(res => {
@@ -137,7 +158,7 @@ function Users() {
               </div>
               <img src={edit} alt="icone" title="Editar dados" style={{ height: "25px", cursor: "pointer", marginRight: "10px" }} onClick={() => setBeforeEditUser(user) }/>
               <img src={trash} alt="icone" title="Apagar" style={{ height: "25px", cursor: "pointer", marginRight: "10px" }} onClick={() => setDeletePost(user)}/>
-              <img src={key} alt="icone" style={{ height: "25px", cursor: "pointer", marginRight: "10px" }} onClick={() => {} }/>
+              <img src={key} alt="icone" style={{ height: "25px", cursor: "pointer", marginRight: "10px" }} onClick={() => setBeforeResetPassUser(user) }/>
               <Switch checked={user.active} id={user._id} onChange={handleCheck} />
             </div>
           )
@@ -169,7 +190,7 @@ function Users() {
           <label>Email</label>
           <input type="email" className="form-control" placeholder="Seu email" onChange={e => setEmail(e.target.value)} />
         </div>
-        
+
         <div className="form-row">
         <div className="col">
           <label>Senha</label>
@@ -210,8 +231,21 @@ function Users() {
         <span> Digite <strong>{userEdit.username}</strong> para confirmar.</span>
         <input type="text" className="form-control text-lowercase mt-3" placeholder={userEdit.username} onChange={e => setVerifyDelete(e.target.value)} />
       </Modal>
+      
+      <Modal title={`Definir nova senha para ${userEdit.name}`} show={modalResetPass} onDisable={setModalResetPass} func={() => handleResetPass()} >
+        <div className="form-row">
+          <div className="col">
+            <label>Senha</label>
+            <input type="password" className="form-control" placeholder="Sua senha" onChange={e => setPassword(e.target.value)} />
+          </div>
+          <div className="col">
+            <label>Repetir senha</label>
+            <input type="password" className="form-control" placeholder="Repita sua senha" onChange={e => setPasswordRepeat(e.target.value)} />
+          </div>
+        </div>
+      </Modal>
 
-      <Modal title={"Preencha todos os campos"} message show={modalMessage} onDisable={setModalMessage} />
+      <Modal title={"Preencha todos os campos corretamente"} message show={modalMessage} onDisable={setModalMessage} />
     </>
   )
 

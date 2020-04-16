@@ -22,7 +22,6 @@ function VideoGallery() {
 
   let seconds = 0 
   let paused = false
-  // let viewVideo = false
   let videoPlayingCount 
 
   useEffect(() => {
@@ -61,10 +60,6 @@ function VideoGallery() {
       console.log("entrou aqui")
       return
     } 
-    // else if (viewVideo) {
-    //   viewVideo = false
-    //   return
-    // }
 
     videoPlayingCount = videoPlay._id
 

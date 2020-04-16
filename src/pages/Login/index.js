@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import Header from '../../components/Header'
 
@@ -17,18 +17,6 @@ function Login() {
   const [showPass, setShowPass] = useState(true)
   const history = useHistory()
   
-  useEffect(() => {
-    const session = localStorage.getItem('_id')
-
-    console.log(history)
-    
-    if(session && history.action === 'PUSH')
-      history.push('/dashboard')
-    else if (history.action === 'POP') {
-      history.push('/')
-    }
-  }, [history])
-
   function handleSubmitLogin(e) {
     e.preventDefault()
 

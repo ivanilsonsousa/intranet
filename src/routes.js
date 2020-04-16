@@ -1,5 +1,6 @@
 import React from 'react'
-import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import { BrowserRouter, Switch } from 'react-router-dom'
+import Route from './services/Route'
 
 import Home from './pages/Home'
 import Gallery from './pages/Gallery'
@@ -17,6 +18,7 @@ import Notices from './pages/Adm/Notices'
 import Phones from './pages/Adm/Fones'
 import Users from './pages/Adm/Users'
 import Company from './pages/Company'
+import NotFound from './pages/NotFound'
 
 export default function Routes() {
     return (
@@ -30,14 +32,15 @@ export default function Routes() {
                 <Route path="/activities" component={Activities}/>
                 <Route path="/pops" component={Pops}/>
                 <Route path="/documents" component={Documents}/>
-                <Route path="/login" component={Login}/>
+                <Route path="/login" component={Login} authTo="/dashboard" />
                 <Route path="/company" component={Company}/>
-                <Route path="/dashboard" exact component={DashBoad}/>
-                <Route path="/dashboard/photos" component={Photos}/>
-                <Route path="/dashboard/posts" component={Posts}/>
-                <Route path="/dashboard/notices" component={Notices}/>
-                <Route path="/dashboard/fones" component={Phones}/>
-                <Route path="/dashboard/users" component={Users}/>
+                <Route path="/dashboard" exact component={DashBoad} isPrivate />
+                <Route path="/dashboard/photos" component={Photos} isPrivate />
+                <Route path="/dashboard/posts" component={Posts} isPrivate />
+                <Route path="/dashboard/notices" component={Notices} isPrivate />
+                <Route path="/dashboard/fones" component={Phones} isPrivate />
+                <Route path="/dashboard/users" component={Users} isPrivate />
+                <Route path="*" component={NotFound} />
             </Switch>
         </BrowserRouter>
     )
