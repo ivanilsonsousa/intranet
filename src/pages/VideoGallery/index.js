@@ -11,22 +11,22 @@ import video_icon from '../../assets/cinema.svg'
 import './styles.css'
 
 function VideoGallery() {
-  const [ query, setQuery ] = useState('')
-  const [ videoPlay, setVideoPlay ] = useState({})
-  const [ clock, setClock ] = useState([])
-  const [ videos, setVideos ] = useState([])
+  const [query, setQuery] = useState('')
+  const [videoPlay, setVideoPlay] = useState({})
+  const [clock, setClock] = useState([])
+  const [videos, setVideos] = useState([])
   const history = useHistory()
 
-  const [ like, setLike ] = useState(0)
-  const [ unlike, setUnLike ] = useState(0)
+  const [like, setLike] = useState(0)
+  const [unlike, setUnLike] = useState(0)
 
-  let seconds = 0 
+  let seconds = 0
   let paused = false
-  let videoPlayingCount 
+  let videoPlayingCount
 
   useEffect(() => {
     api.get(`/videos?query=${query}`)
-      .then(res =>  {
+      .then(res => {
         setVideos(res.data)
       })
       .catch(err => {
@@ -36,17 +36,17 @@ function VideoGallery() {
 
   function addView(id) {
     api.put(`/videos-add-view/${id}`)
-    .then(response => {
-      const { status } = response.data 
+      .then(response => {
+        const { status } = response.data
 
-      console.log(status)
-    })
-    .catch((err) => { 
-      console.log(err)
-    })
+        console.log(status)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }
 
-  function pause() { 
+  function pause() {
     paused = true
   }
 
@@ -56,10 +56,10 @@ function VideoGallery() {
 
   function countView(idVideo) {
     if (idVideo === videoPlayingCount) {
-      paused = false  
+      paused = false
       console.log("entrou aqui")
       return
-    } 
+    }
 
     videoPlayingCount = videoPlay._id
 
@@ -67,19 +67,19 @@ function VideoGallery() {
 
     paused = false
     seconds = 0
-    
+
 
     finishClocks(clock)
-    
+
     let inter = setInterval(() => {
 
       if (history.location.pathname !== '/videos')
         paused = true
-      
+
       if (!paused) {
         seconds++
       }
-      
+
       if (seconds === 5) {
         seconds = 0
         console.log("+1 view ", videoPlay._id)
@@ -88,29 +88,29 @@ function VideoGallery() {
         // viewVideo = true
         sessionStorage.setItem("lastname", "Smith");
       }
-      
+
     }, 1000);
-    
+
     setClock([inter])
   }
 
   function handleLike() {
     setLike(like + 1)
   }
-  
+
   function handleUnLike() {
     setUnLike(unlike + 1)
   }
 
-  return(
+  return (
     <>
-      <Header/>
+      <Header />
       <div className="container-fluid">
         <div className="container-fluid d-flex align-items-baseline">
-          <div className="d-flex align-items-end pl-2 pt-5"> <img src={video_icon} style={{ width: "45px" }} alt="DashBoard" /> 
-          <h3 className="mt-4 ml-3 mb-0 display-3 title align-text-bottom">Vídeos</h3></div>
+          <div className="d-flex align-items-end pl-2 pt-5"> <img src={video_icon} style={{ width: "45px" }} alt="DashBoard" />
+            <h3 className="mt-4 ml-3 mb-0 display-3 title align-text-bottom">Vídeos</h3></div>
         </div>
-        <hr/>
+        <hr />
         <div className="container pb-5 mx-sm-auto" >
           <div className="row">
             <div className="col col-12 col-md-7 mb-4">
@@ -127,11 +127,11 @@ function VideoGallery() {
                   </div>
                 </div>
               </div>
-              <hr/>
+              <hr />
               <h4>Descrição</h4>
               <p className="paragraph">
-                {videoPlay.description}<br/>
-                {videoPlay._id}
+                {videoPlay.description}<br />
+                {/* {videoPlay._id} */}
               </p>
             </div>
             <div className="col col-md-5 mb-4">
@@ -140,7 +140,7 @@ function VideoGallery() {
           </div>
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </>
   )
 }

@@ -8,6 +8,7 @@ import Modal from '../../components/Modal'
 import Directory from '../../components/Directory'
 import api from '../../services/api'
 
+import { cutLegend } from "../../scripts/utils"
 import './styles.css'
 
 import folder_icon from '../../assets/folder-black.svg'
@@ -16,7 +17,7 @@ import upload from '../../assets/upload.svg'
 function Documents() {
   const [parent, setParent] = useState('root')
   const [folder, setFolder] = useState('')
-  const [stackParent, setStackParent] = useState([{parent: 'root', legend: 'Documentos'}])
+  const [stackParent, setStackParent] = useState([{ parent: 'root', legend: 'Documentos' }])
   const [file, setFile] = useState(null)
   const [titleFile, setTitleFile] = useState('')
   const [dirUpdate, setDirUpdate] = useState('')
@@ -26,14 +27,6 @@ function Documents() {
   const [modalNewFile, setModalNewFile] = useState(false)
   const [modalMessage, setModalMessage] = useState(false)
   const [nameFileChoose, setNameFileChoose] = useState('')
-
-  function cutLegend(legend) {
-    if(legend.length < 35)
-      return legend
-  
-    const ext = legend.split('.').pop()
-    return `${legend.substr(0, 30)}...${ext}`
-  }
 
   function setFileUpdate(file) {
     setFile(file)
@@ -50,7 +43,7 @@ function Documents() {
       }
     })
 
-    if(!repeated)
+    if (!repeated)
       setStackParent([...stackParent, data])
   }
 
@@ -64,7 +57,7 @@ function Documents() {
     const stack = stackParent
     stack.pop()
     const size = Object.keys(stack).length
-    const { parent } = stack[size-1]
+    const { parent } = stack[size - 1]
     setParent(parent)
     setStackParent(stack)
   }
@@ -84,7 +77,7 @@ function Documents() {
     setModalNewFolder(false)
     setModalNewFile(false)
   }
-  
+
   function uploadFile() {
     if (!file || !titleFile) {
       setModalMessage(true)
@@ -98,15 +91,15 @@ function Documents() {
     data.append('file', file)
 
     api.post('/documents', data)
-    .then(response => {
-      setDirUpdate(response.data._id)
-      setFile(null)
-      closeModal()
-    })
-    .catch((err) => { 
-      alert(err) 
-      setFile(null) 
-    })
+      .then(response => {
+        setDirUpdate(response.data._id)
+        setFile(null)
+        closeModal()
+      })
+      .catch((err) => {
+        alert(err)
+        setFile(null)
+      })
   }
 
   function makeFolder() {
@@ -132,9 +125,9 @@ function Documents() {
 
   useEffect(() => {
     api.get(`/documents/${parent}`)
-      .then(res =>  {
-        setDir(res.data) 
-        setLoad(false) 
+      .then(res => {
+        setDir(res.data)
+        setLoad(false)
       })
       .catch(err => {
         setLoad(false)
@@ -142,29 +135,29 @@ function Documents() {
       })
   }, [parent, dirUpdate]);
 
-  return(
+  return (
     <>
-      <Header/>
-      {stackParent && <BreadCrumb data={stackParent} setStackParent={setStackParent} setParent={setParent}/>}
+      <Header />
+      {stackParent && <BreadCrumb data={stackParent} setStackParent={setStackParent} setParent={setParent} />}
       <div className="container">
         <div className="container-fluid d-flex align-items-baseline w-100">
-          <div className="d-flex align-items-end pl-2 pt-5"> <img src={folder_icon} style={{ width: "45px" }} alt="Icone de Pasta" /> 
-          <h3 className="mt-4 ml-3 mb-0 display-3 title align-text-bottom">Documentos</h3></div>
-          {parent && <button type="button" className="btn btn-secondary align-self-end ml-auto mr-2" disabled={ parent === 'root' ? true : false } onClick={() => comeBack()} ><i className="fas fa-chevron-left"></i></button>}
+          <div className="d-flex align-items-end pl-2 pt-5"> <img src={folder_icon} style={{ width: "45px" }} alt="Icone de Pasta" />
+            <h3 className="mt-4 ml-3 mb-0 display-3 title align-text-bottom">Documentos</h3></div>
+          {parent && <button type="button" className="btn btn-secondary align-self-end ml-auto mr-2" disabled={parent === 'root' ? true : false} onClick={() => comeBack()} ><i className="fas fa-chevron-left"></i></button>}
           <button type="button" className="btn btn-secondary align-self-end" onClick={() => setModalNewFolder(true)} >Nova Pasta <i className="fas fa-folder-plus"></i></button>
-          <button type="button" className="btn btn-success align-self-end ml-2" disabled={ parent === 'root' ? true : false } onClick={() => setBeforeModalNewFile()} >Novo Arquivo <i className="fas fa-cloud-upload-alt"></i></button>
+          <button type="button" className="btn btn-success align-self-end ml-2" disabled={parent === 'root' ? true : false} onClick={() => setBeforeModalNewFile()} >Novo Arquivo <i className="fas fa-cloud-upload-alt"></i></button>
         </div>
         <hr className="my"></hr>
       </div>
       <div className="container">
-          {
-            load ? 
+        {
+          load ?
             <div className="container d-flex flex-column h-100 align-items-center justify-content-center pt-5">
               <Spinner sizeUnit="px" size={35} color="#4d6d6d" />
             </div>
             :
             <Directory data={dir} func={doubleClick} setDirUpdate={setDirUpdate} />
-          }
+        }
       </div>
       <Footer />
 
@@ -173,15 +166,15 @@ function Documents() {
           <input type="text" className="form-control" placeholder="Nova Pasta" onChange={(e) => setFolder(e.target.value)} />
         </div>
       </Modal>
-      
+
       <Modal title={"Novo Arquivo"} noIcon show={modalNewFile} func={() => uploadFile()} onDisable={setModalNewFile} >
         <div className="form-group">
           <input type="text" className="form-control" placeholder="Descrição do arquivo" onChange={(e) => setTitleFile(e.target.value)} />
           <label htmlFor="upload" className="label-upload" title="Fazer upload de arquivo">
-            <input type="file" name="Document" id="upload" onChange={e => setFileUpdate(e.target.files[0])}/>
+            <input type="file" name="Document" id="upload" onChange={e => setFileUpdate(e.target.files[0])} />
             <img src={upload} style={{ width: "45px" }} alt="Icone de Upload" />
             {nameFileChoose ?
-              <span className="text-success font-weight-bold">{nameFileChoose}</span> 
+              <span className="text-success font-weight-bold">{nameFileChoose}</span>
               :
               <span className="mt-2">Clique aqui para adiconar um arquivo</span>}
           </label>

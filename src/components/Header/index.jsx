@@ -23,7 +23,7 @@ function Header(props) {
         </Link>
         <div className="row d-flex justify-content-sm-between align-items-sm-center w-100 px-sm-5 justify-content-end pr-2 pr-sm-0">
           <h1 className="display-4 m-0">Intranet</h1>
-          <div className="meu-ip">{`Meu IP é ${ip}`}</div>
+          <div className="meu-ip">{`Meu IP é 10.1.3.119`}</div>
         </div>
       </div>
       <nav className="navbar navbar-expand-lg navbar-dark color-default p-0">
