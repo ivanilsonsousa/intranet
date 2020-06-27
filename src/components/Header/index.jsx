@@ -10,10 +10,11 @@ function Header(props) {
   const [ip, setIp] = useState("");
 
   useEffect(() => {
-    api.get("/meu-ip")
-    .then(res => setIp(res.data.ip))
-    .catch(err => setIp("Sem conexão"));
-  }, [])
+    api
+      .get("/meu-ip")
+      .then((res) => setIp(res.data.ip))
+      .catch((err) => setIp("Sem conexão"));
+  }, []);
 
   return (
     <>
@@ -44,43 +45,56 @@ function Header(props) {
           id="navbarSupportedContent"
         >
           <ul className="navbar-nav mr-auto">
-            <li className={`nav-item ${ props.flag === 'Home' ? 'active' : ''}`}>
+            <li className={`nav-item ${props.flag === "Home" ? "active" : ""}`}>
               <Link className="nav-link" to="/">
                 Home
               </Link>
             </li>
-            <li className={`nav-item ${ props.flag === 'Empresa' ? 'active' : ''}`}>
+            <li
+              className={`nav-item ${props.flag === "Empresa" ? "active" : ""}`}
+            >
               <Link className="nav-link" to="/company">
                 Empresa
               </Link>
             </li>
-            <li className={`nav-item ${ props.flag === 'Departamentos' ? 'active' : ''}`}>
+            <li
+              className={`nav-item ${
+                props.flag === "Departamentos" ? "active" : ""
+              }`}
+            >
               <Link className="nav-link" to="/documents">
                 Departamentos
               </Link>
             </li>
-            <li className={`nav-item ${ props.flag === 'RH' ? 'active' : ''}`}>
+            <li className={`nav-item ${props.flag === "RH" ? "active" : ""}`}>
               <Link className="nav-link" to="/documents">
                 Gestão de Pessoas
               </Link>
             </li>
-            <li className={`nav-item ${ props.flag === 'TI' ? 'active' : ''}`}>
+            <li className={`nav-item ${props.flag === "TI" ? "active" : ""}`}>
               <Link className="nav-link" to="/login">
                 TI
               </Link>
             </li>
-            <li className={`nav-item ${ props.flag === 'Marketing' ? 'active' : ''}`}>
+            <li
+              className={`nav-item ${
+                props.flag === "Marketing" ? "active" : ""
+              }`}
+            >
               <Link className="nav-link" to="/documents">
-                Marketing  
-                {/* { props.flag === 'Marketing' ? <span className="sr-only">(current)</span> : <></> } */}
+                Marketing
               </Link>
             </li>
-            <li className={`nav-item ${ props.flag === 'DEPE' ? 'active' : ''}`}>
+            <li className={`nav-item ${props.flag === "DEPE" ? "active" : ""}`}>
               <Link className="nav-link" to="/documents">
                 Projetos DEPE
               </Link>
             </li>
-            <li className={`nav-item ${ props.flag === 'Documentos' ? 'active' : ''}`}>
+            <li
+              className={`nav-item ${
+                props.flag === "Documentos" ? "active" : ""
+              }`}
+            >
               <Link className="nav-link" to="/documents">
                 Documentos
               </Link>

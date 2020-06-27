@@ -7,7 +7,7 @@ import { cutLegend } from "../../scripts/utils";
 function VideoItem(props) {
   const [playing, setPlaying] = useState(props.playing);
   const { selectedVideo, setVideo } = props.func;
-  const { video, thumbnail } = props;
+  const { video, thumbnail, setRefreshLike } = props;
 
   function handleClick() {
     setPlaying(true);
@@ -20,9 +20,10 @@ function VideoItem(props) {
 
     if (selectedVideo !== video._id) setPlaying(false);
     else {
+      setRefreshLike(video._id);
       setPlaying(true);
     }
-  }, [selectedVideo, video._id, props.playing]);
+  }, [selectedVideo, video._id, props.playing, setRefreshLike]);
 
   return (
     <div
@@ -85,6 +86,7 @@ function VideoList(props) {
             playing={index === 0 ? true : false}
             video={video}
             func={{ selectedVideo, setVideo }}
+            setRefreshLike={props.setRefreshLike}
             thumbnail="http://localhost:3333/files/photos-caroussel/thumb.jpg"
             setVideoPlay={props.setVideoPlay}
           />

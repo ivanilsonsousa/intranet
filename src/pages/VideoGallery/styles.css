@@ -5,6 +5,8 @@
   cursor: pointer;
 }
 .content-like i:hover,
-.content-like i:hover + b {
+.content-like i:hover + b,
+.content-like i.fas,
+.content-like i.fas + b {
   color: var(--color-default);
 }

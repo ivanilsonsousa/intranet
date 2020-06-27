@@ -1,33 +1,43 @@
-import React from 'react'
+import React from "react";
 
-import './styles.css'
+import "./styles.css";
 
 function BreadCrumb(props) {
-  let { data } = props
-
-  // data = localStorage.getItem('stackParent') ? localStorage.getItem('stackParent') : data
+  let { data } = props;
 
   function updateStack(index) {
-    const parent = data[index].parent
+    const parent = data[index].parent;
 
-    props.setParent(parent)
-    props.setStackParent(data.slice(0, ++index))
+    props.setParent(parent);
+    props.setStackParent(data.slice(0, ++index));
   }
 
   return (
     <nav aria-label="breadcrumb">
-        <ol className="breadcrumb">
-          {
-            data.map((element, index, array) => {
-              const { legend } = element
-              const isEndArray = Object.keys(array).length - 1 === index
+      <ol className="breadcrumb">
+        {data.map((element, index, array) => {
+          const { legend } = element;
+          const isEndArray = Object.keys(array).length - 1 === index;
 
-              return <li key={index} className={`breadcrumb-item ${isEndArray ? 'active' : ''}`} > { isEndArray ? legend : <a id="where" href="#where" onClick={() => updateStack(index)} >{ legend }</a> } </li>
-            })
-          }
-        </ol>
-      </nav>
-  )
+          return (
+            <li
+              key={index}
+              className={`breadcrumb-item ${isEndArray ? "active" : ""}`}
+            >
+              {" "}
+              {isEndArray ? (
+                legend
+              ) : (
+                <a id="where" href="#where" onClick={() => updateStack(index)}>
+                  {legend}
+                </a>
+              )}{" "}
+            </li>
+          );
+        })}
+      </ol>
+    </nav>
+  );
 }
 
 export default BreadCrumb;
