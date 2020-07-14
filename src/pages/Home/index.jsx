@@ -9,15 +9,17 @@ import { ClipLoader as Spinner } from "react-spinners";
 
 import art from "../../assets/art.svg";
 import video from "../../assets/video-cameras.svg";
-import soulmv from "../../assets/soulmv.svg";
+// import soulmv from "../../assets/soulmv.svg";
+// import sigtap from "../../assets/sigtap.svg";
 import fone from "../../assets/fones.svg";
 import file from "../../assets/file.svg";
 import folder from "../../assets/folder.svg";
 import computer from "../../assets/computer.svg";
 import mv from "../../assets/mv-indicadores.svg";
-import sigtap from "../../assets/sigtap.svg";
 import upToDate from "../../assets/upToDate.svg";
 import gmail from "../../assets/gmail.svg";
+import sacr from "../../assets/sacr.svg";
+import pep from "../../assets/pep.svg";
 
 import { getDate } from "../../scripts/utils";
 import api from "../../services/api";
@@ -73,11 +75,15 @@ function Home() {
                 />
                 <OptionLink image={video} legend="Vídeos" to="/videos" />
                 <OptionLink
-                  image={soulmv}
-                  legend="Soul MV"
-                  externalLink={process.env.REACT_APP_URL_SOULMV}
+                  image={sacr}
+                  legend="MV SACR"
+                  externalLink={process.env.REACT_APP_URL_SACR}
                 />
-                <OptionLink image={fone} legend="Lista de Ramais" to="/fones" />
+                <OptionLink
+                  image={pep}
+                  legend="MV PEP"
+                  externalLink={process.env.REACT_APP_URL_PEP}
+                />
               </div>
 
               <div className="row">
@@ -86,11 +92,7 @@ function Home() {
                   legend="MV Indicadores"
                   externalLink={process.env.REACT_APP_URL_MV_PAINEL}
                 />
-                <OptionLink
-                  image={sigtap}
-                  legend="SigTap Web"
-                  externalLink={process.env.REACT_APP_URL_SIGTAP}
-                />
+                <OptionLink image={fone} legend="Lista de Ramais" to="/fones" />
                 <OptionLink
                   image={upToDate}
                   legend="UpToDate"

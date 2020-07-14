@@ -1,36 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, createContext, useContext } from "react";
 import search_icon from "../../assets/search.svg";
 import "./styles.css";
 
 import { cutLegend } from "../../scripts/utils";
 
+const VideoContext = createContext();
+
 function VideoItem(props) {
-  const [playing, setPlaying] = useState(props.playing);
-  const { selectedVideo, setVideo } = props.func;
-  const { video, thumbnail, setRefreshLike } = props;
+  const { video, thumbnail } = props;
+  const { setVideoPlay, refreshLikes, videoPlay } = useContext(VideoContext);
 
   function handleClick() {
-    setPlaying(true);
-    props.setVideoPlay(video);
-    setVideo(video._id);
+    setVideoPlay(video)
+    refreshLikes(video)
   }
-
-  useEffect(() => {
-    if (props.playing && selectedVideo === "#") return;
-
-    if (selectedVideo !== video._id) setPlaying(false);
-    else {
-      setRefreshLike(video._id);
-      setPlaying(true);
-    }
-  }, [selectedVideo, video._id, props.playing, setRefreshLike]);
 
   return (
     <div
       onClick={() => handleClick()}
-      className={`video-item ${playing ? "playing" : ""}`}
+      className={`video-item ${video._id === videoPlay._id ? "playing" : ""}`}
     >
-      <i className="fas fa-play d-flex align-items-center justify-content-center pr-2" />
+      <i className="fas fa-play d-flex align-items-center justify-content-center px-1" />
       <div className="video-thumbnail">
         <img src={thumbnail} alt="Tumbnail" />
       </div>
@@ -43,19 +33,21 @@ function VideoItem(props) {
 }
 
 function VideoList(props) {
-  const [query, setQuery] = useState("");
-  const [selectedVideo, setVideo] = useState("#");
-  const { setVideoPlay } = props;
-  const videos = props.data;
+  const [search, setSearch] = useState("");
+  const { setVideoPlay, data: videos, videoPlay, refreshLikes, setQuery } = props;
 
   function handleSearch(e) {
     e.preventDefault();
-    props.setQuery(query);
+    setQuery(search);
+  }
+
+  const handleInicialize = () => {
+    if (!videoPlay._id && videos[0]) setVideoPlay(videos[0]);
   }
 
   useEffect(() => {
-    if (!props.videoPlay._id && videos[0]) setVideoPlay(videos[0]);
-  }, [videos, setVideoPlay, props.videoPlay._id]);
+    handleInicialize()
+  }, [handleInicialize]);
 
   return (
     <div className="content-list">
@@ -68,7 +60,7 @@ function VideoList(props) {
               placeholder="Pesquise por vídeos"
               className="form-control"
               aria-label="Search"
-              onChange={(e) => setQuery(e.target.value)}
+              onChange={(e) => setSearch(e.target.value)}
               type="text"
             />
             <img
@@ -81,15 +73,13 @@ function VideoList(props) {
       </div>
       <div className="video-list">
         {videos.map((video, index) => (
-          <VideoItem
-            key={video._id}
-            playing={index === 0 ? true : false}
-            video={video}
-            func={{ selectedVideo, setVideo }}
-            setRefreshLike={props.setRefreshLike}
-            thumbnail="http://localhost:3333/files/photos-caroussel/thumb.jpg"
-            setVideoPlay={props.setVideoPlay}
-          />
+          <VideoContext.Provider key={video._id} value={{ setVideoPlay, videoPlay, refreshLikes }} >
+            <VideoItem
+              playing={index === 0 ? true : false}
+              video={video}
+              thumbnail="http://10.1.3.119:3333/files/file/thumbI.png"
+            />
+          </VideoContext.Provider>
         ))}
       </div>
     </div>

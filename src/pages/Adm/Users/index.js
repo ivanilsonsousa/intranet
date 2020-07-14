@@ -114,7 +114,7 @@ function Users() {
   }
 
   function handleDeletePost() {
-    if(veryfyDelete != userEdit.username)
+    if(veryfyDelete !== userEdit.username)
       return alert("çjiefgbpwrep")
 
     api.delete(`users/${userId}`).then(res => {

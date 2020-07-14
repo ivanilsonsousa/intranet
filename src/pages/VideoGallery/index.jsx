@@ -41,11 +41,12 @@ function VideoGallery() {
   function refreshLikes(video) {
     setLike(false);
     setUnLike(false);
-    console.log("ete");
-    console.log(video);
-    if (valuePropertyExists("likes", video)) {
+    setCountLike(0);
+    setCountUnLike(0);
+    console.log(video._id);
+    if (valuePropertyExists("likes", video._id)) {
       setLike(true);
-    } else if (valuePropertyExists("unlikes", video)) setUnLike(true);
+    } else if (valuePropertyExists("unlikes", video._id)) setUnLike(true);
   }
 
   function addView(id) {
@@ -129,7 +130,11 @@ function VideoGallery() {
   }
 
   function handleLike(idVideo) {
-    if (like) return;
+    if (like) {
+      setLike(false);
+      addOrRemoveSessionStorage("likes", idVideo, true);  
+      return;
+    }
 
     console.log(valuePropertyExists("unlikes", idVideo));
 
@@ -146,7 +151,11 @@ function VideoGallery() {
   }
 
   function handleUnLike(idVideo) {
-    if (unlike) return;
+    if (unlike) {
+      setUnLike(false);
+      addOrRemoveSessionStorage("unlikes", idVideo, true);  
+      return;
+    }
 
     console.log(valuePropertyExists("likes", idVideo));
 
@@ -219,13 +228,13 @@ function VideoGallery() {
               </p>
             </div>
             <div className="col col-md-5 mb-4">
-              <VideoList
-                data={videos}
-                setVideoPlay={setVideoPlay}
-                videoPlay={videoPlay}
-                setQuery={setQuery}
-                setRefreshLike={refreshLikes}
-              />
+            <VideoList
+              data={videos}
+              setVideoPlay={setVideoPlay}
+              videoPlay={videoPlay}
+              setQuery={setQuery}
+              refreshLikes={refreshLikes}
+            />
             </div>
           </div>
         </div>

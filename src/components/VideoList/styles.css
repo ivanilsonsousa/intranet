@@ -5,7 +5,6 @@
 .content-list {
   border: 1px solid gray;
   padding: 0;
-  border-radius: 3px;
 }
 .video-list {
   max-height: 70vh;
@@ -15,13 +14,12 @@
   width: 4px;
 }
 .video-list::-webkit-scrollbar-thumb {
-  background-color: rgb(128, 14, 14);
+  background-color: LightGrey;
   border-radius: 4px;
 }
 .video-list::-webkit-scrollbar-track {
-  background-color: #ccc;
+  background-color: transparent;
 }
-
 .video-item {
   display: flex;
   padding: 5px 20px;
@@ -30,6 +28,9 @@
 }
 .video-item i {
   display: none !important;
+}
+.video-item.playing {
+  padding: 5px 0px;
 }
 .video-item.playing i {
   display: flex !important;

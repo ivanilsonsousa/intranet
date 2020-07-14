@@ -7,13 +7,14 @@ import logo from "../../assets/logo-intranet.svg";
 import "./styles.css";
 
 function Header(props) {
+
   const [ip, setIp] = useState("");
 
   useEffect(() => {
     api
       .get("/meu-ip")
-      .then((res) => setIp(res.data.ip))
-      .catch((err) => setIp("Sem conexão"));
+      .then((res) => setIp(`Meu IP é ${ res.data.ip }`))
+      .catch(() => setIp("Sem conexão"));
   }, []);
 
   return (
@@ -24,7 +25,7 @@ function Header(props) {
         </Link>
         <div className="row d-flex justify-content-sm-between align-items-sm-center w-100 px-sm-5 justify-content-end pr-2 pr-sm-0">
           <h1 className="display-4 m-0">Intranet</h1>
-          <div className="meu-ip">{`Meu IP é 10.1.3.119`}</div>
+          <div className="meu-ip">{ ip }</div>
         </div>
       </div>
       <nav className="navbar navbar-expand-lg navbar-dark color-default p-0">
