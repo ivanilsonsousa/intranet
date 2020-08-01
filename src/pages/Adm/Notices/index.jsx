@@ -28,9 +28,11 @@ function Notices() {
   const [type, setType] = useState("primary");
   const [modalDelete, setModalDelete] = useState(false);
 
+  const token = () => `Bearer ${localStorage.getItem("token")}`;
+
   useEffect(() => {
     api
-      .get(`/posts?query=${query}`)
+      .get(`/posts?query=${query}`, { headers: { Authorization: token() } })
       .then((res) => {
         setPosts(res.data);
       })
@@ -56,7 +58,11 @@ function Notices() {
     }
 
     api
-      .post(`/posts`, { title, description, type })
+      .post(
+        `/posts`,
+        { title, description, type },
+        { headers: { Authorization: token() } }
+      )
       .then((res) => {
         setUpdate(res.data);
         setModalPost(false);
@@ -78,7 +84,11 @@ function Notices() {
     }
 
     api
-      .put(`/posts/${_id}`, { title, description, type })
+      .put(
+        `/posts/${_id}`,
+        { title, description, type },
+        { headers: { Authorization: token() } }
+      )
       .then((res) => {
         setUpdate(res.data);
         setModalEdit(false);
@@ -93,7 +103,7 @@ function Notices() {
 
   function handleDeletePost() {
     api
-      .delete(`posts/${postId}`)
+      .delete(`posts/${postId}`, { headers: { Authorization: token() } })
       .then((res) => {
         setModalDelete(false);
         setUpdate(res.data);
@@ -104,7 +114,11 @@ function Notices() {
   }
 
   async function handleCheck(id, value) {
-    return await api.put(`/posts/${id}`, { active: value });
+    return await api.put(
+      `/posts/${id}`,
+      { active: value },
+      { headers: { Authorization: token() } }
+    );
   }
 
   return (

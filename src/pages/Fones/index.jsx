@@ -13,7 +13,7 @@ function Phones() {
 
   useEffect(() => {
     api
-      .get(`/phones?query=${query}`)
+      .get(`/phones-list?query=${query}`)
       .then((res) => {
         setPhones(res.data);
       })

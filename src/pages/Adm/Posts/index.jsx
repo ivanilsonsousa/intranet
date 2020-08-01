@@ -26,13 +26,17 @@ function Posts() {
   const [modalDelete, setModalDelete] = useState(false);
   const [thumbnail, setThumbnail] = useState(null);
 
+  const token = () => `Bearer ${localStorage.getItem("token")}`;
+
   const preview = useMemo(() => {
     return thumbnail ? URL.createObjectURL(thumbnail) : null;
   }, [thumbnail]);
 
   useEffect(() => {
     api
-      .get(`/posts-caroussel?query=${query}`)
+      .get(`/posts-caroussel?query=${query}`, {
+        headers: { Authorization: token() },
+      })
       .then((res) => {
         setPhotoPosts(res.data);
       })
@@ -63,7 +67,7 @@ function Posts() {
     data.append("file", thumbnail);
 
     api
-      .post("/posts-caroussel", data)
+      .post("/posts-caroussel", data, { headers: { Authorization: token() } })
       .then((response) => {
         setModalNewPhotoPost(false);
         setUpdate(response.data);
@@ -76,7 +80,9 @@ function Posts() {
 
   function handleDeletePost() {
     api
-      .delete(`posts-caroussel/${postId}`)
+      .delete(`posts-caroussel/${postId}`, {
+        headers: { Authorization: token() },
+      })
       .then((res) => {
         setModalDelete(false);
         setUpdate(res.data);
@@ -87,7 +93,11 @@ function Posts() {
   }
 
   async function handleCheck(id, value) {
-    return await api.put(`/posts-caroussel/${id}`, { active: value });
+    return await api.put(
+      `/posts-caroussel/${id}`,
+      { active: value },
+      { headers: { Authorization: token() } }
+    );
   }
 
   return (

@@ -25,9 +25,13 @@ function Phones() {
   const [description, setDescription] = useState("");
   const [modalDelete, setModalDelete] = useState(false);
 
+  const token = () => `Bearer ${localStorage.getItem("token")}`;
+
   useEffect(() => {
     api
-      .get(`/phones?query=${query}`)
+      .get(`/phones?query=${query}`, {
+        headers: { Authorization: token() },
+      })
       .then((res) => {
         setPhones(res.data);
       })
@@ -53,7 +57,11 @@ function Phones() {
     }
 
     api
-      .post(`/phones`, { title, description })
+      .post(
+        `/phones`,
+        { title, description },
+        { headers: { Authorization: token() } }
+      )
       .then((res) => {
         setUpdate(res.data);
         setModalPost(false);
@@ -74,7 +82,11 @@ function Phones() {
     }
 
     api
-      .put(`/phones/${_id}`, { title, description })
+      .put(
+        `/phones/${_id}`,
+        { title, description },
+        { headers: { Authorization: token() } }
+      )
       .then((res) => {
         setUpdate(res.data);
         setModalEdit(false);
@@ -88,7 +100,7 @@ function Phones() {
 
   function handleDeletePost() {
     api
-      .delete(`phones/${phoneId}`)
+      .delete(`phones/${phoneId}`, { headers: { Authorization: token() } })
       .then((res) => {
         setModalDelete(false);
         setUpdate(res.data);
@@ -99,7 +111,11 @@ function Phones() {
   }
 
   async function handleCheck(id, value) {
-    return await api.put(`/phones/${id}`, { active: value });
+    return await api.put(
+      `/phones/${id}`,
+      { active: value },
+      { headers: { Authorization: token() } }
+    );
   }
 
   return (

@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useState, useContext } from "react";
 import Header from "../../components/Header";
+
+import { Context } from "../../Context/AuthContext";
 
 import stacasa from "../../assets/stacasa.svg";
 import "./styles.css";
 
 import { verifyCapsLock } from "../../scripts/utils";
-import api from "../../services/api";
 
 function Login() {
   const [user, setUser] = useState("");
@@ -15,30 +15,25 @@ function Login() {
   const [showMessage, setShowMessage] = useState(false);
   const [caps, setCaps] = useState(false);
   const [showPass, setShowPass] = useState(true);
-  const history = useHistory();
 
-  function handleSubmitLogin(e) {
+  const { authenticated, handleLogin } = useContext(Context);
+
+  async function handleSubmitLogin(e) {
     e.preventDefault();
+    let timer = null;
 
-    api
-      .post("/login", { user, password })
-      .then((response) => {
-        const { _id, message } = response.data;
+    const login = await handleLogin({ user, password });
 
-        if (_id) {
-          localStorage.setItem("_id", _id);
-          history.push("/dashboard");
-        } else {
-          setMessage(message);
-          setTimeout(() => {
-            setShowMessage(false);
-          }, 3000);
-          setShowMessage(true);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    clearTimeout(timer);
+
+    if (!authenticated) {
+      setMessage(login.message);
+      setShowMessage(true);
+    }
+
+    timer = setTimeout(() => {
+      setShowMessage(false);
+    }, 3000);
   }
 
   return (
@@ -97,7 +92,7 @@ function Login() {
               Entrar
             </button>
             {showMessage && (
-              <span className={`login-error ${showMessage ? "fadeIn" : ""}`}>
+              <span className={`${showMessage ? "fadeIn" : ""}`}>
                 <strong>{message}</strong>
               </span>
             )}

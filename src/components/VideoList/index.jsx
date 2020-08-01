@@ -7,12 +7,15 @@ import { cutLegend } from "../../scripts/utils";
 const VideoContext = createContext();
 
 function VideoItem(props) {
-  const { video, thumbnail } = props;
-  const { setVideoPlay, refreshLikes, videoPlay } = useContext(VideoContext);
+  const { video, thumbnail, index } = props;
+  const { setVideoPlay, refreshLikes, videoPlay, setIndex } = useContext(
+    VideoContext
+  );
 
   function handleClick() {
-    setVideoPlay(video)
-    refreshLikes(video)
+    setVideoPlay(video);
+    refreshLikes(video);
+    setIndex(index);
   }
 
   return (
@@ -33,8 +36,17 @@ function VideoItem(props) {
 }
 
 function VideoList(props) {
+  const {
+    setVideoPlay,
+    data: videos,
+    videoPlay,
+    refreshLikes,
+    setQuery,
+  } = props;
+
   const [search, setSearch] = useState("");
-  const { setVideoPlay, data: videos, videoPlay, refreshLikes, setQuery } = props;
+  const [index, setIndex] = useState("1");
+  const [quantityVideos, setQuantity] = useState(videos.length);
 
   function handleSearch(e) {
     e.preventDefault();
@@ -43,17 +55,30 @@ function VideoList(props) {
 
   const handleInicialize = () => {
     if (!videoPlay._id && videos[0]) setVideoPlay(videos[0]);
-  }
+  };
 
   useEffect(() => {
-    handleInicialize()
+    const idVideos = videos.map((video) => video._id);
+
+    let indexVideo = idVideos.indexOf(videoPlay._id);
+
+    indexVideo = !videoPlay._id ? 0 : indexVideo;
+
+    setIndex(indexVideo == -1 ? "?" : indexVideo + 1);
+  }, [videos]);
+
+  useEffect(() => {
+    handleInicialize();
+    setQuantity(videos.length);
   }, [handleInicialize]);
 
   return (
     <div className="content-list">
       <div className="header-list">
         <h4>Lista de vídeos</h4>
-        <span className="block">3/100</span>
+        <span className="block">
+          {index}/{quantityVideos}
+        </span>
         <div className="md-form active-search">
           <form onSubmit={(e) => handleSearch(e)}>
             <input
@@ -73,11 +98,15 @@ function VideoList(props) {
       </div>
       <div className="video-list">
         {videos.map((video, index) => (
-          <VideoContext.Provider key={video._id} value={{ setVideoPlay, videoPlay, refreshLikes }} >
+          <VideoContext.Provider
+            key={video._id}
+            value={{ setVideoPlay, videoPlay, refreshLikes, setIndex }}
+          >
             <VideoItem
               playing={index === 0 ? true : false}
               video={video}
-              thumbnail="http://10.1.3.119:3333/files/file/thumbI.png"
+              index={index + 1}
+              thumbnail="http://127.0.0.1:3333/files/teste/13-sites-gratis-para-criar-graficos-online_-1596073998339.jpg"
             />
           </VideoContext.Provider>
         ))}

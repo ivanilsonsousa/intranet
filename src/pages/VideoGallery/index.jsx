@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
 import ReactPlayer from "react-player";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
@@ -15,7 +14,6 @@ function VideoGallery() {
   const [videoPlay, setVideoPlay] = useState({});
   const [clock, setClock] = useState([]);
   const [videos, setVideos] = useState([]);
-  const history = useHistory();
 
   const [countLike, setCountLike] = useState(0);
   const [countUnlike, setCountUnLike] = useState(0);
@@ -38,12 +36,20 @@ function VideoGallery() {
       });
   }, [query]);
 
+  useEffect(
+    () => () => {
+      pause();
+    },
+    [pause]
+  );
+
   function refreshLikes(video) {
     setLike(false);
     setUnLike(false);
     setCountLike(0);
     setCountUnLike(0);
     console.log(video._id);
+
     if (valuePropertyExists("likes", video._id)) {
       setLike(true);
     } else if (valuePropertyExists("unlikes", video._id)) setUnLike(true);
@@ -87,8 +93,6 @@ function VideoGallery() {
     finishClocks(clock);
 
     let inter = setInterval(() => {
-      if (history.location.pathname !== "/videos") paused = true;
-
       if (!paused) {
         seconds++;
       }
@@ -98,8 +102,6 @@ function VideoGallery() {
         console.log("+1 view ", videoPlay._id);
         addView(videoPlay._id);
         clearInterval(inter);
-        // viewVideo = true
-        // sessionStorage.setItem("lastname", "Smith");
       }
     }, 1000);
 
@@ -132,7 +134,7 @@ function VideoGallery() {
   function handleLike(idVideo) {
     if (like) {
       setLike(false);
-      addOrRemoveSessionStorage("likes", idVideo, true);  
+      addOrRemoveSessionStorage("likes", idVideo, true);
       return;
     }
 
@@ -153,7 +155,7 @@ function VideoGallery() {
   function handleUnLike(idVideo) {
     if (unlike) {
       setUnLike(false);
-      addOrRemoveSessionStorage("unlikes", idVideo, true);  
+      addOrRemoveSessionStorage("unlikes", idVideo, true);
       return;
     }
 
@@ -228,13 +230,13 @@ function VideoGallery() {
               </p>
             </div>
             <div className="col col-md-5 mb-4">
-            <VideoList
-              data={videos}
-              setVideoPlay={setVideoPlay}
-              videoPlay={videoPlay}
-              setQuery={setQuery}
-              refreshLikes={refreshLikes}
-            />
+              <VideoList
+                data={videos}
+                setVideoPlay={setVideoPlay}
+                videoPlay={videoPlay}
+                setQuery={setQuery}
+                refreshLikes={refreshLikes}
+              />
             </div>
           </div>
         </div>

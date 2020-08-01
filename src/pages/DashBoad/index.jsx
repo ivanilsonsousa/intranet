@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useState, useContext } from "react";
 import Header from "../../components/Header";
 import Option from "../../components/Option";
 import Modal from "../../components/Modal";
@@ -13,16 +12,12 @@ import group_icon from "../../assets/group.svg";
 import logo from "../../assets/logo-dashboard.svg";
 import "./styles.css";
 
+import { Context } from "../../Context/AuthContext";
 import post_icon from "../../assets/post.svg";
 
 export default function DashBoad() {
   const [modal, setModal] = useState(false);
-  const history = useHistory();
-
-  function handleLogout() {
-    localStorage.removeItem("_id");
-    history.push("/");
-  }
+  const { handleLogout } = useContext(Context);
 
   return (
     <>
