@@ -16,10 +16,9 @@ function Photos() {
               Fotos
             </h3>
           </div>
-          {/* <button type="button" className="btn btn-info align-self-end ml-auto" > */}
           <label
             htmlFor="upload"
-            className="btn btn-info align-self-end m-0 ml-auto"
+            className="btn align-self-end m-0 ml-auto btn-rounded"
             title="Fazer upload de arquivo"
           >
             Adicionar Foto <i className="fas fa-plus"></i>
@@ -30,7 +29,6 @@ function Photos() {
               style={{ width: "0", height: "0" }}
             />
           </label>
-          {/* </button> */}
         </div>
         <hr className="my"></hr>
         <div className="container"></div>

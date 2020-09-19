@@ -13,7 +13,7 @@ function BreadCrumb(props) {
   }
 
   return (
-    <nav aria-label="breadcrumb">
+    <nav aria-label="breadcrumb" className="nav-breadcrumb">
       <ol className="breadcrumb">
         {data.map((element, index, array) => {
           const { legend } = element;
@@ -28,9 +28,9 @@ function BreadCrumb(props) {
               {isEndArray ? (
                 legend
               ) : (
-                <a id="where" href="#where" onClick={() => updateStack(index)}>
+                <span onClick={() => updateStack(index)}>
                   {legend}
-                </a>
+                </span>
               )}{" "}
             </li>
           );

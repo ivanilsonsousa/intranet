@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import ContextMenu from "../ContextMenu";
 import OptionLink from "../OptionLink";
 import "./styles.css";
@@ -13,6 +13,8 @@ import iconVIDEO from "../../assets//video.svg";
 import iconDefault from "../../assets/file.svg";
 
 import empty from "../../assets/empty.svg";
+
+import { Context } from "../../Context/AuthContext";
 
 function chooseIcon(format = "") {
   let icon = iconDefault;
@@ -48,17 +50,20 @@ function cutLegend(legend) {
   return `${legend.substr(0, 20)}...`;
 }
 
+
 function Directory(props) {
   const { data } = props;
+  const { authenticated } = useContext(Context);
 
   return data.length ? (
-    <div className="row mb-3 directory">
+    <div className="directory">
       {data.map((dir, index) => {
         return dir.type === "file" ? (
+          authenticated ?
           <ContextMenu
             id={dir._id}
             filename={dir.title}
-            width="25"
+            width="100"
             key={dir._id}
             setDirUpdate={props.setDirUpdate}
           >
@@ -70,11 +75,21 @@ function Directory(props) {
               externalLink={dir.url}
             />
           </ContextMenu>
+          :
+          <OptionLink
+            image={chooseIcon(dir.format)}
+            legend={cutLegend(dir.title)}
+            key={dir._id}
+            width="100"
+            title={dir.title}
+            externalLink={dir.url}
+          />
         ) : (
+          authenticated ?
           <ContextMenu
             id={dir._id}
             filename={dir.title}
-            width="25"
+            width="100"
             key={dir._id}
             setDirUpdate={props.setDirUpdate}
           >
@@ -87,6 +102,16 @@ function Directory(props) {
               func={props.func}
             />
           </ContextMenu>
+          :
+          <OptionLink
+            image={folder_open}
+            legend={dir.title}
+            width="100"
+            folder
+            key={dir._id}
+            parent={dir._id}
+            func={props.func}
+          />
         );
       })}
     </div>

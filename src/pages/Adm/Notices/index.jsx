@@ -4,6 +4,7 @@ import AlertModal from "../../../components/Modal";
 import Switch from "../../../components/Switch";
 import NotFound from "../../../components/NotFound";
 import Search from "../../../components/Search";
+import { ClipLoader as Spinner } from "react-spinners";
 
 import trash from "../../../assets/bin.svg";
 import edit from "../../../assets/edit.svg";
@@ -27,14 +28,18 @@ function Notices() {
   const [description, setDescription] = useState("");
   const [type, setType] = useState("primary");
   const [modalDelete, setModalDelete] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const token = () => `Bearer ${localStorage.getItem("token")}`;
 
   useEffect(() => {
+    setLoading(true);
+
     api
       .get(`/posts?query=${query}`, { headers: { Authorization: token() } })
       .then((res) => {
         setPosts(res.data);
+        setLoading(false);
       })
       .catch((err) => {
         console.log(err);
@@ -136,7 +141,7 @@ function Notices() {
           <Search className="ml-auto mr-2" onChange={setQuery} />
           <button
             type="button"
-            className="btn btn-info align-self-end mb-1"
+            className="btn align-self-end btn-rounded"
             onClick={() => setModalPost(true)}
           >
             Adicionar <i className="fas fa-plus"></i>
@@ -144,7 +149,12 @@ function Notices() {
         </div>
         <hr className="my"></hr>
         <div className="container pt-5">
-          {posts.length ? (
+          {loading ?
+            <div className="d-flex align-items-center justify-content-center">
+              <Spinner sizeUnit="px" size={35} color="#4d6d6d" />
+            </div>
+            :
+          posts.length ? (
             posts.map((post) => {
               return (
                 <div className={`post ${post.type}`} key={post._id}>
@@ -207,11 +217,7 @@ function Notices() {
         </div>
         <div className="form-group">
           <label htmlFor="exampleFormControlSelect1">Descrição</label>
-          <input
-            type="text"
-            className="form-control"
-            onChange={(e) => setDescription(e.target.value)}
-          />
+          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" onChange={(e) => setDescription(e.target.value)} ></textarea>
         </div>
         <div className="form-group">
           <label htmlFor="menu-select">Tipo (Cor)</label>
@@ -247,14 +253,7 @@ function Notices() {
         </div>
         <div className="form-group">
           <label htmlFor="exampleFormControlSelect1">Descrição</label>
-          <input
-            type="text"
-            className="form-control"
-            defaultValue={postEdit.description}
-            onChange={(e) =>
-              setPostEdit({ ...postEdit, description: e.target.value })
-            }
-          />
+          <textarea className="form-control" defaultValue={postEdit.description} id="exampleFormControlTextarea1" rows="3" onChange={(e) => setPostEdit({ ...postEdit, description: e.target.value })} ></textarea>
         </div>
         <div className="form-group">
           <label htmlFor="menu-select">Tipo (Cor)</label>

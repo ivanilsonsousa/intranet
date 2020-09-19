@@ -26,4 +26,9 @@
 }
 .directory {
   min-height: 60vh;
+
+  display: grid;
+  grid-gap: 0;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  grid-template-rows: repeat(auto-fill, 150px);
 }

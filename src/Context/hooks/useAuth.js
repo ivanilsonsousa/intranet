@@ -20,15 +20,13 @@ export default function useAuth() {
       }
 
       setLoading(false);
-    })()
+    })();
 
   }, []);
 
   async function handleLogin(login) {
-
     try {
       const { data } = await api.post('/login', login);
-      console.log(data)
       const token = data.token;
 
       if (!token)
@@ -50,7 +48,6 @@ export default function useAuth() {
     setAuthenticated(false);
     localStorage.removeItem('token');
     api.defaults.headers.Authorization = undefined;
-    history.push('/');
   }
 
   async function checkIsAutenticate() {

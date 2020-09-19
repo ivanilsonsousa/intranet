@@ -11,7 +11,7 @@ function Callout(props) {
         <h4>{props.title}</h4>
         <span>{props.date}</span>
       </div>
-      <div className="row px-2">{props.description}</div>
+      <div className="row px-2" dangerouslySetInnerHTML={{__html: props.description}} />
     </div>
   );
 }

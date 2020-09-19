@@ -1,0 +1,49 @@
+[
+    {
+        "id": 1,
+        "label": "Serviços de Apoio",
+        "children": [
+            {
+                "id": 2,
+                "label": "Agência Transfusional",
+                "children": [
+                    {
+                        "id": 3
+                    },
+                    {
+                        "id": 4,
+                        "label": "CCIRAS",
+                        "children": [
+                            {
+                                "id": 5,
+                                "label": "Assistência ao paciente em precaução de contato"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 6,
+        "label": "Comissões",
+        "children": [
+            {
+                "id": 7,
+                "label": "Conduta do serviço de hemoterapia nas reações transfusionais imediatas"
+            },
+            {
+                "id": 8,
+                "label": "Condutas dos serviços assistencialistas nas reações transfusionais imediatas"
+            },
+            {
+                "id": 9,
+                "label": "Investigação da tecnovigilância por busca ativa"
+            },
+            {
+                "id": 10,
+                "label": " Investigação da tecnovigilância por notificação espontânea"
+            }
+        ]
+    }
+]

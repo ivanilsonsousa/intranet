@@ -13,10 +13,11 @@ function RouteWrapper({
   }
 
   if (authenticated && authTo) return <Redirect to={authTo} />;
+  else 
 
   if (!authenticated && isPrivate) return <Redirect to={redirectTo} />;
 
-  return <Route {...rest} render={props => <Component {...props} />} />;
+  return <Route {...rest} render={props => <Component {...props }  />} />;
 }
 
 RouteWrapper.propTypes = {

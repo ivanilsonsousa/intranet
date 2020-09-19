@@ -1,7 +1,6 @@
 import React, { useState, useContext } from "react";
 import Header from "../../components/Header";
 import Option from "../../components/Option";
-import Modal from "../../components/Modal";
 
 import dashboard_icon from "../../assets/dashboard.svg";
 import airplane_icon from "../../assets/origami.svg";
@@ -12,12 +11,9 @@ import group_icon from "../../assets/group.svg";
 import logo from "../../assets/logo-dashboard.svg";
 import "./styles.css";
 
-import { Context } from "../../Context/AuthContext";
 import post_icon from "../../assets/post.svg";
 
 export default function DashBoad() {
-  const [modal, setModal] = useState(false);
-  const { handleLogout } = useContext(Context);
 
   return (
     <>
@@ -35,13 +31,6 @@ export default function DashBoad() {
               Painel de configurações
             </h3>
           </div>
-          <button
-            type="button"
-            className="btn btn-light ml-auto"
-            onClick={() => setModal(true)}
-          >
-            <strong>SAIR</strong> <i className="fas fa-sign-out-alt"></i>
-          </button>
         </div>
         <hr className="my"></hr>
         <div
@@ -87,12 +76,6 @@ export default function DashBoad() {
           />
         </div>
       </div>
-      <Modal
-        title={"Deseja realmente sair do sistema"}
-        show={modal}
-        onDisable={setModal}
-        func={() => handleLogout()}
-      />
     </>
   );
 }

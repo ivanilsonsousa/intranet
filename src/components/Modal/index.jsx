@@ -3,7 +3,7 @@ import { Modal } from "react-bootstrap";
 
 import "./styles.css";
 
-function AlertModal(props) {
+function ModalCustom(props) {
   return (
     <>
       <Modal
@@ -11,6 +11,7 @@ function AlertModal(props) {
         show={props.show}
         onHide={() => props.onDisable(false)}
         animation
+        backdrop={props.backdrop || true}
       >
         <Modal.Header closeButton>
           <Modal.Title>
@@ -21,31 +22,31 @@ function AlertModal(props) {
                     ? "fas fa-exclamation-circle mr-2"
                     : "far fa-question-circle mr-2"
                 }
-              ></i>
+              />
             )}
             {props.title}
           </Modal.Title>
         </Modal.Header>
         {props.children && <Modal.Body>{props.children}</Modal.Body>}
         <Modal.Footer>
-          <button
-            className="btn btn-modal btn-cancel"
-            onClick={() => props.onDisable(false)}
-          >
-            {props.message ? "Fechar" : "Não"}
-          </button>
           {props.message || (
             <button
               className="btn btn-modal btn-confirme"
               onClick={() => props.func()}
             >
-              Sim
+              Confirmar
             </button>
           )}
+          <button
+            className="btn btn-modal btn-cancel"
+            onClick={() => props.onDisable(false)}
+          >
+            {props.message ? "Fechar" : "Cancelar"}
+          </button>
         </Modal.Footer>
       </Modal>
     </>
   );
 }
 
-export default AlertModal;
+export default ModalCustom;

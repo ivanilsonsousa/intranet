@@ -4,6 +4,7 @@ import AlertModal from "../../../components/Modal";
 import Switch from "../../../components/Switch";
 import NotFound from "../../../components/NotFound";
 import Search from "../../../components/Search";
+import { ClipLoader as Spinner } from "react-spinners";
 
 import trash from "../../../assets/bin.svg";
 import edit from "../../../assets/edit.svg";
@@ -24,28 +25,34 @@ function Phones() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [modalDelete, setModalDelete] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const token = () => `Bearer ${localStorage.getItem("token")}`;
 
   useEffect(() => {
+    setLoading(true);
+
+    console.log(query)
+
     api
       .get(`/phones?query=${query}`, {
         headers: { Authorization: token() },
       })
       .then((res) => {
         setPhones(res.data);
+        setLoading(false);
       })
       .catch((err) => {
         console.log(err);
       });
   }, [update, query]);
 
-  function setDeletePost(id) {
+  function setDeletePhone(id) {
     setPhoneId(id);
     setModalDelete(true);
   }
 
-  function setEditPost(phone) {
+  function setEditPhone(phone) {
     setFoneEdit(phone);
     setModalEdit(true);
   }
@@ -98,7 +105,7 @@ function Phones() {
       });
   }
 
-  function handleDeletePost() {
+  function handleDeletePhone() {
     api
       .delete(`phones/${phoneId}`, { headers: { Authorization: token() } })
       .then((res) => {
@@ -133,7 +140,7 @@ function Phones() {
           <Search className="ml-auto mr-2" onChange={setQuery} />
           <button
             type="button"
-            className="btn btn-info align-self-end mb-1"
+            className="btn align-self-end btn-rounded"
             onClick={() => setModalPost(true)}
           >
             Adicionar <i className="fas fa-plus"></i>
@@ -141,10 +148,15 @@ function Phones() {
         </div>
         <hr className="my"></hr>
         <div className="container pt-5">
-          {phones.length ? (
+          {loading ?
+            <div className="d-flex align-items-center justify-content-center">
+              <Spinner sizeUnit="px" size={35} color="#4d6d6d" />
+            </div>
+            :
+           phones.length ? (
             phones.map((phone) => {
               return (
-                <div className={`post secundary`} key={phone._id}>
+                <div className="post secundary" key={phone._id}>
                   <div className="d-flex space-between w-100">
                     <div className="w-100">
                       <h5 className="title-phone">
@@ -164,7 +176,7 @@ function Phones() {
                       cursor: "pointer",
                       marginRight: "10px",
                     }}
-                    onClick={() => setEditPost(phone)}
+                    onClick={() => setEditPhone(phone)}
                   />
                   <img
                     src={trash}
@@ -174,7 +186,7 @@ function Phones() {
                       cursor: "pointer",
                       marginRight: "10px",
                     }}
-                    onClick={() => setDeletePost(phone._id)}
+                    onClick={() => setDeletePhone(phone._id)}
                   />
                   <Switch
                     checked={phone.active}
@@ -254,7 +266,7 @@ function Phones() {
         title="Deseja realmente apagar esse ramal?"
         show={modalDelete}
         onDisable={setModalDelete}
-        func={() => handleDeletePost()}
+        func={() => handleDeletePhone()}
       />
 
       <AlertModal

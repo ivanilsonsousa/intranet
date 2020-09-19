@@ -4,18 +4,24 @@ import Footer from "../../components/Footer";
 import NotFound from "../../components/NotFound";
 import Search from "../../components/Search";
 
+import { ClipLoader as Spinner } from "react-spinners";
+
 import fone from "../../assets/phone.svg";
 import api from "../../services/api";
 
 function Phones() {
   const [phones, setPhones] = useState([]);
   const [query, setQuery] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setLoading(true);
+
     api
       .get(`/phones-list?query=${query}`)
       .then((res) => {
         setPhones(res.data);
+        setLoading(false);
       })
       .catch((err) => {
         console.log(err);
@@ -28,7 +34,6 @@ function Phones() {
       <div className="container content-body">
         <div className="container-fluid d-flex align-items-baseline w-100">
           <div className="d-flex align-items-end pl-2 pt-5">
-            {" "}
             <img src={fone} style={{ width: "50px" }} alt="Posts" />
             <h3 className="mt-4 ml-3 mb-0 display-3 title align-text-bottom">
               Lista de Ramais
@@ -39,7 +44,12 @@ function Phones() {
         </div>
         <hr className="my"></hr>
         <div className="container py-5">
-          {phones.length ? (
+          {loading ?
+            <div className="d-flex align-items-center justify-content-center">
+              <Spinner sizeUnit="px" size={35} color="#4d6d6d" />
+            </div>
+            :
+           phones.length ? (
             phones.map((phone) => {
               return (
                 <div className={`post secundary`} key={phone._id}>
@@ -60,6 +70,7 @@ function Phones() {
           ) : (
             <NotFound />
           )}
+
         </div>
       </div>
       <Footer />

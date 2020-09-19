@@ -9,14 +9,14 @@
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  transition: background-color .5s;
 }
 .card-option:hover {
-  opacity: 0.8;
   text-decoration: underline;
   color: white;
 }
 .card-option:hover {
-  background-color: #db4040cc;
+  background-color: #ccc;
 }
 .folder::active {
   background-color: blueviolet;

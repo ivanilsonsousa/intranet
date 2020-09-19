@@ -1,10 +1,7 @@
 import React from "react";
 import Header from "../../components/Header";
 import Search from "../../components/Search";
-import Accordion, {
-  AccordionCard,
-  AccordionItem,
-} from "../../components/Accordion";
+import Tree from "../../components/Accordion";
 
 import file from "../../assets/file-black.svg";
 
@@ -24,29 +21,9 @@ function Pops() {
           <Search className="ml-auto" onChange={() => {}} />
         </div>
         <hr className="my"></hr>
-        <Accordion>
-          <AccordionCard title="SESMT" id="1">
-            <AccordionItem label="Acompanhamento de acidente com material biológico." />
-            <AccordionItem label="Acompanhamento de acidente com material biológico." />
-            <AccordionItem label="Acompanhamento de acidente com material biológico." />
-            <AccordionItem label="Acompanhamento de acidente com material biológico." />
-            <AccordionItem label="Acompanhamento de acidente com material biológico." />
-          </AccordionCard>
-          <AccordionCard title="RH" id="2">
-            <AccordionItem label="Acompanhamento de acidente com material biológico." />
-            <AccordionItem label="Acompanhamento de acidente com material biológico." />
-            <AccordionItem label="Acompanhamento de acidente com material biológico." />
-            <AccordionItem label="Acompanhamento de acidente com material biológico." />
-            <AccordionItem label="Acompanhamento de acidente com material biológico." />
-          </AccordionCard>
-          <AccordionCard title="Juridico" id="3">
-            <AccordionItem label="Acompanhamento de acidente com material biológico." />
-            <AccordionItem label="Acompanhamento de acidente com material biológico." />
-            <AccordionItem label="Acompanhamento de acidente com material biológico." />
-            <AccordionItem label="Acompanhamento de acidente com material biológico." />
-            <AccordionItem label="Acompanhamento de acidente com material biológico." />
-          </AccordionCard>
-        </Accordion>
+        <div className="container mx-3">
+          <Tree />
+        </div>
       </div>
     </>
   );

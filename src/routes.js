@@ -17,6 +17,7 @@ import Posts from './pages/Adm/Posts';
 import Notices from './pages/Adm/Notices';
 import Phones from './pages/Adm/Fones';
 import Users from './pages/Adm/Users';
+import Videos from './pages/Adm/Videos';
 import Company from './pages/Company';
 import NotFound from './pages/NotFound';
 
@@ -40,6 +41,7 @@ export default function Routes() {
         <Route path="/dashboard/notices" component={Notices} isPrivate />
         <Route path="/dashboard/fones" component={Phones} isPrivate />
         <Route path="/dashboard/users" component={Users} isPrivate />
+        <Route path="/dashboard/videos" component={Videos} isPrivate />
         <Route path="*" component={NotFound} />
       </Switch>
     </BrowserRouter>

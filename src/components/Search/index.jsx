@@ -5,7 +5,7 @@ import './styles.css'
 function Search(props) {
   const inputRef = useRef(null);
   const [ open, setOpen ] = useState(false);
-  const { onChange, className } = props;
+  const { onChange, className, afterChange } = props;
   let time = null;
 
   function handleChange(value) {
@@ -13,6 +13,7 @@ function Search(props) {
 
     time = setTimeout(() => {
       onChange(value);
+      if(afterChange) afterChange();
     }, 1000);
   }
 

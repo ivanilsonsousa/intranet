@@ -14,8 +14,14 @@
   font-size: 28px;
 }
 .slider {
-  max-height: 350px;
+  height: 400px !important;
   overflow: hidden;
+  background-size: cover;
+}
+.btn.btn-rounded {
+  border-radius: 50px;
+  padding: 10px 20px;
+  font-weight: 600;
 }
 .no-touch {
   -webkit-touch-callout: none;
@@ -75,6 +81,16 @@
 }
 :-ms-input-placeholder {  /* IE */
    text-transform: initial; 
+}
+.wrapper-handout {
+  overflow-y: scroll;
+  max-height: 450px;
+  padding: 0 10px;
+  scrollbar-color: transparent transparent;
+  scrollbar-width: 0px;
+}
+.wrapper-handout::-webkit-scrollbar {
+  width: 0px;
 }
 @-webkit-keyframes fadeIn {
   100% { opacity: 0; }

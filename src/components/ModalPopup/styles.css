@@ -1,0 +1,12 @@
+.modal-popup .modal-content {
+  width: min-content;
+}
+.modal-dialog.modal-lg.modal-dialog-centered {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+label#labelShow,
+input#ckdisablemsg {
+  cursor: pointer;
+}

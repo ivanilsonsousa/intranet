@@ -8,6 +8,7 @@ import api from "../../services/api";
 
 import video_icon from "../../assets/cinema.svg";
 import "./styles.css";
+import { useLayoutEffect } from "react";
 
 function VideoGallery() {
   const [query, setQuery] = useState("");
@@ -21,6 +22,7 @@ function VideoGallery() {
   const [like, setLike] = useState(false);
   const [unlike, setUnLike] = useState(false);
 
+  let inter = null;
   let seconds = 0;
   let paused = false;
   let videoPlayingCount;
@@ -36,12 +38,18 @@ function VideoGallery() {
       });
   }, [query]);
 
-  useEffect(
-    () => () => {
+  useLayoutEffect(() => {
+    // finishClocks(clock);
+    // clearInterval(inter);
+
+    return () => {
+      console.log(query);
+      // clearInterval(inter);
+      console.log("saiu da tela");
       pause();
-    },
-    [pause]
-  );
+      finishClocks(clock);
+    }
+  }, [inter])
 
   function refreshLikes(video) {
     setLike(false);
@@ -69,17 +77,22 @@ function VideoGallery() {
   }
 
   function pause() {
+    console.log("Video pausado...");
     paused = true;
+    finishClocks(clock);
   }
 
   function finishClocks(clocks) {
+    console.log(':::... ', clocks)
     clocks.forEach((clock) => clearInterval(clock));
+    setClock([]);
+    console.log(':::... ', clock)
   }
 
   function countView(idVideo) {
+    console.log(":::: ", idVideo)
     if (idVideo === videoPlayingCount) {
       paused = false;
-      console.log("entrou aqui");
       return;
     }
 
@@ -92,17 +105,23 @@ function VideoGallery() {
 
     finishClocks(clock);
 
-    let inter = setInterval(() => {
-      if (!paused) {
-        seconds++;
-      }
+    inter = setInterval(() => {
+      console.log("seconds")
+      console.log(seconds)
 
-      if (seconds === 5) {
+      if (seconds === 20) {
         seconds = 0;
         console.log("+1 view ", videoPlay._id);
         addView(videoPlay._id);
         clearInterval(inter);
       }
+
+      if (!paused) {
+        seconds++;
+      }
+
+      if(!inter)
+        finishClocks();
     }, 1000);
 
     setClock([inter]);
@@ -192,9 +211,9 @@ function VideoGallery() {
               <ReactPlayer
                 url={videoPlay.file_url}
                 controls
-                muted
                 width="100%"
                 height="auto"
+                muted
                 onPlay={() => countView(videoPlay._id)}
                 onPause={() => pause()}
                 playing

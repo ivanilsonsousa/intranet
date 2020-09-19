@@ -106,7 +106,7 @@ function VideoList(props) {
               playing={index === 0 ? true : false}
               video={video}
               index={index + 1}
-              thumbnail="http://127.0.0.1:3333/files/teste/13-sites-gratis-para-criar-graficos-online_-1596073998339.jpg"
+              thumbnail={video.thumb_url}
             />
           </VideoContext.Provider>
         ))}

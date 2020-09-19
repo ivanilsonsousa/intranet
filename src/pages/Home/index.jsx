@@ -4,13 +4,12 @@ import Carousel from "../../components/Carousel";
 import OptionLink from "../../components/OptionLink";
 import Callout from "../../components/Callout";
 import Footer from "../../components/Footer";
+import ModalPopup from "../../components/ModalPopup";
 
 import { ClipLoader as Spinner } from "react-spinners";
 
 import art from "../../assets/art.svg";
 import video from "../../assets/video-cameras.svg";
-// import soulmv from "../../assets/soulmv.svg";
-// import sigtap from "../../assets/sigtap.svg";
 import fone from "../../assets/fones.svg";
 import file from "../../assets/file.svg";
 import folder from "../../assets/folder.svg";
@@ -28,10 +27,20 @@ function Home() {
   const width = "33.33333";
   const [posts, setPosts] = useState([]);
   const [photoPosts, setPhotoPosts] = useState([]);
+  const [popupMessage, setPopupMessage] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      const response = await api.get('/popups');
+
+      
+      setPopupMessage(response.data);
+    })()
+  }, [])
 
   useEffect(() => {
     async function loadPosts() {
-      const response = await api.get("/posts/20");
+      const response = await api.get("/posts-list");
 
       setPosts(response.data);
     }
@@ -108,17 +117,19 @@ function Home() {
           </div>
 
           <div className="row">
-            <div className="col-sm-6 ">
+            <div className="col-sm-6">
               <h1 className="display-4 title-display">Comunicados</h1>
-              {posts.map((post) => (
-                <Callout
+              <div className="wrapper-handout" scrolling="no" >
+                {posts.map((post) => (
+                  <Callout
                   key={post._id}
                   className={`callout-${post.type}`}
                   title={post.title}
                   description={post.description}
                   date={getDate(post.createAt)}
-                />
-              ))}
+                  />
+                ))}
+              </div>
             </div>
 
             <div className="col-sm-6">
@@ -166,6 +177,11 @@ function Home() {
           </div>
         </div>
       </div>
+      
+      <ModalPopup
+        content={popupMessage}
+      />
+
       <Footer />
     </>
   );

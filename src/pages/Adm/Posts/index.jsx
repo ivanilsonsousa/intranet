@@ -4,6 +4,7 @@ import AlertModal from "../../../components/Modal";
 import Switch from "../../../components/Switch";
 import NotFound from "../../../components/NotFound";
 import Search from "../../../components/Search";
+import { ClipLoader as Spinner } from "react-spinners";
 
 import trash from "../../../assets/bin.svg";
 import notice_icon from "../../../assets/post.svg";
@@ -25,6 +26,7 @@ function Posts() {
   const [title, setTitle] = useState("");
   const [modalDelete, setModalDelete] = useState(false);
   const [thumbnail, setThumbnail] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const token = () => `Bearer ${localStorage.getItem("token")}`;
 
@@ -33,12 +35,15 @@ function Posts() {
   }, [thumbnail]);
 
   useEffect(() => {
+    setLoading(true);
+
     api
       .get(`/posts-caroussel?query=${query}`, {
         headers: { Authorization: token() },
       })
       .then((res) => {
         setPhotoPosts(res.data);
+        setLoading(false);
       })
       .catch((err) => {
         console.log(err);
@@ -115,7 +120,7 @@ function Posts() {
           <Search className="ml-auto mr-2" onChange={setQuery} />
           <button
             type="button"
-            className="btn btn-info align-self-end mb-1"
+            className="btn align-self-end btn-rounded"
             onClick={() => setInsertPost()}
           >
             Adicionar <i className="fas fa-plus"></i>
@@ -123,7 +128,12 @@ function Posts() {
         </div>
         <hr className="my"></hr>
         <div className="container pt-5">
-          {photoPosts.length ? (
+          {loading ?
+            <div className="d-flex align-items-center justify-content-center">
+              <Spinner sizeUnit="px" size={35} color="#4d6d6d" />
+            </div>
+            :
+          photoPosts.length ? (
             photoPosts.map((photoPost) => {
               return (
                 <div className="post info" key={photoPost._id}>

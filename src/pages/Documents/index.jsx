@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { ClipLoader as Spinner } from "react-spinners";
 
 import Header from "../../components/Header";
@@ -7,6 +7,8 @@ import BreadCrumb from "../../components/BreadCrumb";
 import Modal from "../../components/Modal";
 import Directory from "../../components/Directory";
 import api from "../../services/api";
+
+import { Context } from "../../Context/AuthContext";
 
 import { cutLegend } from "../../scripts/utils";
 import "./styles.css";
@@ -18,7 +20,7 @@ function Documents() {
   const [parent, setParent] = useState("root");
   const [folder, setFolder] = useState("");
   const [stackParent, setStackParent] = useState([
-    { parent: "root", legend: "Documentos" },
+    { parent: "root", legend: "Início" },
   ]);
   const [file, setFile] = useState(null);
   const [titleFile, setTitleFile] = useState("");
@@ -30,9 +32,13 @@ function Documents() {
   const [modalMessage, setModalMessage] = useState(false);
   const [nameFileChoose, setNameFileChoose] = useState("");
 
+  const { authenticated } = useContext(Context);
+
   function setFileUpdate(file) {
     setFile(file);
-    setNameFileChoose(cutLegend(file.name));
+    if(!file) return
+
+    setNameFileChoose(cutLegend(file.name, 30, true));
   }
 
   function updateStackParent(data) {
@@ -67,8 +73,6 @@ function Documents() {
     const { parent } = data;
     updateStackParent(data);
 
-    // localStorage.setItem('stackParent', stackParent)
-    // console.log(JSON.parse(parent))
     setParent(parent);
   }
 
@@ -90,6 +94,9 @@ function Documents() {
     data.append("title", titleFile);
     data.append("parent", parent);
     data.append("file", file);
+
+    console.log("AQUI")
+    console.log(data)
 
     api
       .post("/documents", data)
@@ -144,15 +151,8 @@ function Documents() {
 
   return (
     <>
-      <Header />
-      {stackParent && (
-        <BreadCrumb
-          data={stackParent}
-          setStackParent={setStackParent}
-          setParent={setParent}
-        />
-      )}
-      <div className="container">
+      <Header flag="Documentos"/>
+      <div className="container-fluid">
         <div className="container-fluid d-flex align-items-baseline w-100">
           <div className="d-flex align-items-end pl-2 pt-5">
             {" "}
@@ -161,39 +161,51 @@ function Documents() {
               style={{ width: "45px" }}
               alt="Icone de Pasta"
             />
-            <h3 className="mt-4 ml-3 mb-0 display-3 title align-text-bottom">
+            <h3 className=" ml-3 mb-0 display-3 title align-text-bottom">
               Documentos
             </h3>
           </div>
           {parent && (
             <button
               type="button"
-              className="btn btn-secondary align-self-end ml-auto mr-2"
+              className={`btn btn-light align-self-end ml-auto mr-2 back`}
               disabled={parent === "root" ? true : false}
               onClick={() => comeBack()}
             >
-              <i className="fas fa-chevron-left"></i>
+              <i className="fas fa-chevron-left" />
+              {!authenticated && <strong> Voltar</strong>}
             </button>
           )}
-          <button
-            type="button"
-            className="btn btn-secondary align-self-end"
-            onClick={() => setModalNewFolder(true)}
-          >
-            Nova Pasta <i className="fas fa-folder-plus"></i>
-          </button>
-          <button
-            type="button"
-            className="btn btn-success align-self-end ml-2"
-            disabled={parent === "root" ? true : false}
-            onClick={() => setBeforeModalNewFile()}
-          >
-            Novo Arquivo <i className="fas fa-cloud-upload-alt"></i>
-          </button>
+          {authenticated && 
+          <>
+            <button
+              type="button"
+              className="btn btn-secondary align-self-end new-folder"
+              onClick={() => setModalNewFolder(true)}
+            >
+              Nova Pasta <i className="fas fa-folder-plus"></i>
+            </button>
+            <button
+              type="button"
+              className="btn btn-light align-self-end ml-2 new-file"
+              disabled={parent === "root" ? true : false}
+              onClick={() => setBeforeModalNewFile()}
+            >
+              Novo Arquivo <i className="fas fa-cloud-upload-alt"></i>
+            </button>
+          </>
+          }
         </div>
-        <hr className="my"></hr>
       </div>
-      <div className="container">
+      {stackParent && (
+        <BreadCrumb
+        data={stackParent}
+        setStackParent={setStackParent}
+        setParent={setParent}
+        />
+        )}
+      <div className="container-fluid">
+      <hr className="my"></hr>
         {load ? (
           <div className="container d-flex flex-column h-100 align-items-center justify-content-center pt-5">
             <Spinner sizeUnit="px" size={35} color="#4d6d6d" />

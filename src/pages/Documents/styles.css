@@ -24,3 +24,16 @@
   width: 0px;
   height: 0px;
 }
+.btn.back {
+  box-shadow: 0 1px 2px 0 rgba(60,64,67,0.302),0 1px 3px 1px rgba(60,64,67,0.149);
+  font-weight: 500;
+}
+.btn.new-file {
+  box-shadow: 0 1px 2px 0 rgba(60,64,67,0.302),0 1px 3px 1px rgba(60,64,67,0.149);
+  font-weight: 500;
+}
+
+.btn.new-folder {
+  box-shadow: 0 1px 2px 0 rgba(60,64,67,0.302),0 1px 3px 1px rgba(60,64,67,0.149);
+  font-weight: 500;
+}

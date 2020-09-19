@@ -4,6 +4,7 @@ import Modal from "../../../components/Modal";
 import Switch from "../../../components/Switch";
 import NotFound from "../../../components/NotFound";
 import Search from "../../../components/Search";
+import { ClipLoader as Spinner } from "react-spinners";
 
 import trash from "../../../assets/bin.svg";
 import edit from "../../../assets/edit.svg";
@@ -31,14 +32,18 @@ function Users() {
   const [modalEdit, setModalEdit] = useState(false);
   const [modalDelete, setModalDelete] = useState(false);
   const [modalResetPass, setModalResetPass] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const token = () => `Bearer ${localStorage.getItem("token")}`;
 
   useEffect(() => {
+    setLoading(true);
+
     api
       .get(`/users?query=${query}`, { headers: { Authorization: token() } })
       .then((res) => {
         setUsers(res.data);
+        setLoading(false);
       })
       .catch((err) => {
         console.log(err);
@@ -173,7 +178,7 @@ function Users() {
           <Search className="ml-auto mr-2" onChange={setQuery} />
           <button
             type="button"
-            className="btn btn-info align-self-end mb-1"
+            className="btn align-self-end btn-rounded"
             onClick={() => setModalPost(true)}
           >
             Adicionar <i className="fas fa-plus"></i>
@@ -181,7 +186,12 @@ function Users() {
         </div>
         <hr className="my"></hr>
         <div className="container pt-5">
-          {users.length ? (
+          {loading ?
+            <div className="d-flex align-items-center justify-content-center">
+              <Spinner sizeUnit="px" size={35} color="#4d6d6d" />
+            </div>
+            :
+          users.length ? (
             users.map((user) => {
               return (
                 <div className={`post info`} key={user._id}>
