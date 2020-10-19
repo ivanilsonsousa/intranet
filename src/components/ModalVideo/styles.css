@@ -1,0 +1,44 @@
+.wrapper-modal-video .modal-video {
+  z-index: 90;
+  position: relative;
+  animation: bottom-up .3s ease-in;
+  animation-fill-mode: forwards;
+}
+.wrapper-modal-video.close {
+  display: none;
+}
+.wrapper-modal-video {
+  position: fixed;
+  
+  width: 100vw;
+  height: 100vh; 
+  background-color: rgba(0,0,0,0.5);
+  transition: background-color .8s;
+  left: 0;
+  top: 0;
+  z-index: 99;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.wrapper-modal-video .wrapper-close {
+  background-color: transparent;
+  display: flex;
+  justify-content: flex-end;
+}
+.wrapper-modal-video .modal-video-close-btn {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 10px;
+}
+@keyframes bottom-up {
+  from {
+    top: 150px
+  }
+
+  to {
+    top: 0;
+  }
+}

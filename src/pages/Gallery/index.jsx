@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Gallery from "react-grid-gallery";
 import Header from "../../components/Header";
 
+import api from "../../services/api";
 import gallery_icon from "../../assets/gallery.svg";
 
 const IMAGES = [
@@ -37,6 +38,25 @@ const IMAGES = [
 ];
 
 function GalleryViewer() {
+  const [images, setImages] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      const { data } = await api.get('/photos');
+      const aux = data.map(photo => {
+        return {
+          src: photo.file_url,
+          thumbnail: photo.file_url,
+          thumbnailWidth: 320,
+          thumbnailHeight: 212
+        };
+      })
+
+      setImages(aux);
+
+    })()
+  }, []);
+
   return (
     <>
       <Header />
@@ -53,7 +73,7 @@ function GalleryViewer() {
         <hr className="my"></hr>
         <div className="container-fluid">
           <Gallery
-            images={IMAGES}
+            images={images}
             enableImageSelection={false}
             backdropClosesModal
           />

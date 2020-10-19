@@ -107,7 +107,10 @@ export default function CustomizedTreeView() {
       <StyledTreeItem nodeId="12" label="Teste" >
         <StyledTreeItem nodeId="13" label="Agência Transfusional">
           <StyledTreeItem nodeId="14" label="Agência Transfusional" onLabelClick={() => window.open('http://10.10.10.5/intranet/wp-content/uploads/2020/07/Coleta-de-amostras-para-testes-pr%C3%A9-transfusionais.pdf', '_blank')} />
-        </StyledTreeItem>
+      </StyledTreeItem>
+      </StyledTreeItem>
+
+      <StyledTreeItem nodeId="16" label="Teste" >
       </StyledTreeItem>
     </TreeView>
   );

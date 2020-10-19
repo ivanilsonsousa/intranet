@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "../../components/Header";
 import Search from "../../components/Search";
-import Tree from "../../components/Accordion";
+import Tree from "../../components/Tree";
 
 import file from "../../assets/file-black.svg";
 

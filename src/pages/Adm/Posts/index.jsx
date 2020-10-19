@@ -193,6 +193,7 @@ function Posts() {
             <input
               type="file"
               onChange={(e) => setThumbnail(e.target.files[0])}
+              accept="image/*"
             />
             <img src={photo} style={{ width: "45px" }} alt="Select img" />
           </label>

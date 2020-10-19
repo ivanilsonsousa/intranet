@@ -10,7 +10,7 @@ import iconWORD from "../../assets/word.svg";
 import iconEXCEL from "../../assets/excel_new.svg";
 import iconSLIDE from "../../assets/powerpoint.svg";
 import iconVIDEO from "../../assets//video.svg";
-import iconDefault from "../../assets/file.svg";
+import iconDefault from "../../assets/file-black.svg";
 
 import empty from "../../assets/empty.svg";
 
@@ -95,7 +95,7 @@ function Directory(props) {
           >
             <OptionLink
               image={folder_open}
-              legend={dir.title}
+              legend={cutLegend(dir.title)}
               width="100"
               folder
               parent={dir._id}
@@ -105,7 +105,7 @@ function Directory(props) {
           :
           <OptionLink
             image={folder_open}
-            legend={dir.title}
+            legend={cutLegend(dir.title)}
             width="100"
             folder
             key={dir._id}

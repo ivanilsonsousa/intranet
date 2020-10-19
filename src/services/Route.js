@@ -8,14 +8,10 @@ function RouteWrapper({
 }) {
   const { loading, authenticated } = useContext(Context);
 
-  if (loading && isPrivate) {
-    return <span>Loading...</span>;
-  }
+  if (loading && isPrivate) return <span>Loading...</span>;
 
   if (authenticated && authTo) return <Redirect to={authTo} />;
-  else 
-
-  if (!authenticated && isPrivate) return <Redirect to={redirectTo} />;
+  else if (!authenticated && isPrivate) return <Redirect to={redirectTo} />;
 
   return <Route {...rest} render={props => <Component {...props }  />} />;
 }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, memo } from "react";
 import { Link } from "react-router-dom";
 import Modal from "../../components/Modal";
 
@@ -107,4 +107,4 @@ function Header(props) {
   );
 }
 
-export default Header;
+export default memo(Header);

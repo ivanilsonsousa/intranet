@@ -1,6 +1,9 @@
 :root {
   --color-default: #a52a2a;
 }
+body {
+  -webkit-font-smoothing: antialiased;
+}
 .content-body {
   min-height: 100vh;
 }

@@ -21,8 +21,10 @@
   opacity: 0.6;
 }
 .label-upload input[type="file"] {
-  width: 0px;
-  height: 0px;
+  color: red;
+  width: 0px !important;
+  height: 0px !important;
+  display: none;
 }
 .btn.back {
   box-shadow: 0 1px 2px 0 rgba(60,64,67,0.302),0 1px 3px 1px rgba(60,64,67,0.149);
@@ -32,8 +34,10 @@
   box-shadow: 0 1px 2px 0 rgba(60,64,67,0.302),0 1px 3px 1px rgba(60,64,67,0.149);
   font-weight: 500;
 }
-
 .btn.new-folder {
   box-shadow: 0 1px 2px 0 rgba(60,64,67,0.302),0 1px 3px 1px rgba(60,64,67,0.149);
   font-weight: 500;
+}
+.btn.new-file:disabled {
+  cursor: not-allowed;
 }

@@ -14,9 +14,9 @@ export default function useSearch(route, query, pageNumber, update, limit, after
   }, [query, update]);
 
   useEffect(() => {
-    console.log("Enviou o video");
-    console.log("query", query);
-    console.log("pageNumber", pageNumber);
+    // console.log("Enviou o video");
+    // console.log("query", query);
+    // console.log("pageNumber", pageNumber);
 
     setLoading(true);
     setError(false);
@@ -26,7 +26,7 @@ export default function useSearch(route, query, pageNumber, update, limit, after
     .then(res => {
       setContent(prevBooks => [...new Set([...prevBooks, ...res.data])]);
 
-      console.log(res);
+      // console.log(res);
       // afterGet();
 
       setHasMore(res.data.length > 0);
@@ -39,5 +39,5 @@ export default function useSearch(route, query, pageNumber, update, limit, after
     return () => cancel();
   }, [query, pageNumber, update]);
 
-  return { loading, error, content, hasMore };
+  return { loading, error, content, setContent, hasMore };
 }

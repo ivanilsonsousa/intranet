@@ -2,6 +2,10 @@
   padding: 10px;
   color: black;
   font-weight: bolder;
+  /* border: 1px solid #dadce0; */
+  background-color: #fff;
+  /* box-shadow: 0 1px 2px 0 rgba(60,64,67,0.302), 0 0px 1px 1px rgba(60,64,67,0.149); */
+  /* border-radius: 8px; */
 }
 .option-dashboard:hover {
   text-decoration: underline;
