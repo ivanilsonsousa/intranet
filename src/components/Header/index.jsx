@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useContext, memo } from "react";
+import React, { useState, useEffect, useContext, memo, useRef } from "react";
 import { Link } from "react-router-dom";
-import Modal from "../../components/Modal";
+
+import Modal from "../../components/ModalNew";
 
 import { Context } from "../../Context/AuthContext";
 
@@ -10,19 +11,19 @@ import logo from "../../assets/logo-intranet.svg";
 import "./styles.css";
 
 function Header(props) {
-  const [modal, setModal] = useState(false);
   const { authenticated, handleLogout } = useContext(Context);
+  const modalRef = useRef(null);
   const [ip, setIp] = useState("");
 
   function logout() {
     handleLogout();
-    setModal(false);
+    modalRef.current.closeModal();
   }
 
   useEffect(() => {
     api
       .get("/my-ip")
-      .then((res) => setIp(`Meu IP é ${ res.data.ip }`))
+      .then((res) => setIp(`Meu IP é ${res.data.ip}`))
       .catch(() => setIp("Sem conexão"));
   }, []);
 
@@ -35,17 +36,16 @@ function Header(props) {
         <div className="row d-flex justify-content-sm-between align-items-sm-center w-100 px-sm-5 justify-content-end pr-2 pr-sm-0">
           <h1 className="display-4 m-0 no-touch">Intranet</h1>
           <div className="d-flex justify-content-sm-between align-items-sm-center ">
-            <span className="meu-ip mr-2">{ ip }</span>
-            {
-            authenticated &&
-            <button
-              type="button"
-              className="btn btn-light"
-              onClick={() => setModal(true)}
-            >
-              <i className="fas fa-sign-out-alt" title="Sair do sistema"></i>
-            </button>
-            }
+            <span className="meu-ip mr-2">{ip}</span>
+            {authenticated && (
+              <button
+                type="button"
+                className="btn btn-light"
+                onClick={() => modalRef.current.openModal()}
+              >
+                <i className="fas fa-sign-out-alt" title="Sair do sistema"></i>
+              </button>
+            )}
           </div>
         </div>
       </div>
@@ -67,14 +67,12 @@ function Header(props) {
           id="navbarSupportedContent"
         >
           <ul className="navbar-nav mr-auto">
-            <li className={`nav-item ${props.flag === "Home" && "active" }`}>
+            <li className={`nav-item ${props.flag === "Home" && "active"}`}>
               <Link className="nav-link" to="/">
-                Home
+                Início
               </Link>
             </li>
-            <li
-              className={`nav-item ${props.flag === "Empresa" && "active"}`}
-            >
+            <li className={`nav-item ${props.flag === "Empresa" && "active"}`}>
               <Link className="nav-link" to="/company">
                 Empresa
               </Link>
@@ -85,9 +83,7 @@ function Header(props) {
               </Link>
             </li>
             <li
-              className={`nav-item ${
-                props.flag === "Documentos" && "active"
-              }`}
+              className={`nav-item ${props.flag === "Documentos" && "active"}`}
             >
               <Link className="nav-link" to="/documents">
                 Documentos
@@ -99,9 +95,8 @@ function Header(props) {
 
       <Modal
         title={"Deseja realmente sair do sistema"}
-        show={modal}
-        onDisable={setModal}
-        func={() => logout()}
+        ref={modalRef}
+        onConfirm={logout}
       />
     </>
   );

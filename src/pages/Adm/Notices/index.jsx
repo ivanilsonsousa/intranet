@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Header from "../../../components/Header";
-import AlertModal from "../../../components/Modal";
+import Modal from "../../../components/ModalNew";
 import Switch from "../../../components/Switch";
 import NotFound from "../../../components/NotFound";
 import Search from "../../../components/Search";
@@ -20,14 +20,16 @@ function Notices() {
   const [query, setQuery] = useState("");
   const [postId, setPostId] = useState(null);
   const [postEdit, setPostEdit] = useState({});
-  const [modalPost, setModalPost] = useState(false);
-  const [modalMessage, setModalMessage] = useState(false);
-  const [modalEdit, setModalEdit] = useState(false);
+
+  const modalPost = useRef(null);
+  const modalMessage = useRef(null);
+  const modalEdit = useRef(null);
+  const modalDelete = useRef(null);
+
   const [update, setUpdate] = useState([]);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [type, setType] = useState("primary");
-  const [modalDelete, setModalDelete] = useState(false);
   const [loading, setLoading] = useState(true);
 
   const token = () => `Bearer ${localStorage.getItem("token")}`;
@@ -48,17 +50,17 @@ function Notices() {
 
   function setDeletePost(id) {
     setPostId(id);
-    setModalDelete(true);
+    modalDelete.current.openModal();
   }
 
   function setEditPost(post) {
     setPostEdit(post);
-    setModalEdit(true);
+    modalEdit.current.openModal();
   }
 
   function handleSubmit() {
     if (!title || !type || !description) {
-      setModalMessage(true);
+      modalMessage.current.openModal();
       return;
     }
 
@@ -70,7 +72,7 @@ function Notices() {
       )
       .then((res) => {
         setUpdate(res.data);
-        setModalPost(false);
+        modalPost.current.closeModal();
         setType("primary");
         setTitle("");
         setDescription("");
@@ -84,7 +86,7 @@ function Notices() {
     const { _id, title, description, type } = postEdit;
 
     if (!_id || !type || !description || !title) {
-      setModalMessage(true);
+      modalMessage.current.openModal();
       return;
     }
 
@@ -96,7 +98,7 @@ function Notices() {
       )
       .then((res) => {
         setUpdate(res.data);
-        setModalEdit(false);
+        modalEdit.current.closeModal();
         setType("primary");
         setTitle("");
         setDescription("");
@@ -110,7 +112,7 @@ function Notices() {
     api
       .delete(`posts/${postId}`, { headers: { Authorization: token() } })
       .then((res) => {
-        setModalDelete(false);
+        modalDelete.current.closeModal();
         setUpdate(res.data);
       })
       .catch((res) => {
@@ -142,19 +144,18 @@ function Notices() {
           <button
             type="button"
             className="btn align-self-end btn-rounded"
-            onClick={() => setModalPost(true)}
+            onClick={() => modalPost.current.openModal()}
           >
             Adicionar <i className="fas fa-plus"></i>
           </button>
         </div>
         <hr className="my"></hr>
         <div className="container pt-5">
-          {loading ?
+          {loading ? (
             <div className="d-flex align-items-center justify-content-center">
               <Spinner sizeUnit="px" size={35} color="#4d6d6d" />
             </div>
-            :
-          posts.length ? (
+          ) : posts.length ? (
             posts.map((post) => {
               return (
                 <div className={`post ${post.type}`} key={post._id}>
@@ -200,12 +201,12 @@ function Notices() {
           )}
         </div>
       </div>
-      <AlertModal
+
+      <Modal
         title={"Novo Comunicado"}
         noIcon
-        show={modalPost}
-        func={handleSubmit}
-        onDisable={setModalPost}
+        ref={modalPost}
+        onConfirm={handleSubmit}
       >
         <div className="form-group">
           <label htmlFor="exampleFormControlSelect1">Título</label>
@@ -217,7 +218,12 @@ function Notices() {
         </div>
         <div className="form-group">
           <label htmlFor="exampleFormControlSelect1">Descrição</label>
-          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" onChange={(e) => setDescription(e.target.value)} ></textarea>
+          <textarea
+            class="form-control"
+            id="exampleFormControlTextarea1"
+            rows="3"
+            onChange={(e) => setDescription(e.target.value)}
+          ></textarea>
         </div>
         <div className="form-group">
           <label htmlFor="menu-select">Tipo (Cor)</label>
@@ -231,14 +237,13 @@ function Notices() {
             <option value="info">Informação</option>
           </select>
         </div>
-      </AlertModal>
+      </Modal>
 
-      <AlertModal
+      <Modal
         title={"Editar Comunicado"}
         noIcon
-        show={modalEdit}
-        func={handleSubmitEdit}
-        onDisable={setModalEdit}
+        ref={modalEdit}
+        onConfirm={handleSubmitEdit}
       >
         <div className="form-group">
           <label htmlFor="exampleFormControlSelect1">Título</label>
@@ -253,7 +258,15 @@ function Notices() {
         </div>
         <div className="form-group">
           <label htmlFor="exampleFormControlSelect1">Descrição</label>
-          <textarea className="form-control" defaultValue={postEdit.description} id="exampleFormControlTextarea1" rows="3" onChange={(e) => setPostEdit({ ...postEdit, description: e.target.value })} ></textarea>
+          <textarea
+            className="form-control"
+            defaultValue={postEdit.description}
+            id="exampleFormControlTextarea1"
+            rows="3"
+            onChange={(e) =>
+              setPostEdit({ ...postEdit, description: e.target.value })
+            }
+          ></textarea>
         </div>
         <div className="form-group">
           <label htmlFor="menu-select">Tipo (Cor)</label>
@@ -268,21 +281,15 @@ function Notices() {
             <option value="info">Informação</option>
           </select>
         </div>
-      </AlertModal>
+      </Modal>
 
-      <AlertModal
+      <Modal
         title="Deseja realmente apagar esse comunicado?"
-        show={modalDelete}
-        onDisable={setModalDelete}
-        func={() => handleDeletePost()}
+        ref={modalDelete}
+        onConfirm={handleDeletePost}
       />
 
-      <AlertModal
-        title={"Preencha todos os campos"}
-        message
-        show={modalMessage}
-        onDisable={setModalMessage}
-      />
+      <Modal title={"Preencha todos os campos"} message ref={modalMessage} />
     </>
   );
 }

@@ -5,6 +5,7 @@ import OptionLink from "../../components/OptionLink";
 import Callout from "../../components/Callout";
 import Footer from "../../components/Footer";
 import ModalPopup from "../../components/ModalPopup";
+import ListBirthdays from "../../components/ListBirthdays";
 
 import { ClipLoader as Spinner } from "react-spinners";
 
@@ -19,6 +20,7 @@ import upToDate from "../../assets/upToDate.svg";
 import gmail from "../../assets/gmail.svg";
 import sacr from "../../assets/sacr.svg";
 import pep from "../../assets/pep.svg";
+import cake from "../../assets/bolo-de-aniversario.svg";
 
 import { getDate } from "../../scripts/utils";
 import api from "../../services/api";
@@ -162,16 +164,11 @@ function Home() {
                 />
               </div>
 
-              <h1 className="display-4 title-display mb-4">Aniversariantes</h1>
-              <div className="row">
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
+              <h1 className="display-4 title-display mb-4">
+                Aniversariantes do dia <img src={cake} style={{ width: "30px", marginBottom: '10px' }} />
+              </h1>
+              <div className="row d-flex">
+                <ListBirthdays />
               </div>
             </div>
           </div>

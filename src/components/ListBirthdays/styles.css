@@ -1,0 +1,47 @@
+.list-birthdays {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+
+  overflow-y: scroll;
+  max-height: 300px;
+  padding: 5px 10px;
+  scrollbar-color: transparent transparent;
+  scrollbar-width: 0px;
+}
+.list-birthdays::-webkit-scrollbar {
+  width: 0px;
+}
+.person-avatar {
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  padding: 20px;
+  cursor: pointer;
+  background-color: blue;
+  display: flex;
+  flex-shrink: 1;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+.person {
+  display: flex;
+  border-radius: 5px;
+  width: 100%;
+  padding: 15px;
+  margin-bottom: 10px;
+  
+  -webkit-box-shadow: -1px 0px 18px -1px rgba(166,163,166,1);
+  -moz-box-shadow: -1px 0px 18px -1px rgba(166,163,166,1);
+  box-shadow: -1px 0px 18px -1px rgba(166,163,166,1);
+}
+.person span {
+  display: inline-block;
+  font-weight: 700;
+  margin-left: 10px;
+}
+.person h6 {
+  color: #666;
+  margin-left: 10px;
+}

@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Header from "../../../components/Header";
-import Modal from "../../../components/Modal";
+import Modal from "../../../components/ModalNew";
 import Switch from "../../../components/Switch";
 import NotFound from "../../../components/NotFound";
 import Search from "../../../components/Search";
@@ -27,12 +27,13 @@ function Users() {
   const [users, setUsers] = useState([]);
   const [query, setQuery] = useState("");
   const [userId, setUserId] = useState(null);
-  const [modalPost, setModalPost] = useState(false);
-  const [modalMessage, setModalMessage] = useState(false);
-  const [modalEdit, setModalEdit] = useState(false);
-  const [modalDelete, setModalDelete] = useState(false);
-  const [modalResetPass, setModalResetPass] = useState(false);
   const [loading, setLoading] = useState(true);
+
+  const modalPost = useRef(null);
+  const modalMessage = useRef(null);
+  const modalEdit = useRef(null);
+  const modalDelete = useRef(null);
+  const modalResetPass = useRef(null);
 
   const token = () => `Bearer ${localStorage.getItem("token")}`;
 
@@ -53,22 +54,22 @@ function Users() {
   function setDeletePost(user) {
     setUserId(user._id);
     setEditUser(user);
-    setModalDelete(true);
+    modalDelete.current.openModal();
   }
 
   function setBeforeEditUser(user) {
     setEditUser(user);
-    setModalEdit(true);
+    modalEdit.current.openModal();
   }
 
   function setBeforeResetPassUser(user) {
     setEditUser(user);
-    setModalResetPass(true);
+    modalResetPass.current.openModal();
   }
 
   function handleSubmit() {
     if (!name || !username || !email) {
-      setModalMessage(true);
+      modalMessage.current.openModal();
       return;
     }
 
@@ -80,7 +81,7 @@ function Users() {
       )
       .then((res) => {
         setUpdate(res.data);
-        setModalPost(false);
+        modalPost.current.closeModal();
       })
       .catch((err) => {
         console.log(err);
@@ -91,7 +92,7 @@ function Users() {
     const { _id, name, username, email } = userEdit;
 
     if (!_id || !name || !username || !email) {
-      setModalMessage(true);
+      modalMessage.current.openModal();
       return;
     }
 
@@ -103,7 +104,7 @@ function Users() {
       )
       .then((res) => {
         setUpdate(res.data);
-        setModalEdit(false);
+        modalEdit.current.closeModal();
       })
       .catch((err) => {
         console.log(err);
@@ -121,7 +122,7 @@ function Users() {
 
   function handleResetPass() {
     if (!password || !passwordRepeat || password !== passwordRepeat) {
-      setModalMessage(true);
+      modalMessage.current.openModal();
       return;
     }
 
@@ -134,7 +135,7 @@ function Users() {
         { headers: { Authorization: token() } }
       )
       .then((res) => {
-        setModalResetPass(false);
+        modalResetPass.current.closeModal();
       })
       .catch((res) => {
         console.log(res);
@@ -147,7 +148,7 @@ function Users() {
     api
       .delete(`users/${userId}`, { headers: { Authorization: token() } })
       .then((res) => {
-        setModalDelete(false);
+        modalDelete.current.closeModal();
         setUpdate(res.data);
       })
       .catch((res) => {
@@ -179,19 +180,18 @@ function Users() {
           <button
             type="button"
             className="btn align-self-end btn-rounded"
-            onClick={() => setModalPost(true)}
+            onClick={() => modalPost.current.openModal()}
           >
             Adicionar <i className="fas fa-plus"></i>
           </button>
         </div>
         <hr className="my"></hr>
         <div className="container pt-5">
-          {loading ?
+          {loading ? (
             <div className="d-flex align-items-center justify-content-center">
               <Spinner sizeUnit="px" size={35} color="#4d6d6d" />
             </div>
-            :
-          users.length ? (
+          ) : users.length ? (
             users.map((user) => {
               return (
                 <div className={`post info`} key={user._id}>
@@ -262,9 +262,8 @@ function Users() {
       <Modal
         title={"Novo Usuário"}
         noIcon
-        show={modalPost}
-        func={handleSubmit}
-        onDisable={setModalPost}
+        ref={modalPost}
+        onConfirm={handleSubmit}
       >
         <div className="form-row">
           <div className="col">
@@ -328,9 +327,8 @@ function Users() {
       <Modal
         title={"Editar Usuário"}
         noIcon
-        show={modalEdit}
-        func={handleSubmitEdit}
-        onDisable={setModalEdit}
+        ref={modalEdit}
+        onConfirm={handleSubmitEdit}
       >
         <div className="form-row">
           <div className="col">
@@ -380,9 +378,8 @@ function Users() {
 
       <Modal
         title="Você tem absoluta certeza?"
-        show={modalDelete}
-        onDisable={setModalDelete}
-        func={() => handleDeletePost()}
+        ref={modalDelete}
+        onConfirm={() => handleDeletePost()}
       >
         <span>
           Essa ação não pode ser desfeita. Isso excluirá permanentemente o
@@ -402,9 +399,8 @@ function Users() {
 
       <Modal
         title={`Definir nova senha para ${userEdit.name}`}
-        show={modalResetPass}
-        onDisable={setModalResetPass}
-        func={() => handleResetPass()}
+        ref={modalResetPass}
+        onConfirm={() => handleResetPass()}
       >
         <div className="form-row">
           <div className="col">
@@ -431,8 +427,7 @@ function Users() {
       <Modal
         title={"Preencha todos os campos corretamente"}
         message
-        show={modalMessage}
-        onDisable={setModalMessage}
+        ref={modalMessage}
       />
     </>
   );

@@ -1,10 +1,14 @@
-import React, { useContext } from 'react';
-import PropTypes from 'prop-types';
-import { Redirect, Route } from 'react-router-dom';
+import React, { useContext } from "react";
+import PropTypes from "prop-types";
+import { Redirect, Route } from "react-router-dom";
 
-import { Context } from '../Context/AuthContext';
+import { Context } from "../Context/AuthContext";
 function RouteWrapper({
-  redirectTo, isPrivate, authTo, component: Component, ...rest
+  redirectTo,
+  isPrivate,
+  authTo,
+  component: Component,
+  ...rest
 }) {
   const { loading, authenticated } = useContext(Context);
 
@@ -13,7 +17,7 @@ function RouteWrapper({
   if (authenticated && authTo) return <Redirect to={authTo} />;
   else if (!authenticated && isPrivate) return <Redirect to={redirectTo} />;
 
-  return <Route {...rest} render={props => <Component {...props }  />} />;
+  return <Route {...rest} render={(props) => <Component {...props} />} />;
 }
 
 RouteWrapper.propTypes = {
@@ -24,7 +28,7 @@ RouteWrapper.propTypes = {
 };
 
 RouteWrapper.defaultProps = {
-  redirectTo: '/',
+  redirectTo: "/",
   isPrivate: false,
 };
 

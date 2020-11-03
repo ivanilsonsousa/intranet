@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Header from "../../../components/Header";
-import AlertModal from "../../../components/Modal";
+
+import Modal from "../../../components/ModalNew";
+
 import Switch from "../../../components/Switch";
 import NotFound from "../../../components/NotFound";
 import Search from "../../../components/Search";
@@ -14,17 +16,18 @@ import api from "../../../services/api";
 import "./style.css";
 
 function Phones() {
+  const modalMessage = useRef(null);
+  const modalPost = useRef(null);
+  const modalDelete = useRef(null);
+  const modalEdit = useRef(null);
+
   const [phones, setPhones] = useState([]);
   const [query, setQuery] = useState("");
   const [phoneId, setPhoneId] = useState(null);
   const [foneEdit, setFoneEdit] = useState({});
-  const [modalPost, setModalPost] = useState(false);
-  const [modalMessage, setModalMessage] = useState(false);
-  const [modalEdit, setModalEdit] = useState(false);
   const [update, setUpdate] = useState([]);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [modalDelete, setModalDelete] = useState(false);
   const [loading, setLoading] = useState(true);
 
   const token = () => `Bearer ${localStorage.getItem("token")}`;
@@ -32,7 +35,7 @@ function Phones() {
   useEffect(() => {
     setLoading(true);
 
-    console.log(query)
+    console.log(query);
 
     api
       .get(`/phones?query=${query}`, {
@@ -49,17 +52,17 @@ function Phones() {
 
   function setDeletePhone(id) {
     setPhoneId(id);
-    setModalDelete(true);
+    modalDelete.current.openModal();
   }
 
   function setEditPhone(phone) {
     setFoneEdit(phone);
-    setModalEdit(true);
+    modalEdit.current.openModal();
   }
 
   function handleSubmit() {
     if (!title || !description) {
-      setModalMessage(true);
+      modalMessage.current.openModal();
       return;
     }
 
@@ -71,7 +74,7 @@ function Phones() {
       )
       .then((res) => {
         setUpdate(res.data);
-        setModalPost(false);
+        modalPost.current.closeModal();
         setTitle("");
         setDescription("");
       })
@@ -84,7 +87,7 @@ function Phones() {
     const { _id, title, description } = foneEdit;
 
     if (!_id || !description || !title) {
-      setModalMessage(true);
+      modalMessage.current.openModal();
       return;
     }
 
@@ -96,7 +99,7 @@ function Phones() {
       )
       .then((res) => {
         setUpdate(res.data);
-        setModalEdit(false);
+        modalEdit.current.closeModal();
         setTitle("");
         setDescription("");
       })
@@ -109,7 +112,7 @@ function Phones() {
     api
       .delete(`phones/${phoneId}`, { headers: { Authorization: token() } })
       .then((res) => {
-        setModalDelete(false);
+        modalDelete.current.closeModal();
         setUpdate(res.data);
       })
       .catch((res) => {
@@ -141,19 +144,18 @@ function Phones() {
           <button
             type="button"
             className="btn align-self-end btn-rounded"
-            onClick={() => setModalPost(true)}
+            onClick={() => modalPost.current.openModal()}
           >
             Adicionar <i className="fas fa-plus"></i>
           </button>
         </div>
         <hr className="my"></hr>
         <div className="container pt-5">
-          {loading ?
+          {loading ? (
             <div className="d-flex align-items-center justify-content-center">
               <Spinner sizeUnit="px" size={35} color="#4d6d6d" />
             </div>
-            :
-           phones.length ? (
+          ) : phones.length ? (
             phones.map((phone) => {
               return (
                 <div className="post secundary" key={phone._id}>
@@ -202,12 +204,11 @@ function Phones() {
         </div>
       </div>
 
-      <AlertModal
+      <Modal
         title={"Novo Ramal"}
         noIcon
-        show={modalPost}
-        func={handleSubmit}
-        onDisable={setModalPost}
+        onConfirm={handleSubmit}
+        ref={modalPost}
       >
         <div className="form-group">
           <label htmlFor="exampleFormControlSelect1">Descrição</label>
@@ -227,14 +228,13 @@ function Phones() {
             onChange={(e) => setDescription(e.target.value)}
           />
         </div>
-      </AlertModal>
+      </Modal>
 
-      <AlertModal
+      <Modal
         title={"Editar Ramal"}
         noIcon
-        show={modalEdit}
-        func={handleSubmitEdit}
-        onDisable={setModalEdit}
+        onConfirm={handleSubmitEdit}
+        ref={modalEdit}
       >
         <div className="form-group">
           <label htmlFor="exampleFormControlSelect1">Descrição</label>
@@ -260,21 +260,15 @@ function Phones() {
             }
           />
         </div>
-      </AlertModal>
+      </Modal>
 
-      <AlertModal
+      <Modal
         title="Deseja realmente apagar esse ramal?"
-        show={modalDelete}
-        onDisable={setModalDelete}
-        func={() => handleDeletePhone()}
+        ref={modalDelete}
+        onConfirm={handleDeletePhone}
       />
 
-      <AlertModal
-        title={"Preencha todos os campos"}
-        message
-        show={modalMessage}
-        onDisable={setModalMessage}
-      />
+      <Modal title={"Preencha todos os campos"} message ref={modalMessage} />
     </>
   );
 }

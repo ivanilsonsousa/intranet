@@ -50,7 +50,6 @@ function cutLegend(legend) {
   return `${legend.substr(0, 20)}...`;
 }
 
-
 function Directory(props) {
   const { data } = props;
   const { authenticated } = useContext(Context);
@@ -59,33 +58,33 @@ function Directory(props) {
     <div className="directory">
       {data.map((dir, index) => {
         return dir.type === "file" ? (
-          authenticated ?
-          <ContextMenu
-            id={dir._id}
-            filename={dir.title}
-            width="100"
-            key={dir._id}
-            setDirUpdate={props.setDirUpdate}
-          >
+          authenticated ? (
+            <ContextMenu
+              id={dir._id}
+              filename={dir.title}
+              width="100"
+              key={dir._id}
+              setDirUpdate={props.setDirUpdate}
+            >
+              <OptionLink
+                image={chooseIcon(dir.format)}
+                legend={cutLegend(dir.title)}
+                width="100"
+                title={dir.title}
+                externalLink={dir.url}
+              />
+            </ContextMenu>
+          ) : (
             <OptionLink
               image={chooseIcon(dir.format)}
               legend={cutLegend(dir.title)}
+              key={dir._id}
               width="100"
               title={dir.title}
               externalLink={dir.url}
             />
-          </ContextMenu>
-          :
-          <OptionLink
-            image={chooseIcon(dir.format)}
-            legend={cutLegend(dir.title)}
-            key={dir._id}
-            width="100"
-            title={dir.title}
-            externalLink={dir.url}
-          />
-        ) : (
-          authenticated ?
+          )
+        ) : authenticated ? (
           <ContextMenu
             id={dir._id}
             filename={dir.title}
@@ -102,7 +101,7 @@ function Directory(props) {
               func={props.func}
             />
           </ContextMenu>
-          :
+        ) : (
           <OptionLink
             image={folder_open}
             legend={cutLegend(dir.title)}

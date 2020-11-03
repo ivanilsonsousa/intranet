@@ -11,7 +11,7 @@ import "./styles.css";
 import { useLayoutEffect } from "react";
 
 function VideoGallery() {
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState(" ");
   const [videoPlay, setVideoPlay] = useState({});
   const [clock, setClock] = useState([]);
   const [videos, setVideos] = useState([]);
@@ -29,7 +29,7 @@ function VideoGallery() {
 
   useEffect(() => {
     api
-      .get(`/videos?query=${query}`)
+      .get('videos-list', { params: { query } })
       .then((res) => {
         setVideos(res.data);
       })

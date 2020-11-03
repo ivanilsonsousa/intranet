@@ -28,9 +28,7 @@ function BreadCrumb(props) {
               {isEndArray ? (
                 legend
               ) : (
-                <span onClick={() => updateStack(index)}>
-                  {legend}
-                </span>
+                <span onClick={() => updateStack(index)}>{legend}</span>
               )}{" "}
             </li>
           );

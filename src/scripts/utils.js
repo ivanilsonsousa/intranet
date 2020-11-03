@@ -20,4 +20,8 @@ function cutLegend(legend, range = 25, showExt = false) {
 
 const verifyCapsLock = (event) => event.getModifierState("CapsLock") ? true : false;
 
-module.exports = { getDate, verifyCapsLock, cutLegend };
+function capitalize(text) {
+  return text.trim().toLowerCase().split(' ').map(name => name.charAt(0).toUpperCase() + name.slice(1)).join(' ');
+}
+
+module.exports = { getDate, verifyCapsLock, cutLegend, capitalize };

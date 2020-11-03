@@ -1,22 +1,23 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
-import AlertModal from "../Modal";
+import Modal from "../ModalNew";
 
 import api from "../../services/api";
 
 import "./styles.css";
 
 function MenuContext(props) {
-  const [modalRename, setModalRename] = useState(false);
-  const [modalDelete, setModalDelete] = useState(false);
-  const [fileName, setFileName] = useState(props.filename);
+  const modalDelete = useRef(null);
+  const modalRename = useRef(null);
   const inputEl = useRef(null);
+
+  const [fileName, setFileName] = useState(props.filename);
 
   function handleDelete() {
     api
       .delete(`/documents/${props.id}`)
       .then((res) => {
-        setModalDelete(false);
+        modalDelete.current.closeModal();
         props.setDirUpdate(res);
       })
       .catch((err) => {
@@ -28,7 +29,7 @@ function MenuContext(props) {
     api
       .put(`/documents/${props.id}`, { title: fileName.trim() })
       .then((res) => {
-        setModalRename(false);
+        modalRename.current.closeModal();
         props.setDirUpdate(res);
       })
       .catch((err) => {
@@ -39,15 +40,15 @@ function MenuContext(props) {
 
   function openModalRename() {
     setFileName(props.filename);
-    setModalRename(true);
+    modalRename.current.openModal();
+    handleFocusInput();
   }
 
-  useEffect(() => {
-    if (modalRename) {
-      inputEl.current.select();
-      inputEl.current.focus();
-    }
-  }, [modalRename]);
+  function handleFocusInput() {
+    console.log(inputEl);
+    // inputEl.select();
+    // inputEl.focus();
+  }
 
   return (
     <div style={{ width: `${props.width}%` }}>
@@ -63,38 +64,37 @@ function MenuContext(props) {
         </MenuItem>
         <MenuItem
           data={{ foo: "bar" }}
-          onClick={() => setModalDelete(true)}
+          onClick={() => modalDelete.current.openModal()}
           className="menu-item"
         >
           <i className="fas fa-trash mr-2" /> Apagar Ficheiro
         </MenuItem>
       </ContextMenu>
 
-      <AlertModal
+      <Modal
         title="Deseja realmente apagar esse ficheiro?"
-        show={modalDelete}
-        onDisable={setModalDelete}
-        func={() => handleDelete()}
+        ref={modalDelete}
+        onConfirm={handleDelete}
       />
 
-      <AlertModal
+      <Modal
         title={"Renomear Ficheiro"}
         noIcon
-        show={modalRename}
-        func={() => handleRename()}
-        onDisable={setModalRename}
+        ref={modalRename}
+        onConfirm={handleRename}
       >
         <div className="form-group">
           <input
             type="text"
             className="form-control"
             ref={inputEl}
+            focus
             value={fileName}
             placeholder="Renomear Ficheiro"
             onChange={(e) => setFileName(e.target.value)}
           />
         </div>
-      </AlertModal>
+      </Modal>
     </div>
   );
 }

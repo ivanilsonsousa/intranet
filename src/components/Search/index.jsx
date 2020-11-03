@@ -1,10 +1,10 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef } from "react";
 
-import './styles.css'
+import "./styles.css";
 
 function Search(props) {
   const inputRef = useRef(null);
-  const [ open, setOpen ] = useState(false);
+  const [open, setOpen] = useState(false);
   const { onChange, className, afterChange } = props;
   let time = null;
 
@@ -13,8 +13,8 @@ function Search(props) {
 
     time = setTimeout(() => {
       onChange(value);
-      if(afterChange) afterChange();
-    }, 1000);
+      if (afterChange) afterChange();
+    }, 400);
   }
 
   function handleClick() {
@@ -23,19 +23,19 @@ function Search(props) {
   }
 
   return (
-    <div className={`searchBox ${open ? 'click' : ''} ${className}`} >
-      <input 
-        type="text" 
-        ref={inputRef} 
-        className="searchInput" 
-        placeholder="Pesquisar..." 
-        onChange={onChange ? (e) => handleChange(e.target.value) : ()=>{}} 
+    <div className={`searchBox ${open ? "click" : ""} ${className}`}>
+      <input
+        type="text"
+        ref={inputRef}
+        className="searchInput"
+        placeholder="Pesquisar..."
+        onChange={onChange ? (e) => handleChange(e.target.value) : () => {}}
       />
       <button className="searchButton" onClick={() => handleClick()}>
-        <i className={`fa fa-${open ? 'times' : 'search'}`} />
+        <i className={`fa fa-${open ? "times" : "search"}`} />
       </button>
-  </div>
-  )
+    </div>
+  );
 }
 
 export default Search;

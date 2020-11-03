@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
 import Header from "../../../components/Header";
-import AlertModal from "../../../components/Modal";
+import Modal from "../../../components/ModalNew";
 import Switch from "../../../components/Switch";
 import NotFound from "../../../components/NotFound";
 import Search from "../../../components/Search";
@@ -17,14 +17,15 @@ import "./style.css";
 import { getDate } from "../../../scripts/utils";
 
 function Posts() {
+  const modalNewPhotoPost = useRef(null);
+  const modalMessage = useRef(null);
+  const modalDelete = useRef(null);
+
   const [query, setQuery] = useState("");
   const [photoPosts, setPhotoPosts] = useState([]);
   const [postId, setPostId] = useState(null);
-  const [modalNewPhotoPost, setModalNewPhotoPost] = useState(false);
-  const [modalMessage, setModalMessage] = useState(false);
   const [update, setUpdate] = useState([]);
   const [title, setTitle] = useState("");
-  const [modalDelete, setModalDelete] = useState(false);
   const [thumbnail, setThumbnail] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -52,18 +53,18 @@ function Posts() {
 
   function setDeletePost(id) {
     setPostId(id);
-    setModalDelete(true);
+    modalDelete.current.openModal();
   }
 
   function setInsertPost() {
     setTitle("");
     setThumbnail(null);
-    setModalNewPhotoPost(true);
+    modalNewPhotoPost.current.openModal();
   }
 
   function handleUpload() {
     if (!title || !thumbnail) {
-      setModalMessage(true);
+      modalMessage.current.openModal();
       return;
     }
 
@@ -74,7 +75,7 @@ function Posts() {
     api
       .post("/posts-caroussel", data, { headers: { Authorization: token() } })
       .then((response) => {
-        setModalNewPhotoPost(false);
+        modalNewPhotoPost.current.closeModal();
         setUpdate(response.data);
       })
       .catch((err) => {
@@ -89,7 +90,7 @@ function Posts() {
         headers: { Authorization: token() },
       })
       .then((res) => {
-        setModalDelete(false);
+        modalDelete.current.closeModal();
         setUpdate(res.data);
       })
       .catch((res) => {
@@ -128,12 +129,11 @@ function Posts() {
         </div>
         <hr className="my"></hr>
         <div className="container pt-5">
-          {loading ?
+          {loading ? (
             <div className="d-flex align-items-center justify-content-center">
               <Spinner sizeUnit="px" size={35} color="#4d6d6d" />
             </div>
-            :
-          photoPosts.length ? (
+          ) : photoPosts.length ? (
             photoPosts.map((photoPost) => {
               return (
                 <div className="post info" key={photoPost._id}>
@@ -170,12 +170,11 @@ function Posts() {
         </div>
       </div>
 
-      <AlertModal
+      <Modal
         title={"Novo Post com Imagem"}
         noIcon
-        show={modalNewPhotoPost}
-        func={() => handleUpload()}
-        onDisable={setModalNewPhotoPost}
+        ref={modalNewPhotoPost}
+        onConfirm={() => handleUpload()}
       >
         <div className="form-group">
           <input
@@ -198,21 +197,15 @@ function Posts() {
             <img src={photo} style={{ width: "45px" }} alt="Select img" />
           </label>
         </div>
-      </AlertModal>
+      </Modal>
 
-      <AlertModal
+      <Modal
         title="Deseja realmente apagar esse post?"
-        show={modalDelete}
-        onDisable={setModalDelete}
-        func={() => handleDeletePost()}
+        ref={modalDelete}
+        onConfirm={() => handleDeletePost()}
       />
 
-      <AlertModal
-        title={"Preencha todos os campos"}
-        message
-        show={modalMessage}
-        onDisable={setModalMessage}
-      />
+      <Modal title={"Preencha todos os campos"} message ref={modalMessage} />
     </>
   );
 }

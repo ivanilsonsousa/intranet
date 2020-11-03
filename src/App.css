@@ -87,7 +87,7 @@ body {
 }
 .wrapper-handout {
   overflow-y: scroll;
-  max-height: 450px;
+  max-height: 520px;
   padding: 0 10px;
   scrollbar-color: transparent transparent;
   scrollbar-width: 0px;

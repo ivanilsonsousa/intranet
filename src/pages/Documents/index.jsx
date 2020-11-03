@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { ClipLoader as Spinner } from "react-spinners";
 
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import BreadCrumb from "../../components/BreadCrumb";
-import Modal from "../../components/Modal";
+import Modal from "../../components/ModalNew";
 import Directory from "../../components/Directory";
 import api from "../../services/api";
 
@@ -27,9 +27,11 @@ function Documents() {
   const [dirUpdate, setDirUpdate] = useState("");
   const [dir, setDir] = useState([]);
   const [load, setLoad] = useState(true);
-  const [modalNewFolder, setModalNewFolder] = useState(false);
-  const [modalNewFile, setModalNewFile] = useState(false);
-  const [modalMessage, setModalMessage] = useState(false);
+
+  const modalNewFolder = useRef(null);
+  const modalNewFile = useRef(null);
+  const modalMessage = useRef(null);
+
   const [nameFileChoose, setNameFileChoose] = useState("");
 
   const { authenticated } = useContext(Context);
@@ -55,7 +57,7 @@ function Documents() {
   }
 
   function setBeforeModalNewFile() {
-    setModalNewFile(true);
+    modalNewFile.current.openModal();
     setNameFileChoose("");
     setFile(null);
   }
@@ -79,13 +81,13 @@ function Documents() {
   function closeModal() {
     setFolder("");
     setFile("");
-    setModalNewFolder(false);
-    setModalNewFile(false);
+    modalNewFolder.current.closeModal();
+    modalNewFile.current.closeModal();
   }
 
   function uploadFile() {
     if (!file || !titleFile) {
-      setModalMessage(true);
+      modalMessage.current.openModal();
       return;
     }
 
@@ -113,7 +115,7 @@ function Documents() {
 
   function makeFolder() {
     if (!folder) {
-      setModalMessage(true);
+      modalMessage.current.openModal();
       return;
     }
 
@@ -181,7 +183,7 @@ function Documents() {
             <button
               type="button"
               className="btn btn-secondary align-self-end new-folder"
-              onClick={() => setModalNewFolder(true)}
+              onClick={() => modalNewFolder.current.openModal()}
             >
               Nova Pasta <i className="fas fa-folder-plus"></i>
             </button>
@@ -223,9 +225,8 @@ function Documents() {
       <Modal
         title={"Nova Pasta"}
         noIcon
-        show={modalNewFolder}
-        func={() => makeFolder()}
-        onDisable={setModalNewFolder}
+        ref={modalNewFolder}
+        onConfirm={makeFolder}
       >
         <div className="form-group">
           <input
@@ -240,9 +241,8 @@ function Documents() {
       <Modal
         title={"Novo Arquivo"}
         noIcon
-        show={modalNewFile}
-        func={() => uploadFile()}
-        onDisable={setModalNewFile}
+        ref={modalNewFile}
+        onConfirm={uploadFile}
       >
         <div className="form-group">
           <input
@@ -277,8 +277,7 @@ function Documents() {
       <Modal
         title={"Preencha todos os campos"}
         message
-        show={modalMessage}
-        onDisable={setModalMessage}
+        ref={modalMessage}
       />
     </>
   );

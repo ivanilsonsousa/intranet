@@ -3,8 +3,7 @@ import Carousel from "nuka-carousel";
 import "./styles.css";
 
 function CardOption({ photos }) {
-
-  return(
+  return (
     <Carousel
       autoplay
       wrapAround={photos.length === 1 ? false : true}
@@ -17,6 +16,6 @@ function CardOption({ photos }) {
       ))}
     </Carousel>
   );
-} 
+}
 
 export default CardOption;
