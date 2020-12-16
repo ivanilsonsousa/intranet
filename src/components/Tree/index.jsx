@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import SvgIcon from "@material-ui/core/SvgIcon";
 import { fade, makeStyles, withStyles } from "@material-ui/core/styles";
@@ -6,6 +6,109 @@ import TreeView from "@material-ui/lab/TreeView";
 import TreeItem from "@material-ui/lab/TreeItem";
 import Collapse from "@material-ui/core/Collapse";
 import { useSpring, animated } from "react-spring/web.cjs"; // web.cjs is required for IE 11 support
+
+import links from "./tree";
+
+import './styles.css'
+
+// Each list item
+const Item = ({ link, title }) => (
+  <dd>
+    <a href={link} target="__blank"><i className="far fa-file-pdf" /> {title}</a>
+  </dd>
+);
+
+// Sublit component
+function SubList ({ title, items }) {
+  const [open, setOpen] = useState(true);
+  const [isVoid, setIsVoid] = useState(false);
+
+  useEffect(() => {
+    setIsVoid(items.length === 0 ? true : false);
+  }, [])
+
+  return (
+  <ol className={`${open ? 'expanded' : 'contracted'}`}>
+    <span 
+    onClick={() => setOpen(!open)}
+    >
+      <i className={`${isVoid ? 'far' : 'fas'} fa-folder${open ? '-open' : ''}`} /> {title}
+    </span>
+
+    <li>
+      {items.map(render)}
+    </li>
+  </ol>
+  );
+};
+
+// Recursively renders list
+const render = item => {
+  return Object.entries(item).map(([title, link]) =>
+    Array.isArray(link) ? (
+      <SubList title={title} items={link} key={`${title}-list`} />
+    ) : (
+      <Item title={title} link={link} key={`${title}-item-${link}`} />
+    )
+  );
+};
+
+// Final list component
+const List = () => <div className="tree no-touch">{links.map(render)}</div>;
+
+export default List;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+
+
+
+
 
 function MinusSquare(props) {
   return (
@@ -62,9 +165,7 @@ function TransitionComponent(props) {
 }
 
 TransitionComponent.propTypes = {
-  /**
-   * Show the component; triggers the enter or exit states
-   */
+  
   in: PropTypes.bool,
 };
 
@@ -91,6 +192,103 @@ const useStyles = makeStyles({
   },
 });
 
+
+
+
+// inicio
+
+let tree = [
+  { parent: "root", name: "A", id: 1 },
+  { parent: "root", name: "B", id: 2 },
+  { parent: "root", name: "C", id: 3 },
+  { parent: "root", name: "D", id: 4 },
+  { parent: "root", name: "E", id: 5 },
+  { parent: 1, name: "Foto", id: 6, file: "http://local.." },
+  { parent: 3, name: "Nova Pasta 2", id: 7 },
+  { parent: 3, name: "Nova Pasta 3", id: 8 },
+  { parent: 5, name: "Nova Pasta", id: 9 },
+  { parent: 8, name: "Nova Pasta", id: 10 },
+  { parent: 7, name: "Nova Pasta 8", id: 11 },
+  { parent: 7, name: "Foto 2", id: 12, file: "http://local.." },
+  { parent: 8, name: "Foto 3", id: 13, file: "http://local.." }
+];
+
+
+
+let parent = "root";
+let historyParents = [];
+let search = [];
+
+function childOfParent(parent) {
+  return tree.filter((e) => e.parent === parent && !e.isVisited);
+}
+
+function getLastParentHistory() {
+  return historyParents[historyParents.length - 1];
+}
+
+
+function createTree(values) {
+  values.forEach((element, index, array) => {
+    // console.log("atual:", element.name, " -> ");
+    search = childOfParent(parent);
+
+    if (parent !== getLastParentHistory()) historyParents.push(parent);
+    // console.log("historyParents: ", printHistory());
+    console.log("parent: ", parent);
+    console.log("childOfParent: \n", search);
+    
+
+
+    if (search.length === 0) {
+      element.isVisited = true;
+      console.log("Visitado: ", element.name);
+
+      historyParents.pop();
+      parent = getLastParentHistory();
+    } else {
+      parent = search[0].id;
+    }
+
+    // console.log("Entra -> ", getNameForID(parent)[0]);
+
+    return <StyledTreeItem nodeId={element.id} label={element.name}>{createTree(search)}</StyledTreeItem>
+    console.log("Index", index);
+
+    // createTree(search); 
+
+    console.log();
+  });
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 export default function CustomizedTreeView() {
   const classes = useStyles();
 
@@ -101,7 +299,10 @@ export default function CustomizedTreeView() {
       defaultExpandIcon={<PlusSquare />}
       defaultEndIcon={<FileIcon />}
     >
+
+
       <StyledTreeItem nodeId="1" label="Serviços de Apoio">
+        
         <StyledTreeItem nodeId="2" label="Agência Transfusional" />
 
         <StyledTreeItem nodeId="3" label="CCIRAS">
@@ -137,6 +338,9 @@ export default function CustomizedTreeView() {
       </StyledTreeItem>
 
       <StyledTreeItem nodeId="16" label="Teste"></StyledTreeItem>
+
     </TreeView>
   );
 }
+
+*/

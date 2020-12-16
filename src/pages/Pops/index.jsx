@@ -1,5 +1,6 @@
 import React from "react";
 import Header from "../../components/Header";
+import Footer from "../../components/Footer";
 import Search from "../../components/Search";
 import Tree from "../../components/Tree";
 
@@ -15,16 +16,19 @@ function Pops() {
             {" "}
             <img src={file} style={{ width: "50px" }} alt="Posts" />
             <h3 className="mt-4 ml-3 mb-0 display-3 title align-text-bottom">
-              POPs
+            Procedimento Operacional Padrão
             </h3>
           </div>
           <Search className="ml-auto" onChange={() => {}} />
         </div>
         <hr className="my"></hr>
-        <div className="container mx-3">
-          <Tree />
+        <div className="container mx-3 mb-5 min-height-70">
+          <React.StrictMode>
+            <Tree />
+          </React.StrictMode>
         </div>
       </div>
+      <Footer />
     </>
   );
 }

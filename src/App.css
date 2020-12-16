@@ -95,6 +95,9 @@ body {
 .wrapper-handout::-webkit-scrollbar {
   width: 0px;
 }
+.min-height-70 {
+  min-height: 70vh;
+}
 @-webkit-keyframes fadeIn {
   100% { opacity: 0; }
   0% { opacity: 1; } 

@@ -11,7 +11,7 @@ import "./styles.css";
 import { useLayoutEffect } from "react";
 
 function VideoGallery() {
-  const [query, setQuery] = useState(" ");
+  const [query, setQuery] = useState("A");
   const [videoPlay, setVideoPlay] = useState({});
   const [clock, setClock] = useState([]);
   const [videos, setVideos] = useState([]);
