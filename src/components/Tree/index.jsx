@@ -1,11 +1,4 @@
 import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import SvgIcon from "@material-ui/core/SvgIcon";
-import { fade, makeStyles, withStyles } from "@material-ui/core/styles";
-import TreeView from "@material-ui/lab/TreeView";
-import TreeItem from "@material-ui/lab/TreeItem";
-import Collapse from "@material-ui/core/Collapse";
-import { useSpring, animated } from "react-spring/web.cjs"; // web.cjs is required for IE 11 support
 
 import links from "./tree";
 

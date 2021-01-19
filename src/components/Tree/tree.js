@@ -57,7 +57,8 @@ export default [
     "Serviços de Enfermagem": [
       { "Bloco Emergência": [ { "Acolhimento com classificação de risco segundo Protocolo de Manchester": "/teste" } ] }
     ],
-    "Test" : [  ]
+    "Pasta Vazia" : [  ],
+    "Coleta de amostras para testes pré transfusionais": "http://10.10.10.5/intranet/wp-content/uploads/2020/11/Coleta-de-amostras-para-testes-pr%C3%A9-transfusionais.pdf"
   },
 
 ];
