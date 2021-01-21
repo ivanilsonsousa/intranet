@@ -45,17 +45,15 @@ const render = (item) => {
 };
 
 // Final list component
-function List() {
+function List({ response }) {
   const [pops, setPops] = useState([]);
-
+  
   useEffect(() => {
     (async () => {
-      let response = await api.get('/pops-tree');
-
-      let treeMenu = response.data;
+      let treeMenu = response;
 
       function LoopObjTree( parent ) {
-        var treeMenuTemp = [];
+        let treeMenuTemp = [];
       
         for( var i in treeMenu ) {
       
@@ -81,7 +79,7 @@ function List() {
       
       setPops(tree);
     })()
-  }, [])
+  }, [response])
 
   return (
     <div className="tree no-touch">{pops.map(render)}</div>

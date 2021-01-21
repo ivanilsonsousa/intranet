@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import Search from "../../components/Search";
@@ -6,7 +6,25 @@ import Tree from "../../components/Tree";
 
 import file from "../../assets/file-black.svg";
 
+import api from "../../services/api";
+
 function Pops() {
+  const [query, setQuery] = useState("");
+  const [pops, setPops] = useState([]);
+
+  useEffect(() => {
+
+    api
+      .get(`/pops-tree?query=${query}`)
+      .then((res) => {
+        setPops(res.data);
+        // console.log("pops", pops);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [query]);
+
   return (
     <>
       <Header />
@@ -16,15 +34,15 @@ function Pops() {
             {" "}
             <img src={file} style={{ width: "50px" }} alt="Posts" />
             <h3 className="mt-4 ml-3 mb-0 display-3 title align-text-bottom">
-            Procedimento Operacional Padrão
+            Procedimentos Operacionais Padrão
             </h3>
           </div>
-          <Search className="ml-auto" onChange={() => {}} />
+          <Search className="ml-auto" onChange={setQuery} />
         </div>
         <hr className="my"></hr>
         <div className="container mx-3 mb-5 min-height-70">
           <React.StrictMode>
-            <Tree />
+            <Tree response={pops}/>
           </React.StrictMode>
         </div>
       </div>
