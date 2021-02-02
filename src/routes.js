@@ -25,22 +25,23 @@ export default function Routes() {
     <BrowserRouter>
       <Switch>
         <Route path="/" exact component={Home} />
-        <Route path="/gallery" component={Gallery} />
-        <Route path="/videos" component={VideoGallery} />
-        <Route path="/persons" component={Persons} />
-        <Route path="/fones" component={Fones} />
-        <Route path="/pops" component={Pops} />
-        <Route path="/documents" component={Documents} />
-        <Route path="/login" component={Login} authTo="/dashboard" />
-        <Route path="/company" component={Company} />
-        <Route path="/dashboard" exact component={DashBoad} isPrivate />
-        <Route path="/dashboard/photos" component={Photos} isPrivate />
-        <Route path="/dashboard/posts" component={Posts} isPrivate />
-        <Route path="/dashboard/notices" component={Notices} isPrivate />
-        <Route path="/dashboard/fones" component={Phones} isPrivate />
-        <Route path="/dashboard/users" component={Users} isPrivate />
-        <Route path="/dashboard/videos" component={Videos} isPrivate />
-        <Route path="*" component={NotFound} />
+        <Route path="/home" exact component={Home} />
+        <Route path="/home/gallery" component={Gallery} />
+        <Route path="/home/videos" component={VideoGallery} />
+        <Route path="/home/persons" component={Persons} />
+        <Route path="/home/fones" component={Fones} />
+        <Route path="/home/pops" component={Pops} />
+        <Route path="/home/documents" component={Documents} />
+        <Route path="/home/login" component={Login} authTo="/home/dashboard" />
+        <Route path="/home/company" component={Company} />
+        <Route path="/home/dashboard" exact component={DashBoad} isPrivate />
+        <Route path="/home/dashboard/photos" component={Photos} isPrivate />
+        <Route path="/home/dashboard/posts" component={Posts} isPrivate />
+        <Route path="/home/dashboard/notices" component={Notices} isPrivate />
+        <Route path="/home/dashboard/fones" component={Phones} isPrivate />
+        <Route path="/home/dashboard/users" component={Users} isPrivate />
+        <Route path="/home/dashboard/videos" component={Videos} isPrivate />
+        <Route path="*/" component={NotFound} />
       </Switch>
     </BrowserRouter>
   );

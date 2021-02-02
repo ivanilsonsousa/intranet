@@ -82,9 +82,9 @@ function Home() {
                 <OptionLink
                   image={art}
                   legend="Galeria de Fotos"
-                  to="/gallery"
+                  to="home/gallery"
                 />
-                <OptionLink image={video} legend="Vídeos" to="/videos" />
+                <OptionLink image={video} legend="Vídeos" to="/home/videos" />
                 <OptionLink
                   image={sacr}
                   legend="MV SACR"
@@ -103,7 +103,7 @@ function Home() {
                   legend="MV Indicadores"
                   externalLink={process.env.REACT_APP_URL_MV_PAINEL}
                 />
-                <OptionLink image={fone} legend="Lista de Ramais" to="/fones" />
+                <OptionLink image={fone} legend="Lista de Ramais" to="/home/fones" />
                 <OptionLink
                   image={upToDate}
                   legend="UpToDate"
@@ -143,7 +143,7 @@ function Home() {
                   legend="POPs"
                   width={width}
                   className="justify-content-center"
-                  to="pops"
+                  to="/home/pops"
                   backgroundColor="DarkSlateGray"
                 />
                 <OptionLink
@@ -151,7 +151,7 @@ function Home() {
                   legend="Documentos"
                   width={width}
                   className="justify-content-center"
-                  to="documents"
+                  to="/home/documents"
                   backgroundColor="SteelBlue"
                 />
                 <OptionLink

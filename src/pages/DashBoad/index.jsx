@@ -40,14 +40,14 @@ export default function DashBoad() {
           <Option
             image={group_icon}
             legend="Usuários"
-            to="/dashboard/users"
+            to="dashboard/users"
             backgroundColor="#3C52B4"
           />
           <Option
             image={post_icon}
             legend="Posts"
             width="50"
-            to="/dashboard/posts"
+            to="dashboard/posts"
             backgroundColor="#FF8556"
           />
           <Option
@@ -65,13 +65,13 @@ export default function DashBoad() {
           <Option
             image={photo_icon}
             legend="Fotos"
-            to="/dashboard/photos"
+            to="dashboard/photos"
             backgroundColor="#A3D98C"
           />
           <Option
             image={video_icon}
             legend="Vídeos"
-            to="/dashboard/videos"
+            to="dashboard/videos"
             backgroundColor="#A3D98C"
           />
         </div>

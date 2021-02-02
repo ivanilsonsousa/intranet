@@ -33,7 +33,7 @@ export default function useAuth() {
       localStorage.setItem("token", token);
       api.defaults.headers.Authorization = `Bearer ${token}`;
       setAuthenticated(true);
-      history.push("/dashboard");
+      history.push("/intranet/dashboard");
 
       return true;
     } catch {

@@ -20,7 +20,7 @@ function Footer() {
       <span>Telefone: (88) 3112-0400</span>
       <span className="text-center">
         &copy;
-        {` Desenvolvido pela equipe de tecnologia da informação 2020 - ${new Date().getFullYear()} `}
+        {` Desenvolvido pela equipe de Tecnologia da Informação 2020 - ${new Date().getFullYear()} `}
       </span>
     </div>
   );

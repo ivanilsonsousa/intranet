@@ -11,7 +11,7 @@ import { AuthProvider } from './Context/AuthContext';
 function App() {
   return (
     <AuthProvider>
-      <Router history={history}>
+      <Router history={history} basename="/home" >
         <Routes />
       </Router>
     </AuthProvider>

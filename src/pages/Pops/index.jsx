@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, createContext, useContext } from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import Search from "../../components/Search";
@@ -8,9 +8,16 @@ import file from "../../assets/file-black.svg";
 
 import api from "../../services/api";
 
+const PopsContext = createContext();
+
 function Pops() {
   const [query, setQuery] = useState("");
   const [pops, setPops] = useState([]);
+  const [currentItemSelected, setCurrentItemSelected] = useState(() => {});
+
+  function setItemSelect() {
+
+  }
 
   useEffect(() => {
 
@@ -42,7 +49,11 @@ function Pops() {
         <hr className="my"></hr>
         <div className="container mx-3 mb-5 min-height-70">
           <React.StrictMode>
-            <Tree response={pops}/>
+            <PopsContext.Provider
+              value={{ setItemSelect }}
+            >
+              <Tree response={pops}/>
+            </PopsContext.Provider>
           </React.StrictMode>
         </div>
       </div>

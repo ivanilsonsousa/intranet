@@ -1,5 +1,6 @@
 {
   "name": "intranet",
+  "homepage": "http://10.10.10.5/home/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
