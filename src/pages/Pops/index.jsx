@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createContext, useContext } from "react";
+import React, { useState, useEffect, createContext, useCallback } from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import Search from "../../components/Search";
@@ -13,11 +13,15 @@ const PopsContext = createContext();
 function Pops() {
   const [query, setQuery] = useState("");
   const [pops, setPops] = useState([]);
-  const [currentItemSelected, setCurrentItemSelected] = useState(() => {});
+  let setCurrentItemSelected = () => {};
 
-  function setItemSelect() {
-
-  }
+  const setItemSelect = useCallback((func) => {
+    if(func === setCurrentItemSelected) return;
+   
+    setCurrentItemSelected(false);
+    func(true);
+    setCurrentItemSelected = func;
+  }, [setCurrentItemSelected]);
 
   useEffect(() => {
 
@@ -62,4 +66,5 @@ function Pops() {
   );
 }
 
+export { PopsContext };
 export default Pops;

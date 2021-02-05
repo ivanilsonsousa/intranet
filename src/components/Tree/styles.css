@@ -40,6 +40,9 @@ ol.expanded > li {
   height: 0;
   display: none;
 }
+.tree .select-item {
+  background-color: #d8d8d8;
+}
 @keyframes translate {
   0% { 
     top: 0px;

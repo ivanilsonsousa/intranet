@@ -1,19 +1,43 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 
-import api from "../../services/api";
+import { PopsContext } from "../../pages/Pops";
+
 import './styles.css'
 
 // Each list item
-const Item = ({ link, title }) => (
+const Item = ({ link, title }) => {
+  const [selected, setSelected] = useState(false);
+  const { setItemSelect } = useContext(PopsContext);
+
+  function handleClick() {
+    setItemSelect(setSelected);
+  }
+
+  return (
   <dd>
-    <a href={link} target="__blank"><i className="far fa-file-pdf" /> {title}</a>
+    <a 
+      href={link} 
+      target="__blank"
+      className={`${selected && 'select-item'}`}
+      onClick={handleClick}
+    >
+      <i className="far fa-file-pdf" /> {title}
+    </a>
   </dd>
-);
+  )
+};
 
 // Sublit component
 function SubList ({ title, items }) {
   const [open, setOpen] = useState(true);
+  const [selected, setSelected] = useState(false);
+  const { setItemSelect } = useContext(PopsContext);
   const [isVoid, setIsVoid] = useState(false);
+
+  function handleClick() {
+    setOpen(!open);
+    setItemSelect(setSelected);
+  }
 
   useEffect(() => {
     setIsVoid(items.length === 0 ? true : false);
@@ -22,7 +46,8 @@ function SubList ({ title, items }) {
   return (
   <ol className={`${open ? 'expanded' : 'contracted'}`}>
     <span 
-    onClick={() => setOpen(!open)}
+    onClick={handleClick}
+    className={`${selected && 'select-item'}`}
     >
       <i className={`${isVoid ? 'far' : 'fas'} fa-folder${open ? '-open' : ''}`} /> {title}
     </span>
@@ -36,7 +61,7 @@ function SubList ({ title, items }) {
 
 // Recursively renders list
 const render = (item) => {
-  
+
   return item.childs ? (
     <SubList title={item.title} items={item.childs} key={`${item.title}-list`} />
   ) : (
@@ -77,6 +102,8 @@ function List({ response }) {
 
       var tree = LoopObjTree();
       
+      console.log(tree);
+
       setPops(tree);
     })()
   }, [response])
