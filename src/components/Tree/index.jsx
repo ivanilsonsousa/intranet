@@ -1,16 +1,17 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, memo } from "react";
 
 import { PopsContext } from "../../pages/Pops";
 
 import './styles.css'
 
 // Each list item
-const Item = ({ link, title }) => {
+const Item = ({ link, title, item }) => {
   const [selected, setSelected] = useState(false);
-  const { setItemSelect } = useContext(PopsContext);
+  const { setItemSelect, setValueCurrent } = useContext(PopsContext);
 
   function handleClick() {
-    setItemSelect(setSelected);
+    setItemSelect(setSelected, item);
+    // setValueCurrent(item);
   }
 
   return (
@@ -28,7 +29,7 @@ const Item = ({ link, title }) => {
 };
 
 // Sublit component
-function SubList ({ title, items }) {
+function SubList ({ title, items, item }) {
   const [open, setOpen] = useState(true);
   const [selected, setSelected] = useState(false);
   const { setItemSelect } = useContext(PopsContext);
@@ -36,7 +37,9 @@ function SubList ({ title, items }) {
 
   function handleClick() {
     setOpen(!open);
-    setItemSelect(setSelected);
+    setItemSelect(setSelected, item);
+    // setValueCurrent(item);
+    // console.log(item);
   }
 
   useEffect(() => {
@@ -63,9 +66,9 @@ function SubList ({ title, items }) {
 const render = (item) => {
 
   return item.childs ? (
-    <SubList title={item.title} items={item.childs} key={`${item.title}-list`} />
+    <SubList title={item.title} item={item} items={item.childs} key={`${item.title}-list`} />
   ) : (
-    <Item title={item.title} link={item.file} key={`${item.title}-item-${item.file}`} />
+    <Item title={item.title} item={item} link={item.file} key={`${item.title}-item-${item.file}`} />
   )
 };
 
@@ -114,4 +117,4 @@ function List({ response }) {
 }
 
 
-export default List;
+export default memo(List);

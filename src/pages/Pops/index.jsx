@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createContext, useCallback } from "react";
+import React, { useState, useEffect, createContext, useCallback, memo } from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import Search from "../../components/Search";
@@ -13,14 +13,16 @@ const PopsContext = createContext();
 function Pops() {
   const [query, setQuery] = useState("");
   const [pops, setPops] = useState([]);
+  const [valueCurrent, setValueCurrent] = useState({});
   let setCurrentItemSelected = () => {};
 
-  const setItemSelect = useCallback((func) => {
-    if(func === setCurrentItemSelected) return;
+  const setItemSelect = useCallback((func, item) => {
+    if(func == setCurrentItemSelected) return;
    
-    setCurrentItemSelected(false);
     func(true);
+    setCurrentItemSelected(false);
     setCurrentItemSelected = func;
+    setValueCurrent(item)
   }, [setCurrentItemSelected]);
 
   useEffect(() => {
@@ -35,6 +37,10 @@ function Pops() {
         console.log(err);
       });
   }, [query]);
+
+  function handleNewFolder() {
+    console.log(valueCurrent);
+  }
 
   return (
     <>
@@ -52,9 +58,21 @@ function Pops() {
         </div>
         <hr className="my"></hr>
         <div className="container mx-3 mb-5 min-height-70">
+          <div className="d-flex justify-content-end px-3">
+            <div className="dropdown no-touch">
+              <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <b>Ações</b>
+              </button>
+              <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <span className="dropdown-item" onClick={handleNewFolder} ><i className="fas fa-folder-plus"></i> Nova Pasta</span>
+                <span className="dropdown-item"><i className="fas fa-edit"></i> Renomear</span>
+                <span className="dropdown-item"><i className="fas fa-trash-alt"></i> Apagar</span>
+              </div>
+            </div>
+          </div>
           <React.StrictMode>
             <PopsContext.Provider
-              value={{ setItemSelect }}
+              value={{ setItemSelect, setValueCurrent }}
             >
               <Tree response={pops}/>
             </PopsContext.Provider>
@@ -66,5 +84,5 @@ function Pops() {
   );
 }
 
-export { PopsContext };
 export default Pops;
+export { PopsContext };
