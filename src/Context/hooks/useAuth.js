@@ -4,6 +4,8 @@ import api from "../../services/api";
 
 import history from "../../history";
 
+const DIR = process.env.REACT_APP_DIR;
+
 export default function useAuth() {
   const [authenticated, setAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -23,6 +25,10 @@ export default function useAuth() {
     })();
   }, []);
 
+  useEffect(() => {
+    console.log("testetesttetete..,.,.,");
+  }, [authenticated])
+
   async function handleLogin(login) {
     try {
       const { data } = await api.post("/login", login);
@@ -33,7 +39,7 @@ export default function useAuth() {
       localStorage.setItem("token", token);
       api.defaults.headers.Authorization = `Bearer ${token}`;
       setAuthenticated(true);
-      history.push("/intranet/dashboard");
+      history.push(`/${DIR}/dashboard`);
 
       return true;
     } catch {

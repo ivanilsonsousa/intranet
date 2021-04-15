@@ -1,116 +1,52 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
+import { useParams } from "react-router-dom";
 import { ClipLoader as Spinner } from "react-spinners";
-
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
-import BreadCrumb from "../../components/BreadCrumb";
+import BreadCrumb from "../../components/BreadCrumb2";
 import Modal from "../../components/ModalNew";
-import Directory from "../../components/Directory";
+import Directory from "../../components/Directory2";
 import api from "../../services/api";
 
 import { Context } from "../../Context/AuthContext";
-
-import { cutLegend } from "../../scripts/utils";
 import "./styles.css";
 
 import folder_icon from "../../assets/folder-black.svg";
-import upload from "../../assets/upload.svg";
+
+const DIR = process.env.REACT_APP_DIR;
 
 function Documents() {
-  const [parent, setParent] = useState("root");
   const [folder, setFolder] = useState("");
-  const [stackParent, setStackParent] = useState([
-    { parent: "root", legend: "Início" },
-  ]);
-  const [file, setFile] = useState(null);
-  const [titleFile, setTitleFile] = useState("");
   const [dirUpdate, setDirUpdate] = useState("");
   const [dir, setDir] = useState([]);
   const [load, setLoad] = useState(true);
 
+  const [stackParent, setStackParent] = useState([]);
+  const params = useParams(`/${DIR}/documents/:parent`);
+  const { authenticated } = useContext(Context);
+  const { parent} = params;
+
   const modalNewFolder = useRef(null);
-  const modalNewFile = useRef(null);
   const modalMessage = useRef(null);
 
-  const [nameFileChoose, setNameFileChoose] = useState("");
-
-  const { authenticated } = useContext(Context);
-
-  function setFileUpdate(file) {
-    setFile(file);
-    if(!file) return
-
-    setNameFileChoose(cutLegend(file.name, 30, true));
-  }
-
-  function updateStackParent(data) {
-    let repeated = false;
-
-    stackParent.forEach((e) => {
-      if (e.parent === data.parent) {
-        repeated = true;
-        return;
-      }
-    });
-
-    if (!repeated) setStackParent([...stackParent, data]);
-  }
-
-  function setBeforeModalNewFile() {
-    modalNewFile.current.openModal();
-    setNameFileChoose("");
-    setFile(null);
-  }
-
-  function comeBack() {
-    const stack = stackParent;
-    stack.pop();
-    const size = Object.keys(stack).length;
-    const { parent } = stack[size - 1];
-    setParent(parent);
-    setStackParent(stack);
-  }
-
-  function doubleClick(data) {
-    const { parent } = data;
-    updateStackParent(data);
-
-    setParent(parent);
-  }
+  useEffect(() => {
+    api
+      .get(`/documents/${parent}`)
+      .then((res) => {
+        console.log(res.data)
+        setDir(res.data.result);
+        setStackParent(res.data.bread);
+        setLoad(false);
+      })
+      .catch((err) => {
+        setLoad(false);
+        setDir([]);
+      });
+  }, [parent, dirUpdate]);
 
   function closeModal() {
     setFolder("");
-    setFile("");
     modalNewFolder.current.closeModal();
-    modalNewFile.current.closeModal();
-  }
-
-  function uploadFile() {
-    if (!file || !titleFile) {
-      modalMessage.current.openModal();
-      return;
-    }
-
-    const data = new FormData();
-
-    data.append("title", titleFile);
-    data.append("parent", parent);
-    data.append("file", file);
-
-    console.log("AQUI")
-    console.log(data)
-
-    api
-      .post("/documents", data)
-      .then((response) => {
-        setDirUpdate(response.data._id);
-        setFile(null);
-        closeModal();
-      })
-      .catch((err) => {
-        alert(err);
-        setFile(null);
-      });
   }
 
   function makeFolder() {
@@ -120,7 +56,7 @@ function Documents() {
     }
 
     api
-      .post("/folders", { parent, title: folder })
+      .post(`/documents/${parent}`, { title: folder })
       .then((response) => {
         setDirUpdate(response.data._id);
         closeModal();
@@ -138,18 +74,30 @@ function Documents() {
       });
   }
 
-  useEffect(() => {
+  function handleNewFile(e) {
+    const { files } = e.target;
+
+    const data = new FormData();
+
+    data.append("type", 'file');
+    data.append("parent", parent);
+    
+    Array.from(files).map(file => {
+      data.append("files", file);
+    });
+
+    console.log(files);
+
     api
-      .get(`/documents/${parent}`)
-      .then((res) => {
-        setDir(res.data);
-        setLoad(false);
+      .post('/documents', data)
+      .then((response) => {
+        setDirUpdate(Date.now());
       })
       .catch((err) => {
-        setLoad(false);
-        setDir([]);
+        console.error(err);
       });
-  }, [parent, dirUpdate]);
+
+  }
 
   return (
     <>
@@ -157,7 +105,6 @@ function Documents() {
       <div className="container-fluid">
         <div className="container-fluid d-flex align-items-baseline w-100">
           <div className="d-flex align-items-end pl-2 pt-5">
-            {" "}
             <img
               src={folder_icon}
               style={{ width: "45px" }}
@@ -167,47 +114,44 @@ function Documents() {
               Documentos
             </h3>
           </div>
-          {parent && (
-            <button
-              type="button"
-              className={`btn btn-light align-self-end ml-auto mr-2 back`}
-              disabled={parent === "root" ? true : false}
-              onClick={() => comeBack()}
-            >
-              <i className="fas fa-chevron-left" />
-              {!authenticated && <strong> Voltar</strong>}
-            </button>
-          )}
           {authenticated && 
           <>
             <button
               type="button"
-              className="btn btn-secondary align-self-end new-folder"
+              className="btn btn-secondary align-self-end new-folder ml-auto"
               onClick={() => modalNewFolder.current.openModal()}
             >
               Nova Pasta <i className="fas fa-folder-plus"></i>
             </button>
-            <button
-              type="button"
-              className="btn btn-light align-self-end ml-2 new-file"
-              disabled={parent === "root" ? true : false}
-              onClick={() => setBeforeModalNewFile()}
+
+            <label
+              htmlFor={parent !== "root" ? "upload" : ""}
+              className={`btn btn-light align-self-end ml-2 new-file label-upload-pop ${parent === "root" ? "btn-disabled" : ""}`}
             >
-              Novo Arquivo <i className="fas fa-cloud-upload-alt"></i>
-            </button>
-          </>
-          }
+              <input
+                id="upload"
+                type="file"
+                multiple="multiple"
+                accept="*/*"
+                onChange={handleNewFile}
+                onClick={(e) => e.target.value = null }
+              />
+                Novo Arquivo <i className="fas fa-cloud-upload-alt"></i>
+            </label>
+
+          </>}  
         </div>
       </div>
       {stackParent && (
         <BreadCrumb
-        data={stackParent}
-        setStackParent={setStackParent}
-        setParent={setParent}
+          data={stackParent}
+          path="documents"
+          setStackParent={setStackParent}
+          stackParent={stackParent}
         />
         )}
       <div className="container-fluid">
-      <hr className="my"></hr>
+      <hr className="my" />
         {load ? (
           <div className="container d-flex flex-column h-100 align-items-center justify-content-center pt-5">
             <Spinner sizeUnit="px" size={35} color="#4d6d6d" />
@@ -215,7 +159,7 @@ function Documents() {
         ) : (
           <Directory
             data={dir}
-            func={doubleClick}
+            path="documents"
             setDirUpdate={setDirUpdate}
           />
         )}
@@ -238,47 +182,6 @@ function Documents() {
         </div>
       </Modal>
 
-      <Modal
-        title={"Novo Arquivo"}
-        noIcon
-        ref={modalNewFile}
-        onConfirm={uploadFile}
-      >
-        <div className="form-group">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Descrição do arquivo"
-            onChange={(e) => setTitleFile(e.target.value)}
-          />
-          <label
-            htmlFor="upload"
-            className="label-upload"
-            title="Fazer upload de arquivo"
-          >
-            <input
-              type="file"
-              name="Document"
-              id="upload"
-              onChange={(e) => setFileUpdate(e.target.files[0])}
-            />
-            <img src={upload} style={{ width: "45px" }} alt="Icone de Upload" />
-            {nameFileChoose ? (
-              <span className="text-success font-weight-bold">
-                {nameFileChoose}
-              </span>
-            ) : (
-              <span className="mt-2">Clique aqui para adiconar um arquivo</span>
-            )}
-          </label>
-        </div>
-      </Modal>
-
-      <Modal
-        title={"Preencha todos os campos"}
-        message
-        ref={modalMessage}
-      />
     </>
   );
 }

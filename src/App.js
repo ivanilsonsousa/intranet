@@ -8,10 +8,12 @@ import history from './history';
 
 import { AuthProvider } from './Context/AuthContext';
 
+const DIR = process.env.REACT_APP_DIR;
+
 function App() {
   return (
     <AuthProvider>
-      <Router history={history} basename="/home" >
+      <Router history={history} basename={`/${DIR}`} >
         <Routes />
       </Router>
     </AuthProvider>

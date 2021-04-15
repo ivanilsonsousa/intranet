@@ -25,6 +25,8 @@ import cake from "../../assets/bolo-de-aniversario.svg";
 import { getDate } from "../../scripts/utils";
 import api from "../../services/api";
 
+const DIR = process.env.REACT_APP_DIR;
+
 function Home() {
   const width = "33.33333";
   const [posts, setPosts] = useState([]);
@@ -82,9 +84,9 @@ function Home() {
                 <OptionLink
                   image={art}
                   legend="Galeria de Fotos"
-                  to="home/gallery"
+                  to={`/${DIR}/gallery`}
                 />
-                <OptionLink image={video} legend="Vídeos" to="/home/videos" />
+                <OptionLink image={video} legend="Vídeos" to={`/${DIR}/playlists`} />
                 <OptionLink
                   image={sacr}
                   legend="MV SACR"
@@ -103,7 +105,7 @@ function Home() {
                   legend="MV Indicadores"
                   externalLink={process.env.REACT_APP_URL_MV_PAINEL}
                 />
-                <OptionLink image={fone} legend="Lista de Ramais" to="/home/fones" />
+                <OptionLink image={fone} legend="Lista de Ramais" to={`/${DIR}/fones`} />
                 <OptionLink
                   image={upToDate}
                   legend="UpToDate"
@@ -143,7 +145,7 @@ function Home() {
                   legend="POPs"
                   width={width}
                   className="justify-content-center"
-                  to="/home/pops"
+                  to={`/${DIR}/pops/root`}
                   backgroundColor="DarkSlateGray"
                 />
                 <OptionLink
@@ -151,7 +153,7 @@ function Home() {
                   legend="Documentos"
                   width={width}
                   className="justify-content-center"
-                  to="/home/documents"
+                  to={`/${DIR}/documents/root`}
                   backgroundColor="SteelBlue"
                 />
                 <OptionLink

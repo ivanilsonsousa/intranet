@@ -36,7 +36,6 @@ body {
 }
 .btn-disabled {
   cursor: no-drop !important;
-  background-color: yellowgreen;
 }
 .fadeIn {
   animation-delay: 0s;
@@ -113,4 +112,16 @@ body {
 @keyframes fadeIn {
   100% { opacity: 0; }
   0% { opacity: 1; } 
+}
+.label-upload-pop {
+  margin: 0;
+}
+.label-upload-pop input[type="file"] {
+  color: red;
+  width: 0px !important;
+  height: 0px !important;
+  display: none;
+}
+.no-pointer {
+  cursor: none;
 }

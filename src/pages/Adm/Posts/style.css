@@ -13,7 +13,11 @@
 label#thumbnail {
   margin-bottom: 20px;
   border: 1px dashed #888;
-  background-size: cover;
+  /* background-size: cover;
+  background-attachment: fixed; */
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
   
   display: flex;
   cursor: pointer;

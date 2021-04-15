@@ -1,23 +1,18 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import "./styles.css";
 
+const DIR = process.env.REACT_APP_DIR;
+
 function BreadCrumb(props) {
-  let { data } = props;
-
-  function updateStack(index) {
-    const parent = data[index].parent;
-
-    props.setParent(parent);
-    props.setStackParent(data.slice(0, ++index));
-    console.log("stack", props.stackParent);
-  }
+  let { data, path } = props;
 
   return (
     <nav aria-label="breadcrumb" className="nav-breadcrumb">
       <ol className="breadcrumb">
         {data.map((element, index, array) => {
-          const { legend } = element;
+          const { legend, parent } = element;
           const isEndArray = Object.keys(array).length - 1 === index;
 
           return ( 
@@ -25,12 +20,15 @@ function BreadCrumb(props) {
               key={index}
               className={`breadcrumb-item ${isEndArray ? "active" : ""}`}
             >
-              {" "}
               {isEndArray ? (
                 legend
               ) : (
-                <span onClick={() => updateStack(index)}>{legend}</span>
-              )}{" "}
+                <Link
+                  to={`/${DIR}/${path}/${parent}`}
+                >
+                  {legend}
+                </Link>
+              )}
             </li>
           );
         })}

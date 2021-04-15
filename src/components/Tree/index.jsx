@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext, memo } from "react";
 
+import { Context } from "../../Context/AuthContext";
 import { PopsContext } from "../../pages/Pops";
 
 import './styles.css'
@@ -7,15 +8,26 @@ import './styles.css'
 // Each list item
 const Item = ({ link, title, item }) => {
   const [selected, setSelected] = useState(false);
-  const { setItemSelect, setValueCurrent } = useContext(PopsContext);
+  const { setItemSelect } = useContext(PopsContext);
+  const { authenticated } = useContext(Context);
 
   function handleClick() {
     setItemSelect(setSelected, item);
-    // setValueCurrent(item);
   }
 
   return (
   <dd>
+    { authenticated ?
+
+    <span
+      className={`${selected && 'select-item'} end-right`}
+      onClick={handleClick}
+    >
+      <i className="fas fa-external-link-alt end-right" onClick={() => window.open(link, '_blank') } /> {title}
+    </span>
+
+    :
+
     <a 
       href={link} 
       target="__blank"
@@ -23,31 +35,30 @@ const Item = ({ link, title, item }) => {
       onClick={handleClick}
     >
       <i className="far fa-file-pdf" /> {title}
-    </a>
+    </a> }
   </dd>
   )
 };
 
 // Sublit component
 function SubList ({ title, items, item }) {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(false);
   const { setItemSelect } = useContext(PopsContext);
   const [isVoid, setIsVoid] = useState(false);
+  const { handleReseteItemSelect } = useContext(PopsContext);
 
   function handleClick() {
     setOpen(!open);
     setItemSelect(setSelected, item);
-    // setValueCurrent(item);
-    // console.log(item);
   }
 
   useEffect(() => {
     setIsVoid(items.length === 0 ? true : false);
-  }, [])
+  }, [item])
 
   return (
-  <ol className={`${open ? 'expanded' : 'contracted'}`}>
+  <ol className={`${open ? 'expanded' : 'contracted'}`} onClick={(e) => handleReseteItemSelect(e)} >
     <span 
     onClick={handleClick}
     className={`${selected && 'select-item'}`}
@@ -66,16 +77,16 @@ function SubList ({ title, items, item }) {
 const render = (item) => {
 
   return item.childs ? (
-    <SubList title={item.title} item={item} items={item.childs} key={`${item.title}-list`} />
+    <SubList title={item.title} item={item} items={item.childs} key={`${item._id}-list`} />
   ) : (
-    <Item title={item.title} item={item} link={item.file} key={`${item.title}-item-${item.file}`} />
+    <Item title={item.title} item={item} link={item.file_url} key={`${item._id}-list`} />
   )
 };
 
 // Final list component
 function List({ response }) {
   const [pops, setPops] = useState([]);
-  
+
   useEffect(() => {
     (async () => {
       let treeMenu = response;
@@ -103,18 +114,15 @@ function List({ response }) {
         return treeMenuTemp;
       }
 
-      var tree = LoopObjTree();
-      
-      console.log(tree);
+      let tree = LoopObjTree();
 
       setPops(tree);
     })()
   }, [response])
 
   return (
-    <div className="tree no-touch">{pops.map(render)}</div>
+    <div className="tree no-touch" >{pops.map(render)}</div>
   );
 }
-
 
 export default memo(List);
