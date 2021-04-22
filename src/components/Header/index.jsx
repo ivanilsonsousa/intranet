@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import Modal from "../../components/ModalNew";
 
-import { Context } from "../../Context/AuthContext";
+import { Context } from "../../context/AuthContext";
 
 import api from "../../services/api";
 import logo from "../../assets/logo-intranet.svg";

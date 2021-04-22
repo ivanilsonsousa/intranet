@@ -1,14 +1,13 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { useParams } from "react-router-dom";
-import { ClipLoader as Spinner } from "react-spinners";
 import Header from "../../components/Header";
+import { Container, Content, HeaderDescription } from "../../components/Layout";
 import Footer from "../../components/Footer";
-import BreadCrumb from "../../components/BreadCrumb2";
 import Modal from "../../components/ModalNew";
 import Directory from "../../components/Directory2";
 import api from "../../services/api";
 
-import { Context } from "../../Context/AuthContext";
+import { Context } from "../../context/AuthContext";
 import "./styles.css";
 
 import folder_icon from "../../assets/folder-black.svg";
@@ -30,6 +29,8 @@ function Documents() {
   const modalMessage = useRef(null);
 
   useEffect(() => {
+    setLoad(true);
+
     api
       .get(`/documents/${parent}`)
       .then((res) => {
@@ -102,19 +103,18 @@ function Documents() {
   return (
     <>
       <Header flag="Documentos"/>
-      <div className="container-fluid">
-        <div className="container-fluid d-flex align-items-baseline w-100">
-          <div className="d-flex align-items-end pl-2 pt-5">
-            <img
-              src={folder_icon}
-              style={{ width: "45px" }}
-              alt="Icone de Pasta"
-            />
-            <h3 className=" ml-3 mb-0 display-3 title align-text-bottom">
-              Documentos
-            </h3>
-          </div>
-          {authenticated && 
+      <Container>
+        <HeaderDescription 
+          title="Documentos" 
+          icon={folder_icon} 
+          iconTam="45" 
+
+          data={stackParent}
+          path="documents"
+          setStackParent={setStackParent}
+          stackParent={stackParent}
+        >
+          {authenticated &&
           <>
             <button
               type="button"
@@ -139,31 +139,17 @@ function Documents() {
                 Novo Arquivo <i className="fas fa-cloud-upload-alt"></i>
             </label>
 
-          </>}  
-        </div>
-      </div>
-      {stackParent && (
-        <BreadCrumb
-          data={stackParent}
-          path="documents"
-          setStackParent={setStackParent}
-          stackParent={stackParent}
-        />
-        )}
-      <div className="container-fluid">
-      <hr className="my" />
-        {load ? (
-          <div className="container d-flex flex-column h-100 align-items-center justify-content-center pt-5">
-            <Spinner sizeUnit="px" size={35} color="#4d6d6d" />
-          </div>
-        ) : (
+          </>}
+        </HeaderDescription>
+        <Content>
           <Directory
             data={dir}
+            load={load}
             path="documents"
             setDirUpdate={setDirUpdate}
           />
-        )}
-      </div>
+        </Content>
+      </Container> 
       <Footer />
 
       <Modal

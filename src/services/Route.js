@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { Redirect, Route } from "react-router-dom";
 
-import { Context } from "../Context/AuthContext";
+import { Context } from "../context/AuthContext";
 function RouteWrapper({
   redirectTo,
   isPrivate,

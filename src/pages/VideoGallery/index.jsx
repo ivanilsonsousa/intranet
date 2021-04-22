@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useLayoutEffect } from "react";
 import ReactPlayer from "react-player";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
@@ -8,10 +8,9 @@ import api from "../../services/api";
 
 import video_icon from "../../assets/cinema.svg";
 import "./styles.css";
-import { useLayoutEffect } from "react";
 
 function VideoGallery() {
-  const [query, setQuery] = useState("A");
+  const [query, setQuery] = useState("");
   const [videoPlay, setVideoPlay] = useState({});
   const [clock, setClock] = useState([]);
   const [videos, setVideos] = useState([]);
@@ -32,6 +31,7 @@ function VideoGallery() {
       .get('videos-list', { params: { query } })
       .then((res) => {
         setVideos(res.data);
+        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);

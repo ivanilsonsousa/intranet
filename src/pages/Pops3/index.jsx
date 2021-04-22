@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { useParams } from "react-router-dom";
+import { ClipLoader as Spinner } from "react-spinners";
 import Header from "../../components/Header";
-import { Container, Content, HeaderDescription } from "../../components/Layout";
 import Footer from "../../components/Footer";
+import BreadCrumb from "../../components/BreadCrumb";
 import Modal from "../../components/ModalNew";
 import Directory from "../../components/Directory2";
 import api from "../../services/api";
 
-import { Context } from "../../context/AuthContext";
+import { Context } from "../../Context/AuthContext";
 import "./styles.css";
 
 import file_icon from "../../assets/file-black.svg";
@@ -30,6 +31,7 @@ function Pops() {
 
   useEffect(() => {
     setLoad(true);
+    // Array.from(Array(100000).keys()).map(n => console.log(n))
 
     api
       .get(`/pops/${parent}`)
@@ -38,6 +40,7 @@ function Pops() {
         setDir(res.data.result);
         setStackParent(res.data.bread);
         setLoad(false);
+        setDir([]);
       })
       .catch((err) => {
         setLoad(false);
@@ -103,17 +106,18 @@ function Pops() {
   return (
     <>
       <Header flag="Pops"/>
-      <Container>
-        <HeaderDescription 
-          title="Procedimento Operacionais Padrão" 
-          icon={file_icon}
-          iconTam="45" 
-
-          data={stackParent}
-          path="pops"
-          setStackParent={setStackParent}
-          stackParent={stackParent}
-        >
+      <div className="container-fluid">
+        <div className="container-fluid d-flex align-items-baseline w-100">
+          <div className="d-flex align-items-end pl-2 pt-5">
+            <img
+              src={file_icon}
+              style={{ width: "45px" }}
+              alt="Icone de Pasta"
+            />
+            <h3 className=" ml-3 mb-0 display-3 title align-text-bottom">
+              Procedimentos Operacionais Padrão
+            </h3>
+          </div>
           {authenticated && 
           <>
             <button
@@ -139,17 +143,31 @@ function Pops() {
                 Novo Arquivo <i className="fas fa-cloud-upload-alt"></i>
             </label>
 
-          </>}
-        </HeaderDescription>
-        <Content>
+          </>}  
+        </div>
+      </div>
+      {stackParent && (
+        <BreadCrumb
+          data={stackParent}
+          path="pops"
+          setStackParent={setStackParent}
+          stackParent={stackParent}
+        />
+        )}
+      <div className="container-fluid">
+      <hr className="my" />
+        {load ? (
+          <div className="container d-flex flex-column h-100 align-items-center justify-content-center pt-5">
+            <Spinner sizeUnit="px" size={35} color="#4d6d6d" />
+          </div>
+        ) : (
           <Directory
             data={dir}
-            load={load}
             path="pops"
             setDirUpdate={setDirUpdate}
           />
-        </Content>
-      </Container> 
+        )}
+      </div>
       <Footer />
 
       <Modal

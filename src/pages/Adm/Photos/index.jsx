@@ -6,7 +6,7 @@ import Search from "../../../components/Search";
 import { ClipLoader as Spinner } from "react-spinners";
 import NotFound from "../../../components/NotFound";
 
-import useSearch from "../../../Context/hooks/useSearch";
+import useSearch from "../../../context/hooks/useSearch";
 import api from "../../../services/api";
 
 import photo_icon from "../../../assets/photo.svg";

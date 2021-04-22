@@ -6,7 +6,7 @@ import Header from "../../../components/Header";
 import Modal from "../../../components/ModalNew";
 import { Line } from "rc-progress";
 
-import useSearch from "../../../Context/hooks/useSearch";
+import useSearch from "../../../context/hooks/useSearch";
 
 import video from "../../../assets/cinema.svg";
 

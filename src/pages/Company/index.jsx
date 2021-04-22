@@ -9,7 +9,7 @@ function Company() {
   return (
     <>
       <Header flag="Empresa" />
-      <div className="container-fluid d-flex company pt-5 justify-content-center px-sm-0 px-md-0" >
+      <div className="container-fluid d-flex company content-body p-5 justify-content-center px-sm-0 px-md-0" >
         <div className="col-4 d-flex align-items-center justify-content-center content-logo-white">
           <img src={logo} style={{ height: "180px" }} alt="logo" />
         </div>

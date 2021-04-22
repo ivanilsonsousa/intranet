@@ -1,11 +1,16 @@
 import React, { useContext, useRef, useState, useMemo } from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
+import 
+  { Container, 
+    Content, 
+    HeaderDescription 
+  } from "../../components/Layout";
 import ContextMenu from "../../components/ContextMenu2";
 import Modal from "../../components/ModalNew";
 import api from "../../services/api";
 
-import { Context } from "../../Context/AuthContext";
+import { Context } from "../../context/AuthContext";
 import "./styles.css";
 
 import camera from "../../assets/camera.svg";
@@ -108,58 +113,52 @@ function Link() {
   return (
     <>
       <Header flag="Links"/>
-      <div className="container-fluid">
-        <div className="container-fluid d-flex align-items-baseline w-100">
-          <div className="d-flex align-items-end pl-2 pt-5">
-            <img
-              src={link_icon}
-              style={{ width: "35px" }}
-              alt="Icone do Link"
-            />
-            <h3 className=" ml-3 mb-0 display-3 title align-text-bottom">
-              Links Rápidos
-            </h3>
-          </div>
+      <Container>
+        <HeaderDescription 
+          title="Links Rápidos" 
+          icon={link_icon} 
+          iconTam="35" 
+        >
           {authenticated && 
-          <>
-            <button
-              type="button"
-              className="btn btn-secondary align-self-end new-folder ml-auto"
-              onClick={() => modalNewLink.current.openModal()}
-            >
-              Novo Link <i className="fas fa-link"></i>
-            </button>
-          </>} 
-        </div>
-      </div>
-      <div className="container-fluid">
-      <hr className="my" />
-        <div className="wrapper-links">
-
-          {items.map((item, index) => {
-            return authenticated 
-            ? 
-              <ContextMenu
-                id={index}
-                key={item._id}
-                path="links"
-                item={item}
+            <>
+              <button
+                type="button"
+                className="btn btn-secondary align-self-end new-folder ml-auto"
+                onClick={() => modalNewLink.current.openModal()}
               >
-                <Option 
+                Novo Link <i className="fas fa-link"></i>
+              </button>
+            </>}
+        </HeaderDescription>
+        
+        <Content>
+          <div className="wrapper-links">
+
+            {items.map((item, index) => {
+              return authenticated 
+              ? 
+                <ContextMenu
+                  id={index}
+                  key={item._id}
+                  path="links"
                   item={item}
+                >
+                  <Option 
+                    item={item}
+                    path="links"
+                  />
+                </ContextMenu>
+              : 
+                <Option 
+                  key={item._id}
+                  item={item} 
                   path="links"
                 />
-              </ContextMenu>
-            : 
-              <Option 
-                key={item._id}
-                item={item} 
-                path="links"
-              />
-          })}
+            })}
 
-        </div>
-      </div>
+          </div>
+        </Content>
+      </Container>
       <Footer />
 
       <Modal

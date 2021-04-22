@@ -32,20 +32,11 @@ function Phones() {
   return (
     <>
       <Header />
-      <div className="container content-body">
-        {/* <div className="container-fluid d-flex align-items-baseline w-100">
-          <div className="d-flex align-items-end pl-2 pt-5">
-            <img src={fone} style={{ width: "50px" }} alt="Posts" />
-            <h3 className="mt-4 ml-3 mb-0 display-3 title align-text-bottom">
-              Lista de Ramais
-            </h3>
-          </div> */}
-          <HeaderDescription icon={fone} title="Lista de Ramais" iconTam="50" className="d-flex align-items-end pl-2 pt-5" >
-            <Search className="ml-auto" onChange={setQuery} />
-          </HeaderDescription>
-        {/* </div> */}
-        <hr className="my"></hr>
-        <div className="container py-5">
+      <Container className="container content-body">
+        <HeaderDescription icon={fone} title="Lista de Ramais" iconTam="50" >
+          <Search className="ml-auto" onChange={setQuery} />
+        </HeaderDescription>
+        <Content className="container py-5">
           {loading ?
             <div className="d-flex align-items-center justify-content-center">
               <Spinner sizeUnit="px" size={35} color="#4d6d6d" />
@@ -72,9 +63,8 @@ function Phones() {
           ) : (
             <NotFound />
           )}
-
-        </div>
-      </div>
+        </Content>
+      </Container>
       <Footer />
     </>
   );

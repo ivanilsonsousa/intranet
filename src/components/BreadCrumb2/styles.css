@@ -1,8 +1,0 @@
-ol.breadcrumb {
-  padding: 10px 40px;
-  background-color: white;
-}
-.breadcrumb-item span:hover {
-  cursor: pointer;
-  text-decoration: underline;
-}

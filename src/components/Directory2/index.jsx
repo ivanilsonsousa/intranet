@@ -1,5 +1,6 @@
 import React, { useContext   } from "react";
 import { Link } from "react-router-dom";
+import { ClipLoader as Spinner } from "react-spinners";
 import ContextMenu from "../ContextMenu2";
 import "./styles.css";
 
@@ -14,7 +15,7 @@ import iconDefault from "../../assets/file-black.svg";
 
 import empty from "../../assets/empty.svg";
 
-import { Context } from "../../Context/AuthContext";
+import { Context } from "../../context/AuthContext";
 
 const DIR = process.env.REACT_APP_DIR;
 
@@ -81,10 +82,16 @@ function Option({ item, path }) {
 }
 
 function Directory(props) {
-  const { data, path } = props;
+  const { data, path, load } = props;
   const { authenticated } = useContext(Context);
 
-  return data.length ? (
+  if (load) return (
+    <div className="container d-flex flex-column align-items-center pt-5 no-touch directory">
+      <Spinner sizeUnit="px" size={35} color="#4d6d6d" />
+    </div>
+  );
+
+  return data?.length ? (
     <div className="directory">
       {data.map(dir => {
 

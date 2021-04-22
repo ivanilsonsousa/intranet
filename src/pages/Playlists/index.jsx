@@ -31,7 +31,7 @@ function Videos() {
 
   return (
     <div className="playlist-body">
-      {Array.from(Array(1000).keys()).map( n => <Link to={`/${DIR}/videos`} ><PlaylistOption /> </Link> )}
+      {Array.from(Array(1).keys()).map( n => <Link to={`/${DIR}/videos`} ><PlaylistOption /> </Link> )}
     </div>
   )
 }

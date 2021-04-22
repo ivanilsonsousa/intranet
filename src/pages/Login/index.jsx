@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import Header from "../../components/Header";
 
-import { Context } from "../../Context/AuthContext";
+import { Context } from "../../context/AuthContext";
 
 import stacasa from "../../assets/stacasa.svg";
 import "./styles.css";

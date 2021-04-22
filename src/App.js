@@ -6,7 +6,7 @@ import './App.css';
 import Routes from './routes';
 import history from './history';
 
-import { AuthProvider } from './Context/AuthContext';
+import { AuthProvider } from './context/AuthContext';
 
 const DIR = process.env.REACT_APP_DIR;
 

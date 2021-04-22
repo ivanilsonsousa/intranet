@@ -25,10 +25,6 @@ export default function useAuth() {
     })();
   }, []);
 
-  useEffect(() => {
-    console.log("testetesttetete..,.,.,");
-  }, [authenticated])
-
   async function handleLogin(login) {
     try {
       const { data } = await api.post("/login", login);
